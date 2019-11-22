@@ -112,7 +112,9 @@ function removeProduct (product) {
 //перерендер корзины
 function renderCart () {
     let allProducts = '';
-    for (el of userCart) {
+    let quantitySum = 0;
+    let basket = document.querySelector(`.btn-cart`);
+    for (let el of userCart) {
         allProducts += `<div class="cart-item" data-id="${el.id}">
                             <div class="product-bio">
                                 <img src="${el.img}" alt="Some image">
@@ -127,7 +129,9 @@ function renderCart () {
                                 <button class="del-btn" data-id="${el.id}">&times;</button>
                             </div>
                         </div>`
+        quantitySum += el.quantity;
     }
 
+    quantitySum === 0 ? basket.innerText = `Корзина` : basket.innerText = `Корзина (${quantitySum})`;
     document.querySelector(`.cart-block`).innerHTML = allProducts;
 }
