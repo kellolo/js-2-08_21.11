@@ -71,7 +71,7 @@ function renderProducts () {
     for (item of list) {
         arr.push(item.createTemplate())
     }
-    document.querySelector('.products').innerHTML = arr.join();
+    document.querySelector('.products').innerHTML = arr.join('');
 }
 
 renderProducts ();
