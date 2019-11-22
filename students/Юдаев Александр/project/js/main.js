@@ -7,8 +7,8 @@ const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
+let userCart = [];
+let list = fetchData ();
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -128,7 +128,7 @@ function renderCart () {
                                 <p class="product-price">${el.quantity * el.price}</p>
                                 <button class="del-btn" data-id="${el.id}">&times;</button>
                             </div>
-                        </div>`
+                        </div>`;
         quantitySum += el.quantity;
     }
 
