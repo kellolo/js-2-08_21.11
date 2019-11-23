@@ -61,7 +61,7 @@ button:focus{
     grid-template-columns: repeat(auto-fit, 200px);
     grid-template-rows: 1fr;
     padding: 40px 80px;
-    justify-content: center;
+    justify-content: space-between;
 }
 p {
     margin: 0 0 5px 0;
