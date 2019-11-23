@@ -1,22 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@Mit22 
-1
-437kellolo/js-2-08_21.11
- Code Issues 0 Pull requests 12 Actions Projects 0 Wiki Security Insights
-js-2-08_21.11/PROJECT/0 - init (1st course version)/js/main.js / 
-@kellolo kellolo инит
-bf4e6e2 2 days ago
-133 lines (120 sloc)  4.58 KB
-  
- You're using jump to definition to discover and navigate code.
-Learn more or give us feedback
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
@@ -150,15 +131,3 @@ function renderCart () {
 
     document.querySelector(`.cart-block`).innerHTML = allProducts;
 }
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
