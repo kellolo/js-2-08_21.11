@@ -1,5 +1,6 @@
 body{
     font-family: 'SF Pro Display', sans-serif;
+    height: 100vh;
     background-image: linear-gradient(102.7deg, #fddaff 8.2%, #dfadfc 19.6%, #adcdfc 36.8%, #adfcf4 73.2%, #caf8d0 90.9%);
 }
 
@@ -17,6 +18,7 @@ button:focus{
     text-transform: uppercase;
     font-weight: bold;
     color: transparent;
+    font-family: 'Permanent Marker', cursive;
     background: linear-gradient(-90deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #23a6d5, #e73c7e, #ee7752);
     background-size: 200% auto;
     color: #000;
@@ -25,7 +27,7 @@ button:focus{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: grad 2s linear infinite;
-    font-size: 24px;
+    font-size: 40px;
 }
 @keyframes grad {
     to {
