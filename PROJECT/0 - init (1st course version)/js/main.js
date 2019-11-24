@@ -67,11 +67,12 @@ function createProduct (i) {
 
 //рендер списка товаров (каталога)
 function renderProducts () {
-    let arr = [];
+    //let arr = [];
+    let str = ''
     for (item of list) {
-        arr.push(item.createTemplate())
+        str += item.createTemplate()
     }
-    document.querySelector('.products').innerHTML = arr.join();
+    document.querySelector('.products').innerHTML = str;
 }
 
 renderProducts ();
@@ -80,8 +81,8 @@ renderProducts ();
 
 // Добавление продуктов в корзину
 function addProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
+    let productId = +product.dataset['id']; //data-id="1"
+    let find = userCart.find (element => element.id === productId); //товар или false
     if (!find) {
         userCart.push ({
             name: product.dataset ['name'],
