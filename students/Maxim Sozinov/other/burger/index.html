@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Burger</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend>Выберите бургер</legend>
+            <label>
+                <input type="radio" name="burgerSize" value="big"> Большой
+            </label>
+            <label>
+                <input type="radio" name="burgerSize" value="small"> Маленький
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Выберите начинку</legend>
+            <label>
+                <input type="radio" name="burgerFilling" value="cheese"> Сыр
+            </label>
+            <label>
+                <input type="radio" name="burgerFilling" value="salad"> Салат
+            </label>
+            <label>
+                <input type="radio" name="burgerFilling" value="potato"> Картоха
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>и, если хотите, добавьте</legend>
+            <label>
+                <input type="checkbox" name="relish" value="flavouring"> Приправа
+            </label>
+            <label>
+                <input type="checkbox" name="relish" value="mayo"> Майонез
+            </label>
+        </fieldset>
+    </form>
+    <button id="makeBurger">Собрать бургер</button>
+    <p id="calories">калорийность: 0</p>
+    <p id="cost">стоимость: 0</p>
+</body>
+
+</html>
