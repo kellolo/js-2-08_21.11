@@ -122,6 +122,7 @@ class CartItem {
 }
 
 let catalog = new Catalog();
+let item = new CartItem();
 
 console.log(catalog);
 //кнопка скрытия и показа корзины
@@ -131,14 +132,12 @@ document.querySelector('.btn-cart').addEventListener('click', () => {
 //кнопки удаления товара (добавляется один раз)
 document.querySelector('.cart-block').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('del-btn')) {
-        let item = new CartItem();
         item.removeProduct (evt.target);
     }
 });
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('buy-btn')) {
-        let item = new CartItem();
         item.addProduct (evt.target);
     }
 });
