@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        padding: 20px;
+    }
+
+    fieldset {
+        margin-bottom: 10px;
+    }
+    label {
+        display: block;
+    }
+    button {
+        margin: 10px 0;
+    }
+</style>
+
+<body>
+    <form action="#">
+        <fieldset>
+            <legend>Поджарь свой собственный бургер</legend>
+            <fieldset>
+                <legend>Размер:</legend>
+                <label>
+                    <input type="radio" name="Size" data-price="50" data-calory="20" checked> Маленький (50 рублей, 20 калорий)
+                </label>
+                <label>
+                    <input type="radio" name="Size" data-price="100" data-calory="40"> Большой (100 рублей, 40 калорий)
+                </label>
+            </fieldset>
+            <fieldset>
+                <legend>Начинка:</legend>
+                <label>
+                    <input type="radio" name="Filling" data-price="10" data-calory="20" checked> С сыром (10 рублей, 20 калорий)
+                </label>
+                <label>
+                    <input type="radio" name="Filling" data-price="20" data-calory="5"> С салатом (20 рублей, 5 калорий)
+                </label>
+                <label>
+                    <input type="radio" name="Filling" data-price="15" data-calory="10"> С картофелем (15 рублей, 10 калорий)
+                </label>
+            </fieldset>
+            <fieldset>
+                <legend>По желанию:</legend>
+                <label>
+                    <input type="checkbox" name="Optional" data-price="15" data-calory="0"> Посыпать приправой (15 рублей, 0 калорий)
+                </label>
+                <label>
+                    <input type="checkbox" name="Optional" data-price="20" data-calory="5"> Полить майонезом (20 рублей, 5 калорий)
+                </label>
+            </fieldset>
+        </fieldset>
+    </form>
+    <button id="calcBtn">Поджарить бургер</button>
+    <div id="result">Стоимость бургера: 0 руб. <br>Калорийность: 0 кал.</div>
+    <script>
+        let calcBtn = document.querySelector('#calcBtn')
+        let result = document.querySelector('#result')
+
+        calcBtn.addEventListener('click', makeBurger)
+
+        function makeBurger() {
+            let burger = new Burger()
+            burger.cookBurger(result)
+        }
+
+        class Burger {
+            constructor() {
+                this.price = 0
+                this.calory = 0
+                this._calculateBurger()
+            }
+            _calculateBurger() {
+                let obj = [...document.querySelectorAll(`input:checked`)]
+                obj.forEach(el => {
+                    this.price += +el.dataset['price']
+                    this.calory += +el.dataset['calory']
+                })
+            }
+            cookBurger(htmlElement) {
+                htmlElement.innerHTML = `Стоимость бургера: ${this.price} руб. <br>Калорийность: ${this.calory} кал.`
+            }
+        }
+    </script>
+</body>
+
+</html>
