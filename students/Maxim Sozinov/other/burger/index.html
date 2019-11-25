@@ -14,37 +14,37 @@
         <fieldset>
             <legend>Выберите бургер</legend>
             <label>
-                <input type="radio" name="burgerSize" value="big"> Большой
+                <input type="radio" name="burgerSize" value="big" data-calories="40" data-price="100"> Большой
             </label>
             <label>
-                <input type="radio" name="burgerSize" value="small"> Маленький
+                <input type="radio" name="burgerSize" value="small" data-calories="20" data-price="50"> Маленький
             </label>
         </fieldset>
         <fieldset>
             <legend>Выберите начинку</legend>
             <label>
-                <input type="radio" name="burgerFilling" value="cheese"> Сыр
+                <input type="radio" name="burgerFilling" value="cheese" data-calories="20" data-price="10"> Сыр
             </label>
             <label>
-                <input type="radio" name="burgerFilling" value="salad"> Салат
+                <input type="radio" name="burgerFilling" value="salad" data-calories="5" data-price="20"> Салат
             </label>
             <label>
-                <input type="radio" name="burgerFilling" value="potato"> Картоха
+                <input type="radio" name="burgerFilling" value="potato" data-calories="10" data-price="15"> Картоха
             </label>
         </fieldset>
         <fieldset>
             <legend>и, если хотите, добавьте</legend>
             <label>
-                <input type="checkbox" name="burgerRelish" value="flavouring"> Приправа
+                <input type="checkbox" name="burgerRelish" value="flavouring" data-calories="0" data-price="15"> Приправа
             </label>
             <label>
-                <input type="checkbox" name="burgerRelish" value="mayo"> Майонез
+                <input type="checkbox" name="burgerRelish" value="mayo" data-calories="10" data-price="15"> Майонез
             </label>
         </fieldset>
     </form>
     <button id="makeBurger">Собрать бургер</button>
-    <p id="calories">калорийность: 0</p>
-    <p id="cost">стоимость: 0</p>
+    <p>калорийность: <span id="calories">0</span></p>
+    <p>стоимость: <span id="cost">0</span></p>
     <script src="script.js"></script>
 </body>
 
