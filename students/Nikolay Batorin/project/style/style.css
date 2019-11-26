@@ -1,5 +1,4 @@
 body {
-    /* font-family: 'SF Pro Display', sans-serif;*/
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -46,24 +45,6 @@ button:focus {
 .logo {
     align-self: center;
 }
-
-
-/*.products {*/
-
-
-/*display: flex;*/
-
-
-/*justify-content: space-between;*/
-
-
-/*flex-wrap: wrap;*/
-
-
-/*padding: 40px 80px;*/
-
-
-/*}*/
 
 .products {
     column-gap: 30px;
