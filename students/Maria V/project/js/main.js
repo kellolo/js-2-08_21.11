@@ -67,11 +67,12 @@ function createProduct (i) {
 
 //рендер списка товаров (каталога)
 function renderProducts () {
-    let arr = [];
+    // let arr = [];
+    let str = ''
     for (item of list) {
-        arr.push(item.createTemplate())
+        str += item.createTemplate()
     }
-    document.querySelector('.products').innerHTML = arr.join('');
+    document.querySelector('.products').innerHTML = str;
 }
 
 renderProducts ();
