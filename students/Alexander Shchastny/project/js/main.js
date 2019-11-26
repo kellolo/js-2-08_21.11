@@ -1,9 +1,9 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad', 'FlashCard'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24, 350, 20];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
+const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
+const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
@@ -50,7 +50,7 @@ function createProduct(i) {
                         <div class="desc">
                             <h3>${this.name}</h3>
                             <p>${this.price} $</p>
-                            <button class="buy-btn"
+                            <button class="buy-btn" 
                             data-id="${this.id}"
                             data-name="${this.name}"
                             data-image="${this.img}"
@@ -71,8 +71,7 @@ function renderProducts() {
     for (item of list) {
         arr.push(item.createTemplate())
     }
-    // строчка с запятой
-    document.querySelector('.products').innerHTML = arr.join('<br>');
+    document.querySelector('.products').innerHTML = arr.join('');
 }
 
 renderProducts();

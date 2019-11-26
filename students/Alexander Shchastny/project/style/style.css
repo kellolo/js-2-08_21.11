@@ -1,17 +1,13 @@
 body {
     font-family: 'SF Pro Display', sans-serif;
-    font-family: 'Odibee Sans',
-        cursive;
-
 }
 
 header {
     display: flex;
-    background-image: linear-gradient(to bottom right, rgb(28, 29, 41), rgb(40, 33, 48), rgb(51, 37, 56), rgb(63, 41, 63), rgb(75, 45, 70), rgb(86, 49, 78), rgb(98, 52, 85), rgb(109, 56, 93), rgb(121, 60, 100), rgb(133, 64, 107), rgb(144, 68, 115), rgb(156, 72, 122));
     justify-content: space-between;
+    background: linear-gradient(45deg, #EECFBA, #C5DDE8);
     color: #fafafa;
     padding: 30px 80px;
-
 }
 
 button:focus {
@@ -19,19 +15,17 @@ button:focus {
 }
 
 .logo {
-
     text-transform: uppercase;
-    font-weight: bold;
-    font-family: 'Odibee Sans',
-        cursive;
-    font-size: 35px;
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 40px;
 }
 
 .btn-cart {
-    background-color: #fafafa;
+    background-color: #ff6161;
+    text-transform: uppercase;
     padding: 10px 20px;
     border: 1px solid transparent;
-    color: #2f2a2d;
+    color: #fff;
     border-radius: 5px;
     transition: all ease-in-out .4s;
     cursor: pointer;
@@ -78,14 +72,16 @@ p {
 
 img {
     max-width: 100%;
-    height: auto;
-
+    height: auto
 }
 
 .desc {
     border: 1px solid #c0c0c040;
     padding: 15px;
-    letter-spacing: 1.1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center
 }
 
 .cart {
@@ -124,9 +120,10 @@ img {
 .buy-btn,
 .del-btn {
     margin-top: 5px;
-    background-color: #2f2a2d;
+    background-color: #ff6161;
     padding: 5px 15px;
     border: 1px solid transparent;
+    text-transform: uppercase;
     color: #fafafa;
     border-radius: 5px;
     transition: all ease-in-out .4s;
