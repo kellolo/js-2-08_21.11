@@ -58,17 +58,10 @@
     </form>
         
     <button id="okBtn">Сделать заказ</button>
+    <div class="orderOut"></div>
 
         
     <script>
-            // <div id="sales">Купи меня! <input type="button" value="Купить" onclick="buy()" /></div>
-            // var sales_div = document.getElementById("sales");
-            // function buy() console.dir (obj){
-            // sales.innerHTML = 'Спасибо за покупку! <input type="button" value="Отменить покупку" onclick="cancel()" />';
-            // }
-            // function cancel() {
-            // sales.innerHTML = 'Купи меня! <input type="button" value="Купить" onclick="buy()" />';
-            // }
 
         let form = document.querySelector ('#uForm')
         let btn = document.querySelector ('#okBtn')
@@ -133,7 +126,7 @@
                     calories += +el.dataset['calories']
                 })
                 return calories
-                // calories.innerHTML = `В заказе ${calories} каллорий`
+                document.querySelector('.orderOut').innerHTML = `В заказе ${calories} каллорий`
             }
         }
     </script>
