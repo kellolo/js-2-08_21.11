@@ -87,7 +87,7 @@ class Cart {
         console.log(this.products);
         let allProducts = '';
         for (let el of this.products) {
-        allProducts += `<div class="cart-item" data-id="${el.id}">
+        allProducts += el.renderProduct();/* `<div class="cart-item" data-id="${el.id}">
                             <div class="product-bio">
                                 <img src="${el.img}" alt="Some image">
                                 <div class="product-desc">
@@ -100,10 +100,11 @@ class Cart {
                                 <p class="product-price">${el.quantity * el.price}</p>
                                 <button class="del-btn" data-id="${el.id}">&times;</button>
                             </div>
-                        </div>`
+                        </div>` */
                 }
     document.querySelector(`.cart-block`).innerHTML = allProducts;
     }
+    
     removeProduct (product) {
         let productId = +product.dataset['id'];
         let find = this.products.find (element => element.id === productId);
@@ -116,11 +117,6 @@ class Cart {
         this._render();
     }
 }
-
-function removeProduct (product) {
-    
-}
-
 class CartItem {
     //HW
     constructor(product) {
@@ -129,6 +125,23 @@ class CartItem {
         this.img = cartImage;
         this.price = +product.dataset['price'];
         this.quantity = 1;
+    }
+    renderProduct() {
+        let str = `<div class="cart-item" data-id="${this.id}">
+                        <div class="product-bio">
+                            <img src="${this.img}" alt="Some image">
+                            <div class="product-desc">
+                                <p class="product-title">${this.name}</p>
+                                <p class="product-quantity">Quantity: ${this.quantity}</p>
+                                <p class="product-single-price">$${this.price} each</p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price">${this.quantity * this.price}</p>
+                            <button class="del-btn" data-id="${this.id}">&times;</button>
+                        </div>
+                    </div>`;
+        return str;
     }
 }
 
