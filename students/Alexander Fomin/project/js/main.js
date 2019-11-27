@@ -1,9 +1,9 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad', 'GraphCard', 'Stylus'];
+const prices = [1000, 200, 20, 10, 25, 30, 18, 24, 350, 20];
+const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
@@ -67,12 +67,11 @@ function createProduct (i) {
 
 //рендер списка товаров (каталога)
 function renderProducts () {
-    //let arr = [];
-    let str = ''
+    let arr = [];
     for (item of list) {
-        str += item.createTemplate()
+        arr.push(item.createTemplate())
     }
-    document.querySelector('.products').innerHTML = str;
+    document.querySelector('.products').innerHTML = arr.join('<br>');
 }
 
 renderProducts ();
@@ -81,8 +80,8 @@ renderProducts ();
 
 // Добавление продуктов в корзину
 function addProduct (product) {
-    let productId = +product.dataset['id']; //data-id="1"
-    let find = userCart.find (element => element.id === productId); //товар или false
+    let productId = +product.dataset['id'];
+    let find = userCart.find (element => element.id === productId);
     if (!find) {
         userCart.push ({
             name: product.dataset ['name'],
