@@ -103,11 +103,10 @@ function createProduct (i) {
         img: image,
         },
 
-        add: function() {
+        function() {
             this.quantity++
         }
     }
-};
 
 //CART
 

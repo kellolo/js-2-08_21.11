@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style/style.css">
     <title>UnderWork</title>
 </head>
+
 <body>
+    <form name="order" class="order">
+        <fieldset class="order__burger">
+            <legend class="order__burgerTitle">Бургер</legend>
+            <label class="order__burgerSmall">Маленький (50 рублей, 20 калорий).
+                <input type="checkbox" name="small" value="2">
+            </label>
+            <label class="order__burgerBig">Большой (100 рублей, 40 калорий).
+                <input type="checkbox" name="big">
+            </label>
+        </fieldset>
+        <fieldset class="order__topping">
+            <legend class="order__toppingTitle">Топинг</legend>
+            <label class="order__toppingCheese">С сыром (+10 рублей, +20 калорий).
+                <input type="checkbox" name="cheese">
+            </label>
+            <label class="order__toppingSalad">С салатом (+20 рублей, +5 калорий).
+                <input type="checkbox" name="salad">
+            </label>
+            <label class="order__toppingPotatoes">С картофелем (+15 рублей, +10 калорий).
+                <input type="checkbox" name="potatoes">
+            </label>
+            <label class="order__toppingSeasoning">Посыпать приправой (+15 рублей, +0 калорий)
+                <input type="checkbox" name="seasoning">
+            </label>
+            <label class="order__toppingMayonnaise">Полить майонезом (+20 рублей, +5 калорий). 
+                <input type="checkbox" name="mayonnaise">
+            </label>
+        </fieldset>
+        <input type="submit" value="Заказать" class="order__btn">
+    </form>
 
 
 
     <script src="js/script.js"></script>
 </body>
+
 </html>
