@@ -10,6 +10,60 @@ const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 var userCart = [];
 var list = fetchData ();
 
+class Catalog {
+    constructor () {
+        this.products = []
+        this.container = '.products'
+        this._init ()
+    }
+    _init () {
+        list.forEach (el => {
+            this.products.push (new Product (el))
+        })
+        this.render ()
+    }
+    render () {
+        let trg = document.querySelector (this.container)
+        let str = ''
+        this.products.forEach (prod => {
+            str += prod.render ()
+        })
+        trg.innerHTML = str
+    }
+}
+
+class Product {
+    constructor (prod) {
+        this.id = prod.id
+        this.title = prod.title
+        this.price = prod.price
+        this.img = prod.img
+    }
+    render () {
+        return `<div class="product-item" data-id="${this.id}">
+                    <img src="${this.img}" alt="Some img">
+                    <div class="desc">
+                        <h3>${this.title}</h3>
+                        <p>${this.price} $</p>
+                        <button class="buy-btn" 
+                        data-id="${this.id}"
+                        data-name="${this.title}"
+                        data-image="${this.img}"
+                        data-price="${this.price}">Купить</button>
+                    </div>
+                </div>`
+    }
+}
+
+class Cart {
+    //HW
+}
+
+class CartItem {
+    //HW
+}
+
+let catalog = new Catalog ()
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
     document.querySelector('.cart-block').classList.toggle('invisible');
@@ -40,48 +94,19 @@ function fetchData () {
 function createProduct (i) {
     return {
         id: ids[i],
-        name: items[i],
+        title: items[i],
         price: prices[i],
         img: image,
-        quantity: 0,
-        createTemplate: function () {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-        },
-
-        add: function() {
-            this.quantity++
-        }
     }
 };
 
-//рендер списка товаров (каталога)
-function renderProducts () {
-    // let arr = [];
-    let str = ''
-    for (item of list) {
-        str += item.createTemplate()
-    }
-    document.querySelector('.products').innerHTML = str;
-}
-
-renderProducts ();
+//рендер списка товаров (каталога) - выпилено
 
 //CART
 
 // Добавление продуктов в корзину
 function addProduct (product) {
-    let productId = +product.dataset['id'];
+    let productId = +product.dataset['id']; //data-id="1"
     let find = userCart.find (element => element.id === productId);
     if (!find) {
         userCart.push ({
