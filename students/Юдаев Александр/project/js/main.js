@@ -7,8 +7,8 @@ const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
+let userCart = [];
+let list = fetchData ();
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -19,13 +19,13 @@ document.querySelector('.cart-block').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('del-btn')) {
         removeProduct (evt.target);
     }
-})
+});
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('buy-btn')) {
         addProduct (evt.target);
     }
-})
+});
 
 //создание массива объектов - имитация загрузки данных с сервера
 function fetchData () {
@@ -34,7 +34,7 @@ function fetchData () {
         arr.push (createProduct (i));
     }
     return arr
-};
+}
 
 //создание товара
 function createProduct (i) {
@@ -63,16 +63,15 @@ function createProduct (i) {
             this.quantity++
         }
     }
-};
+}
 
 //рендер списка товаров (каталога)
 function renderProducts () {
-    //let arr = [];
-    let str = ''
-    for (item of list) {
-        str += item.createTemplate()
+    let arr = [];
+    for (let item of list) {
+        arr.push(item.createTemplate())
     }
-    document.querySelector('.products').innerHTML = str;
+    document.querySelector('.products').innerHTML = arr.join('');
 }
 
 renderProducts ();
@@ -81,8 +80,8 @@ renderProducts ();
 
 // Добавление продуктов в корзину
 function addProduct (product) {
-    let productId = +product.dataset['id']; //data-id="1"
-    let find = userCart.find (element => element.id === productId); //товар или false
+    let productId = +product.dataset['id'];
+    let find = userCart.find (element => element.id === productId);
     if (!find) {
         userCart.push ({
             name: product.dataset ['name'],
@@ -113,7 +112,9 @@ function removeProduct (product) {
 //перерендер корзины
 function renderCart () {
     let allProducts = '';
-    for (el of userCart) {
+    let quantitySum = 0;
+    let basket = document.querySelector(`.btn-cart`);
+    for (let el of userCart) {
         allProducts += `<div class="cart-item" data-id="${el.id}">
                             <div class="product-bio">
                                 <img src="${el.img}" alt="Some image">
@@ -127,8 +128,10 @@ function renderCart () {
                                 <p class="product-price">${el.quantity * el.price}</p>
                                 <button class="del-btn" data-id="${el.id}">&times;</button>
                             </div>
-                        </div>`
+                        </div>`;
+        quantitySum += el.quantity;
     }
 
+    quantitySum === 0 ? basket.innerText = `Корзина` : basket.innerText = `Корзина (${quantitySum})`;
     document.querySelector(`.cart-block`).innerHTML = allProducts;
 }
