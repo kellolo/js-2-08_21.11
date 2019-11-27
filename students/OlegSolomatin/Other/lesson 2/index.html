@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <form action="#" id="userform">
+        <fieldset>
+            <label>
+                <input type="text" name="Name"> Enter name
+            </label>
+            <label>
+                <input type="text" name="Age"> Enter age
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="radio" name="Gender" value="male"> male
+            </label>
+            <label>
+                <input type="radio" name="Gender" value="female"> female
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="checkbox" name="Hobbies" value="eat"> Еда
+            </label>
+            <label>
+                <input type="checkbox" name="Hobbies" value="sport"> Качалка
+            </label>
+            <label>
+                <input type="checkbox" name="Hobbies" value="tv-show"> Сериалы
+            </label>
+            <label>
+                <input type="checkbox" name="Hobbies" value="litres">  Книги
+            </label>
+            <label>
+                <input type="checkbox" name="Hobbies" value="music">  Музыка
+            </label>
+        </fieldset>
+    </form>
+    <button id="okBtn">Add user</button>
+<script>
+    let form = document.querySelector('#uForm');
+    let btn = document.querySelector('#okBtn');
+    let users = [];
+
+    btn.addEventListener('click', addUser);
+
+    function  addUser() {
+        let newUser = new User ('Name','Age','Gender','Hobbies');
+        users.push (newUser)
+    }
+
+    class User {
+        constructor(name, age, gender, hobbies) {
+            this.Name = this._text (name);
+            this.Age = this._text (age);
+            this.Gender = this._text (gender);
+            this.Hobbies = this._getArray (hobbies)
+        }
+        _text (attrName) {
+            let obj = document.querySelector(`input[name=${attrName}]`);
+            return obj.value
+        }
+        _check (attrName) {
+            let obj = document.querySelector(`input[name=${attrName}]:checked`);
+            return obj.value
+        }
+        _getArray (attrName) {
+            let objArr = [...document.querySelectorAll(`input[name=${attrName}]:checked`)];
+            let arr = [];
+            objArr.forEach( el => {
+                arr.push (el.value)
+            });
+            return arr
+        }
+
+
+    }
+    /*
+    class Human {
+        constructor (nam, ag, gen) {
+            this.name = nam;
+            this.age = ag;
+            this.gender = gen ? 'male' : 'female';
+            this.married = false;
+            this.partner = null;
+        }
+        gowork () {
+            console.log(`${this.name} goes work.`)
+        }
+        getmarried (pers) {
+            if (!this.married) {
+                this.married = true;
+                this.partner = pers;
+                pers.getmarried(this)
+            } else {
+                console.log(`${this.name} is already married with ${this.partner.name}`)
+            }
+        }
+    }
+
+    let oleg = new Human('Oleg', 23, 1)
+    let sopha = new Human('Sophia', 22, 0)*/
+</script>
+</body>
+</html>
