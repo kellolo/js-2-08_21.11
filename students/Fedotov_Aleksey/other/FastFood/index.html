@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" id = "orderForm" onchange="updateForm()">
+        <fieldset>
+            <label >
+                <input type="radio" name="size" data-price = "50" data-cal = "20" value = "Маленький"checked> Маленький
+            </label>
+            <label >
+                <input type="radio" name="size" data-price = "100" data-cal = "40" value = "Большой">Большой
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="radio" name="inBurger" data-price = "10" data-cal = "20" value = "Сыр" checked> С сыром
+            </label>
+            <label>
+                <input type="radio" name="inBurger" data-price = "20" data-cal = "5" value = "Салат"> С салатом
+            </label>
+            <label>
+                <input type="radio" name="inBurger" data-price = "15" data-cal = "10" value = "Картофель"> С катофелем
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="checkbox" name="souce" data-price = "15" data-cal = "0" value = "Приправа" checked> Посыпать приправой
+            </label>
+            <label>
+                <input type="checkbox" name="souce" data-price = "20" data-cal = "5" value = "Майонез" checked> Полить майонезом
+            </label>
+        </fieldset>
+        <!-- <button id = "orderBtn" onclick="clickToOrder()">Заказать</button> -->
+    </form>
+    <button id = "orderBtn" onclick="clickToOrder()">Заказать</button>
+    <p class = "totalPrice"></p>
+    <p class="totalCal"></p>
+
+    <div class="main"></div>
+    <script>
+        let orderForm = document.querySelector('#orderForm');
+        let orderBtn = document.querySelector('#orderBtn');
+        let order;
+
+        function updateForm (size, inBurger, souce) {
+            order = new Order ('size','inBurger', 'souce');
+        }
+        function clickToOrder() {
+            order.orderOutput();
+        }
+
+        //Class order Description
+        class Order {
+            constructor (size,inBurger,souce) {
+                this.size = this._comp(size);
+                this.inBurger = this._comp(inBurger);
+                this.souce = this._getArray(souce);
+                this.total_init();
+            }
+            _comp (attrName) {
+                let obj = document.querySelector(`input[name=${attrName}]:checked`);
+                let comp = new Comp(obj.value, +obj.dataset['price'], +obj.dataset['cal']);
+                return comp;
+            }
+            _getArray (attrName) {
+                let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                let arr = []
+                let comp;
+                objArr.forEach (el => {
+                    comp = new Comp(el.value, +el.dataset['price'], +el.dataset['cal']);
+                    arr.push (comp);
+                })
+                return arr
+            }
+            total_init () {
+                let price = 0;
+                let cal = 0;
+                let totalPrice = document.querySelector('.totalPrice');
+                let totalCal = document.querySelector('.totalCal');
+                price += this.size.getPrice();
+                price += this.inBurger.getPrice();
+                cal += this.size.getCal();
+                cal += this.inBurger.getCal();
+                this.souce.forEach (el => {
+                    price += el.getPrice();
+                    cal += el.getCal();
+                });
+                totalPrice.innerHTML = `Стоимость заказа составляет ${price} рублей`;
+                totalCal.innerHTML = `В заказе ${cal} каллорий`;
+            }
+            orderOutput () {
+                let out = document.querySelector('.main');
+                let str='';
+                let arr =[];
+                str = `Ваш заказ:</br>
+                        размер: ${this.size.getName()};</br>
+                        Начинка: ${this.inBurger.getName()};</br>
+                        Добавки:<br>`;
+                            this.souce.forEach (el => {
+                                arr.push(el.getName());
+                        });
+                str = str + arr.join(",");
+                out.innerHTML = str;
+            }
+        }
+
+        class Comp {
+            constructor (name, price, cal) {
+                this.name = name;
+                this.price = price;
+                this.cal = cal;
+            }
+            getName() {
+                return this.name;
+            }
+            getPrice () {
+                return this.price;
+            }
+            getCal () {
+                return this.cal;
+            }
+        }
+
+        updateForm('size','inBurger', 'souce');
+
+    </script>
+
+</body>
+</html>

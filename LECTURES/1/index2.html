@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main">
+
+    </div>
+
+    <script>
+        let main = document.querySelector ('.main')
+
+        // let list = document.createElement ('ol')
+
+        // for (let i = 1; i <= 5; i++) {
+        //     let item = document.createElement ('li')
+        //     item.classList.add ('dynamic')
+        //     item.innerHTML = `List item number ${i}`
+        //     list.appendChild (item)
+        // }
+
+        // main.appendChild (list)
+        let str = '<ol>'
+        for (let i = 1; i <= 5; i++) {
+            str += `<li class="dynamic"> List <span class="italic">item</span> number <b>${i}</b> </li>`
+        }
+        str += '</ol>'
+        main.innerHTML = str
+    </script>
+</body>
+</html>
