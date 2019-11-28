@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>lesson-2_fastfood</title>
+    <link rel="stylesheet" href="style/normalize.css" />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+      <h1>FastFood</h1>
+    <main>
+      <div class="head">Выбери свой гамбургер!</div>
+      <form action="#" class="uForm" id="uForm">
+        <fieldset>
+          <label>Размер:<br>
+              <input type="radio" name="Size" value="Small" checked> Маленький
+              <input type="radio" name="Size" value="Big"> Большой
+          </label>
+        </fieldset>
+        <fieldset>
+            <label>Начинка:<br>
+                <input type="checkbox" name="Cheese" value="Cheese"> С сыром
+            </label><br>
+            <label>
+                <input type="checkbox" name="Salad" value="Salad"> С салатом
+            </label><br>
+            <label>
+                <input type="checkbox" name="Potato" value="Potato"> С картошкой
+            </label>
+          </fieldset>
+          <fieldset>
+              <label>Добавить:<br>
+                  <input type="checkbox" name="Flavouring" value="Flavouring"> приправу
+              </label><br>
+              <label>
+                  <input type="checkbox" name="Mayo" value="Mayo"> майонез
+              </label>
+            </fieldset>
+      </form>
+      <div class="total" id="total">
+        <div class="total__price">Стоимость: <span id="price"></span></div>
+        <div class="total__calorie">Калорийность: <span id="calorie"></span></div>
+      </div>
+    </main>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
