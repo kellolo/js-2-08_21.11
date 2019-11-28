@@ -6,7 +6,8 @@ body {
 
 form {
   height: 100vh;
-  background: linear-gradient(4deg, #5462c3, #ba872c);
+  /*background: linear-gradient(4deg, #5462c3, #ba872c);*/
+  background: #484A56;
   color: whitesmoke;
   border: none;
   padding: 20px;
@@ -15,7 +16,7 @@ form {
   justify-content: center;
   align-items: center; }
   form fieldset {
-    width: 600px;
+    width: 560px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -23,7 +24,7 @@ form {
     form fieldset legend {
       font-family: 'Montserrat', helvetica, arial, sans-serif;
       font-weight: 700;
-      color: #484A56; }
+      color: white; }
     form fieldset label {
       color: #484A56;
       font-size: 1em;

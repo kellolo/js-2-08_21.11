@@ -1,4 +1,4 @@
-$color-grey: #484A56;
+$color-grey: white;
 
 @mixin font_body {
   font-family:'Montserrat', helvetica, arial, sans-serif;
@@ -14,7 +14,8 @@ body {
 }
 form {
   height: 100vh;
-  background: linear-gradient(4deg, #5462c3, #ba872c);
+  /*background: linear-gradient(4deg, #5462c3, #ba872c);*/
+  background: #484A56;
   color: whitesmoke;
   border: none;
   padding: 20px;
@@ -24,7 +25,7 @@ form {
   align-items: center;
 
   fieldset {
-    width: 600px;
+    width: 560px;
     height: auto;
     display: flex;
     flex-direction: column;

@@ -7,87 +7,12 @@
     <link rel="stylesheet" href="css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/style2.css">
 </head>
 <body>
-<form action="#">
-    <fieldset>
-        <legend>Выбери размер бургера</legend>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-secondary active">
-                <i class="fal fa-hamburger" aria-hidden="true"></i>
-                <input type="radio" data-price="50" data-cal="20" name="options" id="option1" autocomplete="off" checked> Маленький (50 &#36;)
-            </label>
-            <label class="btn btn-secondary">
-                <i class="fal fa-hamburger" aria-hidden="true"></i>
-                <input type="radio" data-price="100" data-cal="40" name="options" id="option2" autocomplete="off"> Большой (100 &#36;)
-            </label>
-        </div>
-    </fieldset>
-    <fieldset class="Filling">
-        <legend>Выбери начинку</legend>
-        <label class="btn btn-secondary active">
-            <i class="fal fa-cheese" aria-hidden="true"></i>
-            <span>Добавить сыр (10 &#36;)</span> <input data-price="10" data-cal="20" type="checkbox" name="Filling" checked autocomplete="off">
-        </label>
-        <label class="btn btn-secondary active">
-            <i class="fal fa-salad"></i>
-            <span>Добавить салат (20 &#36;)</span> <input type="checkbox" name="Filling" data-price="20" data-cal="5">
-        </label>
-        <label class="btn btn-secondary active">
-            <img src="img/potatoe_icon-icons.com_62980.png" alt="...">
-            <span>Добавить картофель (15 &#36;)</span> <input type="checkbox" name="Filling" data-price="15" data-cal="10">
-        </label>
-    </fieldset>
-    <fieldset>
-        <legend>Дополнительно</legend>
-        <label class="btn btn-secondary active">
-            <img src="img/saltcontainer_114689.png" alt="...">
-            <span>Добавить приправу (15 &#36;)</span> <input type="checkbox" name="add" data-price="15" data-cal="0">
-        </label>
-        <label class="btn btn-secondary active">
-            <img src="img/saucebottle_121674.png" alt="...">
-            <span>Добавить майонез (20 &#36;)</span> <input type="checkbox" name="add" data-price="20" data-cal="5">
-        </label>
-    </fieldset>
-    <input class="btn0" type="button" id="baton" value="Посчитать стоимость">
-    <p class="result">
-    </p>
-</form>
 <div class="wrapper">
-    <input type="checkbox" id="navigation" />
-    <label for="navigation">
-        <!--Chips-->
-        <svg version="1.1" id="chips" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-             width="71.282px" height="56px" viewBox="0 0 71.282 56" enable-background="new 0 0 71.282 56" xml:space="preserve">
-         <path id="chip-no-sauce" fill="#FFDE5E" stroke="#F2C335" stroke-miterlimit="10" d="M4.885,21.828c0,0,22.319,2,31.535,2c9.159,0,31.535-2,31.535-2
-            v2.753c0,0-22.032,2-31.535,2c-9.778,0-31.535-2-31.535-2L4.885,21.828z"/>
-            <g id="chip-with-sauce">
-            <path fill="#FFDE5E" stroke="#F2C335" stroke-miterlimit="10" d="M68.254,27.867c0,0-20.306-1.61-31.834-2
-               c-11.122-0.376-31.236,2-31.236,2v-2.753c0,0,19.239-2,31.236-2c11.597,0,31.834,2,31.834,2V27.867z"/>
-                <g>
-               <path fill="#ED1C24" d="M16.943,31.066c-0.199,0-0.393-0.071-0.545-0.2l-3.035-2.574c-0.093,0.021-0.188,0.035-0.285,0.043
-                  l-7.125,0.571l0.367,0.306l0.023,0.054c0.13,0.299,0.083,0.637-0.124,0.882c-0.162,0.19-0.396,0.299-0.645,0.299
-                  c-0.199,0-0.393-0.071-0.545-0.2L3.073,28.59c-0.494-0.399-0.787-0.941-0.836-1.546c-0.048-0.579,0.132-1.143,0.508-1.586
-                  s0.902-0.714,1.481-0.762l8.494-0.698c0.054-0.005,0.109-0.007,0.164-0.007c0.181,0,0.364,0.025,0.56,0.077
-                  c0.222,0.005,0.454,0.092,0.64,0.25l1.91,1.619c0.235,0.2,0.379,0.479,0.404,0.788s-0.071,0.607-0.271,0.842
-                  c-0.153,0.18-0.355,0.307-0.579,0.368l1.942,1.646c0.172,0.146,0.277,0.35,0.296,0.575s-0.052,0.443-0.198,0.615
-                  C17.426,30.958,17.191,31.066,16.943,31.066z"/>
-                    <path fill="#BE1E2D" d="M12.884,24.24c0.171,0,0.336,0.026,0.496,0.068c0.192,0.009,0.384,0.064,0.542,0.198l1.91,1.619
-                  c0.38,0.323,0.428,0.895,0.104,1.276c-0.179,0.211-0.434,0.32-0.69,0.32c-0.207,0-0.415-0.071-0.585-0.215l2.668,2.262
-                  c0.25,0.212,0.282,0.586,0.069,0.837c-0.117,0.138-0.284,0.209-0.453,0.209c-0.135,0-0.272-0.046-0.384-0.141l-3.133-2.657
-                  c-0.119,0.034-0.243,0.058-0.37,0.068l-7.734,0.62l0.792,0.661c0.088,0.202,0.065,0.441-0.086,0.621
-                  c-0.118,0.139-0.285,0.21-0.453,0.21c-0.136,0-0.272-0.046-0.384-0.141l-1.957-1.659c-0.008-0.007-0.012-0.019-0.02-0.026
-                  c-0.405-0.319-0.684-0.795-0.729-1.349c-0.088-1.061,0.701-1.992,1.761-2.079l8.494-0.698
-                  C12.789,24.242,12.836,24.24,12.884,24.24 M12.884,23.74c-0.062,0-0.124,0.003-0.187,0.008l-8.491,0.698
-                  c-0.646,0.054-1.232,0.355-1.652,0.85s-0.621,1.123-0.566,1.769c0.052,0.634,0.359,1.227,0.846,1.642l0.005,0.009l0.077,0.069
-                  l1.951,1.654c0.198,0.167,0.449,0.259,0.707,0.259c0.322,0,0.626-0.141,0.834-0.387c0.27-0.32,0.332-0.758,0.164-1.144
-                  L6.547,29.11l6.549-0.525c0.065-0.006,0.131-0.014,0.196-0.025l2.943,2.496c0.198,0.167,0.449,0.259,0.707,0.259
-                  c0.322,0,0.626-0.141,0.834-0.386c0.189-0.223,0.28-0.506,0.256-0.797s-0.16-0.556-0.383-0.745l-1.641-1.392
-                  c0.114-0.074,0.218-0.165,0.308-0.271c0.242-0.285,0.359-0.648,0.329-1.023c-0.03-0.375-0.205-0.715-0.491-0.958l-1.91-1.619
-                  c-0.212-0.181-0.483-0.288-0.786-0.313C13.26,23.764,13.071,23.74,12.884,23.74L12.884,23.74z"/>
-            </g>
-         </g>
-      </svg>
+    <input type="checkbox" id="navigation">
+    <label for="navigation" class="burger">
         <!--Burger-->
         <svg version="1.1" id="burger" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="92.875px" height="60.819px" viewBox="0 0 92.875 60.819" enable-background="new 0 0 92.875 60.819" xml:space="preserve">
@@ -178,22 +103,50 @@
             c0-0.01-0.006-0.019-0.006-0.028h11.529h0.002c0,0,0.001,0,0.002,0C87.716,27.548,88.376,26.896,88.376,26.092z"/>
       </svg>
     </label>
-    <nav>
-        <ul>
-            <li>
-                <a href=""><i class='fa fa-cutlery'></i>Menu</a>
-            </li>
-            <li>
-                <a href=""><i class='fa fa-coffee'></i>Drinks</a>
-            </li>
-            <li>
-                <a href=""><i class='fa fa-phone'></i>Contact</a>
-            </li>
-            <li>
-                <a href=""><i class='fa fa-map-marker'></i>Location</a>
-            </li>
-        </ul>
-    </nav>
+    <form>
+        <fieldset>
+            <legend>Выбери размер бургера</legend>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <i class="fal fa-hamburger" aria-hidden="true"></i>
+                    <input type="radio" data-price="50" data-cal="20" name="options" id="option1" autocomplete="off" checked> Маленький (50 &#36;)
+                </label>
+                <label class="btn btn-secondary">
+                    <i class="fal fa-hamburger" aria-hidden="true"></i>
+                    <input type="radio" data-price="100" data-cal="40" name="options" id="option2" autocomplete="off"> Большой (100 &#36;)
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="Filling">
+            <legend>Выбери начинку</legend>
+            <label class="btn btn-secondary active">
+                <i class="fal fa-cheese" aria-hidden="true"></i>
+                <span>Добавить сыр (10 &#36;)</span> <input data-price="10" data-cal="20" type="checkbox" name="Filling" autocomplete="off">
+            </label>
+            <label class="btn btn-secondary active">
+                <i class="fal fa-salad"></i>
+                <span>Добавить салат (20 &#36;)</span> <input type="checkbox" name="Filling" data-price="20" data-cal="5">
+            </label>
+            <label class="btn btn-secondary active">
+                <img src="img/potatoe_icon-icons.com_62980.png" alt="...">
+                <span>Добавить картофель (15 &#36;)</span> <input type="checkbox" name="Filling" data-price="15" data-cal="10">
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Дополнительно</legend>
+            <label class="btn btn-secondary active">
+                <img src="img/saltcontainer_114689.png" alt="...">
+                <span>Добавить приправу (15 &#36;)</span> <input type="checkbox" name="add" data-price="15" data-cal="0">
+            </label>
+            <label class="btn btn-secondary active">
+                <img src="img/saucebottle_121674.png" alt="...">
+                <span>Добавить майонез (20 &#36;)</span> <input type="checkbox" name="add" data-price="20" data-cal="5">
+            </label>
+        </fieldset>
+        <input class="btn0" type="button" id="baton" value="Посчитать стоимость">
+        <p class="result">
+        </p>
+    </form>
     <section>
         <article>
             <h1>Hamburger Menu</h1>
@@ -204,7 +157,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script>document.querySelector("#baton").addEventListener("click", function () {
+<script>
+    document.querySelector("#baton").addEventListener("click", function () {
 
     if (document.querySelectorAll(`input[name="Filling"]:checked`).length === 0) {
 
@@ -217,100 +171,35 @@
     }
 });
 
-class Burger {
-    constructor (options, Filling, add) {
-        this.price = 0;
-        this.cal = 0;
-        this._getRadio(options);
-        this._getChecked(Filling);
-        this._getChecked(add);
-        this._render();
-    }
-
-    _getRadio(name) {
-        let node = document.querySelector(`input[name="${name}"]:checked`);
-        this.price += +node.dataset.price;
-        this.cal += +node.dataset.cal;
-    }
-
-    _getChecked(name) {
-        let nodes = document.querySelectorAll(`input[name="${name}"]:checked`);
-        [...nodes].forEach((elem) => {
-            this.price += +elem.dataset.price;
-            this.cal += +elem.dataset.cal;
-        })
-    }
-
-    _render() {
-        let textBlock = document.querySelector(".result");
-        textBlock.innerText = `Best price - ${this.price} $. Калорийность ${this.cal} - call.`
-    }
-}
-
-
-
-    /*let form = document.querySelector('#uForm');
-    let btn = document.querySelector('#okBtn');
-    let users = [];
-
-    btn.addEventListener('click', addUser);
-
-    function  addUser() {
-        let newUser = new User ('Name','Age','Gender','Hobbies');
-        users.push (newUser)
-    }
-
-    class User {
-        constructor(name, age, gender, hobbies) {
-            this.Name = this._text (name);
-            this.Age = this._text (age);
-            this.Gender = this._text (gender);
-            this.Hobbies = this._getArray (hobbies)
-        }
-        _text (attrName) {
-            let obj = document.querySelector(`input[name=${attrName}]`);
-            return obj.value
-        }
-        _check (attrName) {
-            let obj = document.querySelector(`input[name=${attrName}]:checked`);
-            return obj.value
-        }
-        _getArray (attrName) {
-            let objArr = [...document.querySelectorAll(`input[name=${attrName}]:checked`)];
-            let arr = [];
-            objArr.forEach( el => {
-                arr.push (el.value)
-            });
-            return arr
+    class Burger {
+        constructor (options, Filling, add) {
+            this.price = 0;
+            this.cal = 0;
+            this._getRadio(options);
+            this._getChecked(Filling);
+            this._getChecked(add);
+            this._render();
         }
 
+        _getRadio(name) {
+            let node = document.querySelector(`input[name="${name}"]:checked`);
+            this.price += +node.dataset.price;
+            this.cal += +node.dataset.cal;
+        }
 
-    }*/
-    /*
-    class Human {
-        constructor (nam, ag, gen) {
-            this.name = nam;
-            this.age = ag;
-            this.gender = gen ? 'male' : 'female';
-            this.married = false;
-            this.partner = null;
+        _getChecked(name) {
+            let nodes = document.querySelectorAll(`input[name="${name}"]:checked`);
+            [...nodes].forEach((elem) => {
+                this.price += +elem.dataset.price;
+                this.cal += +elem.dataset.cal;
+            })
         }
-        gowork () {
-            console.log(`${this.name} goes work.`)
-        }
-        getmarried (pers) {
-            if (!this.married) {
-                this.married = true;
-                this.partner = pers;
-                pers.getmarried(this)
-            } else {
-                console.log(`${this.name} is already married with ${this.partner.name}`)
-            }
+
+        _render() {
+            let textBlock = document.querySelector(".result");
+            textBlock.innerText = `Best price - ${this.price} $. Калорийность ${this.cal} - call.`
         }
     }
-
-    let oleg = new Human('Oleg', 23, 1)
-    let sopha = new Human('Sophia', 22, 0)*/
 </script>
 </body>
 </html>
