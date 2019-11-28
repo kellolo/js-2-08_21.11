@@ -58,13 +58,12 @@ class Product {
 
 class Cart {
     constructor(){
-        this.products = [];
+        this.basket = document.querySelector(`.btn-cart`);
     }
 
     renderCart() {
         let allProducts = '';
         let quantitySum = 0;
-        let basket = document.querySelector(`.btn-cart`);
         for (let el of userCart) {
             allProducts += `<div class="cart-item" data-id="${el.id}">
                             <div class="product-bio">
@@ -83,12 +82,16 @@ class Cart {
             quantitySum += el.quantity;
         }
 
-        quantitySum === 0 ? basket.innerText = `Корзина` : basket.innerText = `Корзина (${quantitySum})`;
+        quantitySum === 0 ? this.basket.innerText = `Корзина` : this.basket.innerText = `Корзина (${quantitySum})`;
         document.querySelector(`.cart-block`).innerHTML = allProducts;
     }
 }
 
 class CartItem {
+    constructor() {
+        this.cart = new Cart();
+    }
+
     addProduct(product){
         let productId = +product.dataset['id']; //data-id="1"
         let find = userCart.find (element => element.id === productId); //товар или false
@@ -103,8 +106,7 @@ class CartItem {
         } else {
             find.quantity++;
         }
-        let cart = new Cart();
-        cart.renderCart();
+        this.cart.renderCart();
     }
 
     removeProduct(product){
@@ -116,8 +118,7 @@ class CartItem {
             userCart.splice(userCart.indexOf(find), 1);
             document.querySelector(`.cart-item[data-id="${productId}"]`).remove();
         }
-        let cart = new Cart();
-        cart.renderCart();
+        this.cart.renderCart();
     }
 }
 
