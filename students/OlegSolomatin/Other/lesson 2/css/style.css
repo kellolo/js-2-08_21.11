@@ -1,7 +1,58 @@
+body {
+  height: 100%;
+  background: #EAEBED; }
+  body img {
+    width: 16px; }
+
 form {
-  width: 410px;
-  height: auto;
-  background-color: #2f2a2d;
-  color: whitesmoke; }
+  height: 100vh;
+  background: linear-gradient(4deg, #5462c3, #ba872c);
+  color: whitesmoke;
+  border: none;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  form fieldset {
+    width: 600px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border: none; }
+    form fieldset legend {
+      font-family: 'Montserrat', helvetica, arial, sans-serif;
+      font-weight: 700;
+      color: #484A56; }
+    form fieldset label {
+      color: #484A56;
+      font-size: 1em;
+      font-family: 'Montserrat', helvetica, arial, sans-serif;
+      font-weight: 400;
+      margin: 5px 5px 5px 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center; }
+      form fieldset label span {
+        color: azure; }
+      form fieldset label img {
+        margin: 0 10px 0 0;
+        filter: invert(1); }
+      form fieldset label i {
+        margin: 0 10px 0 0; }
+
+.btn0 {
+  margin: 10px;
+  width: max-content;
+  border: 3px solid #28a745;
+  background: transparent;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 700; }
+
+.btn0:hover {
+  background-color: #28a745; }
 
 /*# sourceMappingURL=style.css.map */

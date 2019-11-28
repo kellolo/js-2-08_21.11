@@ -3,47 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <form action="#" id="userform">
-        <fieldset>
-            <label>
-                <input type="text" name="Name"> Enter name
+<form action="#">
+    <fieldset>
+        <legend>Выбери размер бургера</legend>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+                <i class="fal fa-hamburger" aria-hidden="true"></i>
+                <input type="radio" data-price="50" data-cal="20" name="options" id="option1" autocomplete="off" checked> Маленький (50 &#36;)
             </label>
-            <label>
-                <input type="text" name="Age"> Enter age
+            <label class="btn btn-secondary">
+                <i class="fal fa-hamburger" aria-hidden="true"></i>
+                <input type="radio" data-price="100" data-cal="40" name="options" id="option2" autocomplete="off"> Большой (100 &#36;)
             </label>
-        </fieldset>
-        <fieldset>
-            <label>
-                <input type="radio" name="Gender" value="male"> male
-            </label>
-            <label>
-                <input type="radio" name="Gender" value="female"> female
-            </label>
-        </fieldset>
-        <fieldset>
-            <label>
-                <input type="checkbox" name="Hobbies" value="eat"> Еда
-            </label>
-            <label>
-                <input type="checkbox" name="Hobbies" value="sport"> Качалка
-            </label>
-            <label>
-                <input type="checkbox" name="Hobbies" value="tv-show"> Сериалы
-            </label>
-            <label>
-                <input type="checkbox" name="Hobbies" value="litres">  Книги
-            </label>
-            <label>
-                <input type="checkbox" name="Hobbies" value="music">  Музыка
-            </label>
-        </fieldset>
-    </form>
-    <button id="okBtn">Add user</button>
-<script>
-    let form = document.querySelector('#uForm');
+        </div>
+    </fieldset>
+    <fieldset class="Filling">
+        <legend>Выбери начинку</legend>
+        <label class="btn btn-secondary active">
+            <i class="fal fa-cheese" aria-hidden="true"></i>
+            <span>Добавить сыр (10 &#36;)</span> <input data-price="10" data-cal="20" type="checkbox" name="Filling" checked autocomplete="off">
+        </label>
+        <label class="btn btn-secondary active">
+            <i class="fal fa-salad"></i>
+            <span>Добавить салат (20 &#36;)</span> <input type="checkbox" name="Filling" data-price="20" data-cal="5">
+        </label>
+        <label class="btn btn-secondary active">
+            <img src="img/potatoe_icon-icons.com_62980.png" alt="...">
+            <span>Добавить картофель (15 &#36;)</span> <input type="checkbox" name="Filling" data-price="15" data-cal="10">
+        </label>
+    </fieldset>
+    <fieldset>
+        <legend>Дополнительно</legend>
+        <label class="btn btn-secondary active">
+            <img src="img/saltcontainer_114689.png" alt="...">
+            <span>Добавить приправу (15 &#36;)</span> <input type="checkbox" name="add" data-price="15" data-cal="0">
+        </label>
+        <label class="btn btn-secondary active">
+            <img src="img/saucebottle_121674.png" alt="...">
+            <span>Добавить майонез (20 &#36;)</span> <input type="checkbox" name="add" data-price="20" data-cal="5">
+        </label>
+    </fieldset>
+    <input class="btn0" type="button" id="baton" value="Посчитать стоимость">
+    <p class="result">
+    </p>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>document.querySelector("#baton").addEventListener("click", function () {
+
+    if (document.querySelectorAll(`input[name="Filling"]:checked`).length === 0) {
+
+        document.querySelector(".result").innerText = "Выберите хотя бы одну начинку!";
+
+    } else {
+
+        let burger = new Burger("options", "Filling", "add");
+
+    }
+});
+
+class Burger {
+    constructor (options, Filling, add) {
+        this.price = 0;
+        this.cal = 0;
+        this._getRadio(options);
+        this._getChecked(Filling);
+        this._getChecked(add);
+        this._render();
+    }
+
+    _getRadio(name) {
+        let node = document.querySelector(`input[name="${name}"]:checked`);
+        this.price += +node.dataset.price;
+        this.cal += +node.dataset.cal;
+    }
+
+    _getChecked(name) {
+        let nodes = document.querySelectorAll(`input[name="${name}"]:checked`);
+        [...nodes].forEach((elem) => {
+            this.price += +elem.dataset.price;
+            this.cal += +elem.dataset.cal;
+        })
+    }
+
+    _render() {
+        let textBlock = document.querySelector(".result");
+        textBlock.innerText = `Best price - ${this.price} $. Калорийность ${this.cal} - call.`
+    }
+}
+
+
+
+    /*let form = document.querySelector('#uForm');
     let btn = document.querySelector('#okBtn');
     let users = [];
 
@@ -79,7 +137,7 @@
         }
 
 
-    }
+    }*/
     /*
     class Human {
         constructor (nam, ag, gen) {
