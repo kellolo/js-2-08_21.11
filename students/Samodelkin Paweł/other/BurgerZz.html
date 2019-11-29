@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BurgerZz...</title>
+	<style>
+		form {
+			display: inline-block;
+		}
+		form span {
+			margin: 15px 0 0;
+			display: block;
+		}
+		button {
+			display: block;
+			margin: 30px 0 0;
+		}
+	</style>
+</head>
+
+<body>
+    <h1 class="title">BurgerZz...</h1>
+    <form action="#" id="burgerform">
+        <span>Размер</span>
+        <fieldset>
+            <caption>
+                <input type="radio" name="burger" id="small_burger" value="small">Маленький (50 рублей, 20 калорий)
+            </caption><br>
+            <caption>
+                <input type="radio" name="burger" id="big_burger" value="big">Большой (100 рублей, 40 калорий)
+            </caption><br>
+        </fieldset>
+        <span>Начинка</span>
+        <fieldset>
+            <caption>
+                <input type="checkbox" name="filling" value="cheese">Сыр(+10 рублей, +20 калорий)
+            </caption><br>
+            <caption>
+                <input type="checkbox" name="filling" value="salad">Салат (+20 рублей, +5 калорий)
+            </caption><br>
+            <caption>
+                <input type="checkbox" name="filling" value="potato">Картофель (+15 рублей, +10 калорий)
+            </caption>
+        </fieldset>
+        <span>Приправа</span>
+        <fieldset>
+            <caption>
+                <input type="checkbox" name="filling" value="seasoning">Приправа (+15 рублей, +0 калорий)
+            </caption><br>
+            <caption>
+                <input type="checkbox" name="filling" value="mayonnaise">Майонез (+20 рублей, +5 калорий)
+            </caption>
+        </fieldset>
+    </form>
+    <button id="ok">Заказать</button>
+    <div class="all"></div>
+
+    <script>
+        let price = [50, 100, 10, 20, 15, 15, 20]
+        let calories = [20, 40, 20, 5, 10, 0, 5]
+        let product = ['small', 'big', 'cheese', 'salad', 'potato', 'seasoning', 'mayonnaise']
+        let btn = document.querySelector('#ok')
+        let block = document.getElementsByClassName('all')[0]
+        btn.addEventListener('click', addBurger)
+        function addBurger() {
+            let yourChoise = new Burger('burger', 'filling')
+            console.log(yourChoise)
+        }
+        let allProducts = fetchData();
+        function fetchData() {
+            let arr = [];
+            for (let i = 0; i < product.length; i++) {
+                arr.push(createProduct(i));
+            }
+            return arr
+        };
+        function createProduct(i) {
+            return {
+                name: product[i],
+                price: price[i],
+                calories: calories[i]
+            }
+        };
+        class Burger {
+            constructor(size, filling) {
+                this.Size = this._check(size)
+                this.filling = this._getfilling(filling)
+                this.findBurger = this._addProduct()
+                this.allPrice = 0
+                this.allCalories = 0
+                this._allSum()
+            }
+            _check(attrName) {
+                let object = document.querySelector(`input[name=${attrName}]:checked`)
+                return object.value
+            }
+            _getfilling(attrName) {
+                let filling = []
+                let arr = [...document.querySelectorAll(`input[name=${attrName}]:checked`)]
+                arr.forEach(el => filling.push(el.value))
+                return filling
+            }
+            _addProduct() {
+                let find = []
+                find[0] = allProducts.find(element => element.name === this.Size);
+                this.filling.forEach(el => find.push(allProducts.find(element => element.name === el)))
+                return find
+            }
+            _allSum() {
+                this.findBurger.forEach(item => {
+                    this.allPrice += item.price
+                    this.allCalories += item.calories
+                })
+                this.render()
+            }
+            render() {
+                let str = ''
+                block.innerHTML = str
+                str = `<p>Цена:  ${this.allPrice} рублей </p>
+                        <p>Калорийность:  ${this.allCalories} калорий </p>`
+                block.innerHTML = str
+            }
+        }
+    </script>
+</body>
+
+</html>
