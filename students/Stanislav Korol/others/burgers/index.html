@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Бургерная</title>
+
+    <style>
+        h3{
+            width: 200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        label{
+            display: block;
+        }
+        button{
+            display: block;
+            margin: 10px auto;
+        }
+        #orderDetails{
+            margin-top: 10px;
+        }
+        #orderDetails > span{
+            display: inline-block;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Собери свой бургер</h3>
+    <form action="javascript:addBurgerToOrder()">
+        <fieldset>
+            <label>
+                <input type="radio" name="size" data-price="50" data-energy="20" value="Маленький"> Маленький
+            </label>
+            <label>
+                <input type="radio" name="size" data-price="100" data-energy="40" value="Большой"> Большой
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="radio" name="filling" data-price="10" data-energy="20" value="Сыр" required> Сыр
+            </label>
+            <label>
+                <input type="radio" name="filling" data-price="20" data-energy="5" value="Салат"> Салат
+            </label>
+            <label>
+                <input type="radio" name="filling" data-price="15" data-energy="10" value="Картошка"> Картошка
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="checkbox" name="topping" data-price="15" data-energy="0" value="Приправа"> Приправа
+            </label>
+            <label>
+                <input type="checkbox" name="topping" data-price="20" data-energy="5" value="Майонез"> Майонез
+            </label>
+        </fieldset>
+
+        <button>Заказать бургер</button>
+    </form>
+
+    <div id="orderDetails"></div>
+
+    <script>
+        class Order{
+            constructor(){
+                this.orderList = [];
+                this.totalPrice = 0;
+                this.totalEnergy = 0;
+            }
+
+            addToOrderList(burger){
+                this.orderList.push(burger);
+                this.totalPrice += burger.price;
+                this.totalEnergy += burger.energy;
+
+                this._renderDetails();
+            }
+
+            _renderDetails(){
+                orderDetails.innerHTML = `<span>Бургеров в заказе: </span><b>${this.orderList.length}</b> шт<br>
+                                            <span>Общая стоимость: </span><b>${this.totalPrice}</b> руб<br>
+                                            <span>Энергетическая ценность: </span><b>${this.totalEnergy}</b> ккал`;
+            }
+        }
+
+        class Burger{
+            constructor(s, f, t){
+                this.price = 0;
+                this.energy = 0;
+
+                this.size = this._radio(s);
+                this.filling = this._radio(f);
+                this.topping = this._check(t);
+            }
+
+            _radio(attrName){
+                const obj = document.querySelector(`input[name="${attrName}"]:checked`);
+                
+                try{
+                    this.price += +obj.dataset["price"];
+                    this.energy += +obj.dataset["energy"];
+
+                    return obj.value;
+                } catch {
+                    return undefined;
+                }
+            }
+
+            _check(attrName){
+                const objArr = document.querySelectorAll(`input[name="${attrName}"]:checked`);
+                const toppingArray = [];
+                
+                objArr.forEach(el => {
+                    this.price += +el.dataset["price"];
+                    this.energy += +el.dataset["energy"];
+
+                    toppingArray.push(el.value);
+                });
+
+                return toppingArray;
+            }
+        }
+
+        const orderDetails = document.querySelector("#orderDetails");
+
+        const burgerOrder = new Order();
+
+        function addBurgerToOrder(){
+            const burger = new Burger("size", "filling", "topping");
+            burgerOrder.addToOrderList(burger);
+        }
+    </script>
+</body>
+</html>

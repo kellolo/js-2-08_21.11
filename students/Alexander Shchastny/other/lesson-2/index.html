@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend>Выберите размер гамбургера</legend>
+            <label>
+                <input type="radio" name="size" data-price="50" data-cal="20" checked> Маленький (50 рублей, 20 калорий)
+            </label>
+            <label>
+                <input type="radio" name="size" data-price="100" data-cal="40"> Большой (100 рублей, 40 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Выберите состав гамбургера</legend>
+            <label>
+                <input type="radio" name="composition" data-price="10" data-cal="20" checked> С сыром (+10 рублей, +20
+                калорий)
+            </label>
+            <label>
+                <input type="radio" name="composition" data-price="20" data-cal="5"> С салатом (+20 рублей, +5 калорий
+            </label>
+            <label>
+                <input type="radio" name="composition" data-price="15" data-cal="10"> С картофелем (+15 рублей, +10
+                калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Выберите допы гамбургера</legend>
+            <label>
+                <input type="checkbox" name="extra" data-price="15" data-cal="0"> Посыпать приправой (+15 рублей, +0
+                калорий)
+            </label>
+            <label>
+                <input type="checkbox" name="extra" data-price="20" data-cal="5"> Полить майонезом (+20 рублей, +5
+                калорий)
+            </label>
+        </fieldset>
+    </form>
+    <button id="buyBtn">Заказать</button>
+    <script src="main.js"></script>
+</body>
+
+</html>

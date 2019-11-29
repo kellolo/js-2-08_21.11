@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
+    <script src="script.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" id="oneForm">
+        <legend><h1>GoodMenu</h1></legend>
+
+
+
+        <fieldset>
+            <h3>Выберите вид гамбургера</h3>
+            <label for="">
+                    <input type="radio" name="Bg-type" data-price="50" data-callories="20" data-size="Маленький"> Маленький (50 рублей, 20 калорий)
+            </label>
+               
+                <label for="">
+                        <input type="radio" name="Bg-type" data-price="100" data-callories="40" data-size="Большой"> Большой (100 рублей, 40 калорий)
+                </label>
+               
+                
+        </fieldset>    
+        <fieldset>
+            <h3>Выберите начинку:</h3>
+            <label for=""><input type="radio" name="Bg-filling" data-price="10" data-callories="20"> С сыром (+10 рублей, +20 калорий)</label>  <br>
+            <label for=""><input type="radio" name="Bg-filling" data-price="20" data-callories="5"> С салатом (+20 рублей, +5 калорий).</label>  <br>
+            <label for=""><input type="radio" name="Bg-filling" data-price="15" data-callories="10"> С картофелем (+15 рублей, +10 калорий).</label>
+            
+        </fieldset>   
+        <fieldset>
+            <h3>Дополнительно:</h3>
+                <label for=""> <input type="radio" name="Bg-extra" data-price="15" data-callories="0"> посыпать приправой (+15 рублей, +0 калорий) </label> <br>
+                <label for="">  <input type="radio" name="Bg-extra" data-price="20" data-callories="5"> полить майонезом (+20 рублей, +5 калорий)</label>
+               
+              
+            
+            
+            
+            
+        </fieldset> 
+        
+           
+        
+        <fieldset>
+            <h3>Итог:</h3>
+            <div class="result">
+                
+            </div>
+
+            <div class="result-2">
+
+            </div>
+
+        </fieldset>
+    </form>
+    <button id="clickbutton">Добавить гамбургер</button>
+</body>
+</html>
