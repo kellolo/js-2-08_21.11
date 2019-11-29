@@ -1,0 +1,96 @@
+@import "_variables";
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    background-color: $WHITE;
+    width: 100%;
+}
+
+.container {
+    max-width: $containerSize;
+    margin: 0 auto;
+    background-color: $GREEN;
+    padding: 25px;
+}
+
+.b-orderCaption {
+    text-align: center;
+}
+
+.b-form {
+    box-sizing: border-box;
+    max-width: $formSize;
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+    &__fieldset{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding-bottom: $internalOffset - 5px;
+        border-radius: $internalOffset;
+    }
+    &__legend{
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: $internalOffset;
+        font-size: 20px;
+    }
+    &__label{
+        display: block;
+        line-height: 16px;
+    }
+    &__size, &__filling, &__topping{
+        margin-right: 5px;
+        font-size: 16px;
+    }
+    &_externalMargin{
+        margin-bottom: $formOffset;
+    }
+    &_elementsMargin{
+        margin-left: $internalOffset;
+        margin-bottom: $internalOffset;
+    }
+}
+
+@mixin color($_color){
+    border-color: $_color;
+    background: lighten($_color, 25%);
+    color: darken($_color, 25%);
+    }
+
+.b-fieldset_themeOrange{
+    @include color($ORANGE);
+}
+.b-fieldset_themeLightBlue{
+    @include color($LIGHTBLUE);
+}
+.b-fieldset_themeDarkBlue{
+    @include color($DARKBLUE);
+}
+.b-fieldset_themeWarning{
+    @include color(rgb(207, 109, 109));
+}
+.b-btnOrder{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: $formSize;
+    font-size: 20px;
+    padding : 5px 0px;
+    border-radius: 10px;
+    background-color: lightgreen;
+    color: darken(lightgreen, 50%);
+    &__processingForm{
+    @extend .b-btnOrder;
+    max-width: none;
+    border: 2px solid black;
+    background-color: #fff;
+    text-align: center;
+    }
+}
