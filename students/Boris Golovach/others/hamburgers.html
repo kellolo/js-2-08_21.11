@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta Size="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        form {
+            width: 300px
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form action="#" id="uForm">
+        <fieldset>
+            <label>
+                <input type="radio" Size="Size" value="big" data-price="50" data-calories="20"> Большой гамбургер            
+            </label>
+            <label>
+                <input type="radio" Size="Size" value="little" data-price="100" data-calories="40"> Маленький гамбургер
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <label>
+                <input type="radio" Size="Filling" value="cheese" data-price="10" data-calories="20"> С сыром
+            </label>
+            <label>
+                <input type="radio" Size="Filling" value="salad" data-price="20" data-calories="5"> С салатом
+            </label>
+            <label>
+                <input type="radio" Size="Filling" value="potatoes" data-price="15" data-calories="10"> С картошкой
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <label>
+                <input type="checkbox" Size="AdditionalOptions" value="seasoning" data-price="15" data-calories="0"> Приправа
+            </label>
+            <label>
+                <input type="checkbox" Size="AdditionalOptions" value="mayonnaise" data-price="20" data-calories="5"> Майонез
+            </label>
+        </fieldset>
+    </form>
+
+    <button id="okBtn">Payment</button>
+    <script>
+        let form = document.querySelector ('#uForm')
+        let btn = document.querySelector ('#okBtn')
+        let Hamburgers = []
+
+        btn.addEventListener ('click', addHamburger)
+
+        function addHamburger () {
+            let newHamburger = new Hamburger ('Size', 'Filling', 'AdditionalOptions')
+            Hamburgers.push (newHamburger)
+        }
+
+        class Hamburger {
+            constructor (size, filling, additionalOptions) {
+                this.Size = this._check (size)
+                this.Filling = this._check (filling)
+                this.AdditionalOptions = this._getArray (additionalOptions)
+            }
+            _check (attrSize) {
+                let obj = document.querySelector (`input[size=${attrSize}]:checked`)
+                return obj.value
+            }
+            _getArray (attrSize) {
+                let objArr = [...document.querySelectorAll (`input[size=${attrSize}]:checked`)]
+                let arr = []
+                objArr.forEach (el => {
+                    arr.push (el.value)
+                })
+                return arr
+            }
+        }
+    </script>
+</body>
+</html>
