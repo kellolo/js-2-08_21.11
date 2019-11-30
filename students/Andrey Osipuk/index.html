@@ -1,87 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        form {
+            width: 400px
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <form action="#" id="uForm">
+        <fieldset>
+            <legend>Размер гамбургера</legend>
+            <label>
+                <input type="radio" name="size" value="big" checked> Большой (100 рублей, 40 калорий)
+            </label>
+            <label>
+                <input type="radio" name="size" value="small"> Маленький (50 рублей, 20 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Выбрать начинку</legend>
+            <label>
+                <input type="radio" name="filling" value="cheese" checked> С сыром (+10 рублей, +20 калорий)
+            </label>
+            <label>
+                <input type="radio" name="filling" value="salad"> С салатом (+20 рублей, +5 калорий)
+            </label>
+            <label>
+                <input type="radio" name="filling" value="potato"> С картофелем (+15 рублей, +10 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Выбрать добавку</legend>
+            <label>
+                <input type="checkbox" name="additions" value="seasoning" checked> Приправа (+15 рублей, +0 калорий)
+            </label>
+            <label>
+                <input type="checkbox" name="additions" value="mayonnaise"> Майонез (+20 рублей, +5 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+                <legend>Ваш заказ</legend>
+                <p>Сумма: <span id="summa" style="font-weight: bold"></span></p>
+                <p>Калории: <span id="calories" style="font-weight: bold"></span></p>
+            </fieldset>
+    </form>
+    <br>
+    <button id="okBtn">Сделать заказ</button>
     <script>
-        // vars: a = undefined, ...
-        // ES5
-        
-        // var a
+        let form = document.querySelector('#uForm')
+        let btn = document.querySelector('#okBtn')
+        let parametrs = {
+            big: {
+                price: 100,
+                calories: 40,
+            },
+            small: {
+                price: 50,
+                calories: 20,
+            },
+            cheese: {
+                price: 10,
+                calories: 20,
+            },
+            salad: {
+                price: 20,
+                calories: 5,
+            },
+            potato: {
+                price: 15,
+                calories: 10,
+            },
+            seasoning: {
+                price: 15,
+                calories: 0,
+            },
+            mayonnaise: {
+                price: 20,
+                calories: 5,
+            },
+        };
 
-        // setTimeout (function () {
-        //     a = 0
-        // }, 0)
+        btn.addEventListener('click', () => {
+            size = document.querySelector(`input[name='size']:checked`).value
+            filling = document.querySelector(`input[name='filling']:checked`).value
+            additions = [...document.querySelectorAll(`input[name='additions']:checked`)].map(el => el.value)
+            let newHamburger = new Hamburger(size, filling, additions)
+            document.getElementById('summa').innerText = newHamburger.getSum();
+            document.getElementById('calories').innerText = newHamburger.getCalories();
+        });
 
-        // console.log (a)
+        class Hamburger {
+            constructor(size, filling, additions) {
+                this.size = size;
+                this.filling = filling;
+                this.additions = additions;
+            }
 
-        // setTimeout (function () {
-        //     console.log (a)
-        // }, 1000)
-        // window.newGlobalVariable = 'lol'
-        // // ES6
-        // let b = 1
-        // const c = []
-        
-        // console.log (aa)
-        // const aa = 0
+            showParametrs() {
+                console.log(this);
+                console.log(this.size, this.filling, this.additions);
+            }
+            getSum() {
+                this.summa = 0;
+                this.summa += parametrs[this.size].price;
+                this.summa += parametrs[this.filling].price;
 
-        // Шаблонные строки
-        // let str = 'Мама мыла '
+                this.additions.forEach(element => {
+                    this.summa += parametrs[element].price;
+                });
 
-        // let what = prompt ('Введите, что мыла мама')
+                return this.summa;
+            }
+            getCalories() {
+                this.calories = 0;
+                this.calories += parametrs[this.size].calories;
+                this.calories += parametrs[this.filling].calories;
 
-        // console.log (str + what)
-        // console.log (`Ответ: ${str} ${what === '1' ? 'Раму' : 'Пилораму'}`)
+                this.additions.forEach(element => {
+                    this.calories += parametrs[element].calories;
+                });
 
-        //Стрелочные функции 
-        // function sayHi (par) {
-        //     let ans = 'Hi' + par
-        //     return ans
-        // }
+                return this.calories;
+            }
+        }
 
-        // let sayArrow = par => {
-        //     let answ = 'Hi' + par
-        //     return answ
-        // }
 
-        // console.log (sayHi())
-        // console.log (sayArrow())
-
-        // let olya = {
-        //     name: 'Olga',
-        //     sayHi: function () {
-        //         console.log (`Hello! I am ${this.name}`)
-        //         console.log (this)
-        //     }
-        // }
-
-        // let kolya = {
-        //     name: 'Kolya',
-        //     sayHi: () => {
-        //         console.log (`Hello! I am ${this.name}`)
-        //         console.log (this)
-        //     }
-        // }
-
-        // let str = prompt ('Введите четырехзначное число')
-        // console.log (str)
-
-        // let a = [...str] // spread оператор, который приводит любое итерируемое данное к массиву
-
-        //Деструктуризация
-        let names = ['Olya', 'Kolya', 'Tolya', 'Vladimir']
-
-        // let name1 = names [0]
-        // let name2 = names [1]
-        // ...
-
-        let [name1, name2, name3, name4] = names
     </script>
 </body>
+
 </html>
