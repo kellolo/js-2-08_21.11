@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        form {
+            border: none;
+            max-width: 350px;
+            padding: 20px;
+            background: rgb(175, 211, 167);
+            border-radius: 30px;
+        }
+        fieldset {
+            margin-bottom: 10px;
+            padding: 5px;
+            background: #ccc;
+            border-radius: 30px;
+        }
+        button {
+  outline: none;
+  display: inline-block;
+  padding: 6px 20px;
+  margin-top: 10px;
+  border-radius: 30px;
+  background:rgb(175, 211, 167);
+  font-size: 14px;
+  font-weight: 300;
+  color: black;
+}
+    </style>
+</head>
+<body>
+<form action="#" id="burgerform">
+        <p>МЕГАБУРГЕР</p>
+    <fieldset>
+        <p>Выбери размер:</p>
+        <label>
+            <input type="radio" name="Size" value="big" data-cal="40" data-price="100"> Большой бургер
+        </label>
+        <label>
+            <input type="radio" name="Size" value="small" data-cal="20" data-price="50"> Бургер поменьше
+        </label>
+    </fieldset>
+    <fieldset>
+            <p>Выбери начинку:</p>
+        <label>
+            <input type="radio" name="Inside" value="cheese" data-cal="20" data-price="10"> С пармезаном и моцареллой
+        </label>
+        <label>
+            <input type="radio" name="Inside" value="salad" data-cal="5" data-price="20"> Со свежим салатом
+        </label>
+        <label>
+            <input type="radio" name="Inside" value="potato" data-cal="10" data-price="15"> С картофелем-фри
+        </label>
+    </fieldset>
+    <fieldset>
+            <p>Добавки:</p>
+        <label>
+            <input type="checkbox" name="Add" value="pepper" data-cal="0" data-price="15"> Приправы
+        </label>
+        <label>
+            <input type="checkbox" name="Add" value="sauce" data-cal="5" data-price="20"> Соус
+        </label>
+    </fieldset>
+    <input type="reset" value="Очистить">
+</form>
+<button id="OkBtn">Заказать</button>
+<script>
+	let form = document.querySelector('#burgerform')
+    let btn = document.querySelector('#OkBtn')
+    let burgers = []
+    let c
+    let p
+    btn.addEventListener('click', addBurger)
+
+
+    function addBurger() {
+        let newBurger = new Burger ('Size', 'Inside', 'Add')
+        burgers.push(newBurger)
+    }
+    class Burger {
+		constructor (size, inside, add){
+			this.Size = this._check(size)
+			this.Inside = this._check(inside)
+			this.Add = this._getArray(add)
+            this.calories = this._countcalor(size, inside)
+            this.price = this._countprice(size, inside)
+        }
+        _check (attrName){
+			let obj = document.querySelector(`input[name=${attrName}]:checked`)
+			return obj.value
+		}
+		_getArray (attrName) {
+			let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+            let arr = []
+            c=0
+            p=0
+			objArr.forEach (el => {
+                arr.push(el.value)
+                c=c+(+el.dataset['cal'])
+                p=p+(+el.dataset['price'])
+			})
+            return arr}
+        _countcalor (attrSize, attrInside) {
+            let obj = document.querySelector(`input[name=${attrSize}]:checked`)
+            let obj1 = document.querySelector(`input[name=${attrInside}]:checked`)
+            let div = document.createElement('div')
+            div.className = "alert"
+            document.body.append(div)
+            return div.innerHTML = "Количество калорий: " + ((+obj.dataset['cal'])+(+obj1.dataset['cal'])+c)
+        }
+        _countprice (attrSize, attrInside) {
+            let obj = document.querySelector(`input[name=${attrSize}]:checked`)
+            let obj1 = document.querySelector(`input[name=${attrInside}]:checked`)
+            let div = document.createElement('div')
+            div.className = "alert"
+            document.body.append(div)
+            return  div.innerHTML = "Итоговая стоимость: " + ((+obj.dataset['price'])+(+obj1.dataset['price'])+p)
+        }
+    }
+</script>
+</body>
+</html>

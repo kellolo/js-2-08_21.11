@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KFC 2.0</title>
+</head>
+<body>
+    <style>
+        #push {
+            margin-top: 10px;
+        }
+        form {
+            width: 300px
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="welcome">Бургер на любой вкус</h1>
+    <form action="#" id="mainForm">
+        <fieldset>
+            <label>
+                <input type="checkbox" name="size" value="big" data-price="100" data-cal="40"> Для взрослых 
+            </label>
+            <label>
+                <input type="checkbox" name="size" value="small" data-price="100" data-cal="40"> Для детей 
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="radio" name="ingredient" value="cheese" data-price="10" data-cal="20"> Сыр
+            </label>
+            <label>
+                <input type="radio" name="ingredient" value="salad" data-price="20" data-cal="5"> Салат
+            </label>
+            <label>
+                <input type="radio" name="ingredient" value="potatoes" data-price="15" data-cal="10"> Картоха
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="checkbox" name="add" value="pepper" data-price="15" data-cal="0">Острый
+            </label>
+            <label>
+                <input type="checkbox" name="add" value="mayonaise" data-price="20" data-cal="5">С майонезом
+            </label>
+        </fieldset>
+    </form>
+
+    <p class = "final_volume">Энергетическая ценность: </p>
+    
+    <p class = "final_price">Цена: </p>
+
+    <button id="push">Заказать себе самый вкусный гамбургер на планете</button>
+
+    
+    
+    <script src="main.js"></script>
+</body>
+</html>

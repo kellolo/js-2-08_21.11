@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Los Pollos Hermanos</title>
+    <style>
+        form {
+            width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- ### Маленький (50 рублей, 20 калорий).
+        ### Большой (100 рублей, 40 калорий). 
+        ### Гамбургер может быть с одним из нескольких видов начинок (обязательно):
+        ### С сыром (+10 рублей, +20 калорий).
+        ### С салатом (+20 рублей, +5 калорий).
+        ### С картофелем (+15 рублей, +10 калорий). 
+        ### Дополнительно гамбургер можно посыпать приправой (+15 рублей, +0 калорий) и полить майонезом (+20 рублей, +5 калорий). 
+        ### 3Напишите программу, рассчитывающую стоимость и калорийность гамбургера. Можно использовать примерную архитектуру класса из методички, но можно использовать и свою. -->
+    <h1>Добро пожаловать в Los Pollos Hermanos!</h1>
+    <h3>Собери свой бургер:</h3>
+    <form action="#" id="uForm">
+        <fieldset>    
+            <label>
+                <input type="radio" name="Size" value="little" data-calories="20" data-price="50" checked> Маленький бургер <br> 20 ккал 50 рублей 
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="Size" value="big" data-calories="40" data-price="100"> Большой бургер <br> 40 ккал 100 рублей
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="checkbox" name="Ingredient" value="cheese" data-calories="20" data-price="10"> Добавить сыр <br>+ 20 ккал + 10 рублей
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" name="Ingredient" value="salad" data-calories="5" data-price="20"> Добавить салат <br>+ 5 ккал + 20 рублей
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" name="Ingredient" value="potatoes" data-calories="10" data-price="15"> Добавить картофель <br>+ 10 ккал + 15 рублей
+            </label>
+        </fieldset>
+        <fieldset>
+                <label>
+                    <input type="checkbox" name="Dressing" value="flavor" data-calories="0" data-price="15"> Посыпать приправой <br>+ 0 ккал + 15 рублей
+                </label>
+                <br>
+                <label>
+                    <input type="checkbox" name="Dressing" value="mayo" data-calories="5" data-price="20"> Полить майонезом <br>+ 5 ккал + 20 рублей
+                </label>
+            </fieldset>
+    </form>
+        
+    <button id="okBtn">Сделать заказ</button>
+    <div class="orderOut"></div>
+
+        
+    <script>
+
+        let form = document.querySelector ('#uForm')
+        let btn = document.querySelector ('#okBtn')
+        let order = []
+                
+        btn.addEventListener ('click', addBurger)
+        
+        function addBurger () {
+            let newBurger = new Burger ('Size', 'Ingredient', 'Dressing')
+            if (newBurger.Ingredient.length === 0) {
+                alert("Не забудь выбрать начинку!")
+            } else {
+                order.push(newBurger)
+            }
+            console.dir(order)
+        }
+
+        class Burger {
+            constructor (size, ingredient, dressing) {
+                this.Size = this._check (size)
+                this.Ingredient = this._getArray
+                 (ingredient)
+                this.Dressing = this._getArray (dressing)
+                this.Price = this._price(size, ingredient, dressing)
+                this.Calories = this._calories(size, ingredient, dressing)
+            }
+            _check (attrName) {
+                let obj = document.querySelector (`input[name=${attrName}]:checked`)
+                return obj.value
+            }
+            _getArray (attrName) {
+                        let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                        let arr = []
+                        objArr.forEach (el => {
+                            arr.push (el.value)
+                        })
+                        return arr
+            }
+            _price(attrSize, attrIngredient, attrDressing) {
+                let obj = document.querySelector(`input[name=${attrSize}]:checked`)
+                let objArr1 = [...document.querySelectorAll(`input[name=${attrIngredient}]:checked`)]
+                let objArr2 = [...document.querySelectorAll(`input[name=${attrDressing}]:checked`)]
+                let price = +obj.dataset['price']
+                objArr1.forEach( el => {
+                    price += +el.dataset['price']
+                })
+                objArr2.forEach(el => {
+                    price += +el.dataset['price']
+                })
+                return price
+                // price.innerHTML = `Стоимость заказа составляет ${price} рублей`
+            }
+            _calories(attrSize, attrIngredient, attrDressing) {
+                let obj = document.querySelector(`input[name=${attrSize}]:checked`)
+                let objArr1 = [...document.querySelectorAll(`input[name=${attrIngredient}]:checked`)]
+                let objArr2 = [...document.querySelectorAll(`input[name=${attrDressing}]:checked`)]
+                let calories = +obj.dataset['calories']
+                objArr1.forEach( el => {
+                    calories += +el.dataset['calories']
+                })
+                objArr2.forEach(el => {
+                    calories += +el.dataset['calories']
+                })
+                return calories
+                document.querySelector('.orderOut').innerHTML = `В заказе ${calories} каллорий`
+            }
+        }
+    </script>
+</body>
+</html>
