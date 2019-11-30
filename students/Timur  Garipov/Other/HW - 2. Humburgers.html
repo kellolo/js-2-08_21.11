@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Choose your Hamburger</title>
+    <style>
+            form {
+                width: 350px
+            }
+            label {
+                display: block;
+                margin-bottom: 10px;
+            }
+            legend {
+                font-weight: 600;
+            }
+            fieldset {
+                margin: 10px;
+            }
+            #calcBtn {
+                margin: 5px 100px;    
+            }
+            h2 {
+                margin: 10px;
+            }
+            p {
+                margin: 20px;
+                font-size: 1.2em;
+            }
+            #calcBtn {
+                background-color: #ccc;
+                padding: 5px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+</head>
+<body>
+    <form action ="#" id="burgerForm">
+        <fieldset>
+            <legend>Какой гамбургер ты хочешь?</legend>
+            <label>
+                <input type="radio" name="Size" value="big" data-price = "100" data-calory = "40"> Большой: 100 руб, 40 калорий
+            </label>
+            <label>
+                <input type="radio" name="Size" value="small" data-price = "50" data-calory = "20"> Маленький:  50 руб, 20 калорий
+            </label>
+        </fieldset>
+        <fieldset>
+                <legend>Какая начинка?</legend>
+            <label>
+                <input type="radio" name="Topping" value="cheese" data-price = "10" data-calory = "20"> Сыр: 10 руб, 20 калорий
+            </label>
+            <label>
+                <input type="radio" name="Topping" value="salad" data-price = "20" data-calory = "5"> Салат: 20 руб, 5 калорий
+            </label>
+            <label>
+                <input type="radio" name="Topping" value="potato" data-price = "15" data-calory = "10"> Картошка: 15 руб, 10 калорий
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Хотите добавить?</legend>
+                <label>
+                    <input type="checkbox" name="Adds" value="spice" data-price = "15" data-calory = "0"> Приправа: 15 руб, 0 калорий
+                </label>
+                <label>
+                    <input type="checkbox" name="Adds" value="mayo"  data-price = "20" data-calory = "5"> Майонез: 20 руб, 5 калорий
+                </label>
+            </fieldset>
+    </form>
+    <button id="calcBtn">Заказать</button>
+    <div class = "eat"></div>
+
+    <script>
+        let form = document.querySelector('#burgerForm');
+        let btn = document.querySelector('#calcBtn');
+        let burgers = [];
+        btn.addEventListener('click', calcPrice);
+        function calcPrice() {
+            let finalPrice = new Hamburger ("Size", "Topping", "Adds");
+            burgers.push(finalPrice);
+            console.log(burgers);
+            let newEl = '';
+            newEl += `<div>
+                <h2> Burger:</h2> 
+                <p>Price: ${burgers[0].price} RUB</p> 
+                <p> Calories: ${burgers[0].calory} </p></div>`;
+            document.querySelector(".eat").innerHTML = newEl;  
+        }
+             
+        class Hamburger {
+            constructor(size, topping, adds) {
+                this.size = this._check (size);
+                this.topping = this._check (topping);
+                this.adds = this._getArray (adds);
+                this.price = this._getPrice (size, topping, adds);
+                this.calory = this._getCalory (size, topping, adds);
+            }
+        
+            _check (attrName) {
+                let obj = document.querySelector (`input[name=${attrName}]:checked`);
+                return obj.value;
+            }
+            _getArray (attrName) {
+                let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)];
+                let arr = [];
+                objArr.forEach (el => {
+                    arr.push (el.value);
+                })
+                return arr;
+            }
+            _getPrice (attrSize, attrTopping, attrAdds) {
+		        let size = document.querySelector(`input[name=${attrSize}]:checked`);
+                let topping = document.querySelector(`input[name=${attrTopping}]:checked`);
+                let adds = [...document.querySelectorAll (`input[name=${attrAdds}]:checked`)];
+                let priceHam = +size.dataset['price'] + +topping.dataset['price'];
+                adds.forEach(el => {
+                    priceHam += +el.dataset['price']
+                })
+                return (priceHam);
+            }
+            _getCalory (attrSize, attrTopping, attrAdds) {
+		        let size = document.querySelector(`input[name=${attrSize}]:checked`);
+                let topping = document.querySelector(`input[name=${attrTopping}]:checked`);
+                let adds = [...document.querySelectorAll (`input[name=${attrAdds}]:checked`)];
+                let caloryHam = +size.dataset['calory'] + +topping.dataset['calory'];
+                adds.forEach(el => {
+                    caloryHam += +el.dataset['calory']
+                })
+                return (caloryHam);
+            }
+        }
+       
+    </script>
+</body>
+</html>
