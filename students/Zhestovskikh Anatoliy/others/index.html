@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW_Lesson2_Burger</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+</head>
+
+<body>
+   <div class="container">
+    <h1>Оформите ваш заказ</h1>
+    <form action="#" id="form">
+        <fieldset>
+            <legend>Размер</legend>
+            <label>
+                <input type="radio" name="Size" value="big" checked data-price="100" data-calories="40"><span class="name" aria-pressed="true">Большой</span><span class="attribute">100 руб</span><span class="attribute">40 ккал</span>
+            </label>
+            <label>
+                <input type="radio" name="Size" value="small" data-price="50" data-calories="20"><span class="name">Маленький</span><span class="attribute">50 руб</span><span class="attribute">20 ккал</span>
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Начинка</legend>
+            <label aria-required="true">
+                <input type="checkbox" name="Filling" value="chees" data-price="10" data-calories="20"><span class="name">Добавить сыр</span><span class="attribute">10 руб</span><span class="attribute">20 ккал</span>
+            </label>
+            <label>
+                <input type="checkbox" name="Filling" value="salad" data-price="20" data-calories="5"><span class="name">Добавить салат</span><span class="attribute">20 руб</span><span class="attribute">5 ккал</span>
+            </label>
+            <label>
+                <input type="checkbox" name="Filling" value="potato" data-price="15" data-calories="10"><span class="name">Добавить картофель</span><span class="attribute">15 руб</span><span class="attribute">10 ккал</span>
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Приправы</legend>
+            <label>
+                <input type="checkbox" name="Sauce" value="spice" data-price="15" data-calories="0"><span class="name">Приправа</span><span class="attribute">15 руб</span><span class="attribute">0 ккал</span>
+            </label>
+            <label>
+                <input type="checkbox" name="Sauce" value="mayonnaise" data-price="20" data-calories="5"><span class="name">Майонез</span><span class="attribute">20 руб</span><span class="attribute">5 ккал</span>
+            </label>
+        </fieldset>
+    </form>
+    <button class="orderButton" id="btn">Заказать</button>
+</div>
+    <script>
+        let form = document.querySelector('#form')
+        let btn = document.querySelector('#btn')
+        let orders = []
+   </script>
+</body>
+
+</html>
