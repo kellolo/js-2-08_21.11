@@ -7,7 +7,8 @@ const cartImage = 'https://placehold.it/100x80';
 
 
 let catalog;
-let url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+//let url = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+let url = 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/catalog'
 
 class Catalog {
     constructor () {
