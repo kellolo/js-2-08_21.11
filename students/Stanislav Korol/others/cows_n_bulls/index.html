@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Быки и коровы</title>
+
+    <style>
+        section{
+            width: 400px;
+            margin: 0 auto;
+        }
+        h3{
+            width: 200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        select{
+            display: inline-block;
+            width: 305px;
+        }
+        #startGame{
+            display: inline-block;
+        }
+        label{
+            display: block;
+        }
+        input{
+            width: 100%;
+        }
+        button{
+            display: block;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h3>Быки и коровы</h3>
+        <select id="difficulty">
+            <option value="4" selected>Сложность: четырехзначные числа</option>
+            <option value="5">Сложность: пятизначные числа</option>
+            <option value="6">Сложность: шестизначные числа</option>
+            <option value="7">Сложность: семизначные числа</option>   
+        </select>
+        <button id="startGame">Начать игру</button>
+        
+        <fieldset>
+            <label>
+                <input type="number" id="tryInput" placeholder="Введите свою догадку">
+            </label>
+        </fieldset>
+
+        <button id="testUserTry" disabled>Проверить догадку</button>
+
+        <div id="results"></div>
+    </section>
+
+    <script>
+        const resultsDiv = document.querySelector("#results");
+        const tryInput = document.querySelector("#tryInput");
+        let difficulty = 4;
+        const testUserBtn = document.querySelector("#testUserTry");
+        const startBtn = document.querySelector("#startGame");
+
+        let myString = "";
+        let tryCount = 0;
+
+        function startGame(){
+            difficulty = +document.querySelector("#difficulty").value;
+
+            let numsArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            for (let i = 0; i < difficulty; i++){
+                let rndIndex = Math.ceil(Math.random() * numsArr.length);
+                myString += numsArr[rndIndex];
+                numsArr.splice(rndIndex, 1);
+            }
+            tryInput.max = Math.pow(10, difficulty) - 1;
+            testUserBtn.removeAttribute("disabled");
+            tryCount = 0;
+        }
+
+        function testUserTry(){
+            let error = false;
+            
+            const userInput = [...tryInput.value];
+            if (userInput.length !== difficulty) {
+                resultsDiv.innerHTML = `Число должно быть ${difficulty}-значным`;
+                return false;
+            }
+
+            for (let i = 0; i < userInput.length; i++) {
+                const el = userInput[i];
+                if (userInput.filter(item => item == el).length > 1) {
+                    resultsDiv.innerHTML = "Цифры в числе не должны повторяться";
+                    return false;
+                }
+            }
+
+            tryCount++;
+            
+            let numMatches = 0;
+            let posMatches = 0;
+
+            const myStringArr = [...myString];
+            for (let i = 0; i < userInput.length; i++){
+                if (myStringArr.indexOf(userInput[i]) > -1) numMatches++;
+                if (myStringArr[i] === userInput[i]) posMatches++;
+            }
+
+            if (numMatches === difficulty && posMatches === difficulty) {
+                resultsDiv.innerHTML = `Число угадано! Кол-во попыток: <b>${tryCount}</b>`;
+                testUserBtn.setAttribute("disabled", true);
+            }
+            else resultsDiv.innerHTML = `Попытка: <b>${tryCount}</b><br>Количество коров: <b>${numMatches}</b><br>Количество быков: <b>${posMatches}</b>.`;
+        }
+
+        testUserBtn.addEventListener("click", testUserTry);
+        startBtn.addEventListener("click", startGame);
+    </script>
+</body>
+</html>
