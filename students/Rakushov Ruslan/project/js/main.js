@@ -1,13 +1,16 @@
 //заглушки (имитация базы данных)
-const image = "https://placehold.it/200x150";
-const cartImage = "https://placehold.it/100x80";
-const items = ["Notebook", "Display", "Keyboard", "Mouse", "Phones", "Router", "USB-camera", "Gamepad"];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+// const image = "https://placehold.it/200x150";
+// const cartImage = "https://placehold.it/100x80";
+// const items = ["Notebook", "Display", "Keyboard", "Mouse", "Phones", "Router", "USB-camera", "Gamepad"];
+// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
+// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+urlCatalogData =
+  "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
+  "master/students/Rakushov%20Ruslan/Others/responses/catalogData.json";
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData();
+// var userCart = [];
+// var list = fetchData();
 
 class Catalog {
   constructor() {
@@ -16,10 +19,22 @@ class Catalog {
     this._init();
   }
   _init() {
-    list.forEach(el => {
-      this.products.push(new Product(el));
-    });
-    this.render();
+    //-----old stuff-----
+    // list.forEach(el => {
+    //   this.products.push(new Product(el));
+    // });
+    this.getCatalogData(this.render);
+  }
+  getCatalogData(cb) {
+    let xhr = new XMLHttpRequest();  
+    xhr.open("GET", urlCatalogData, false);
+  xhr.send();
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      this.products = JSON.parse(xhr.responseText);
+      cb();
+    }
+      
+    //TODO Попробовать асинк, fetch, promise
   }
   render() {
     let trg = document.querySelector(this.container);
@@ -31,12 +46,32 @@ class Catalog {
   }
 }
 
+//Запрос каталога товаров - ПЕРЕНЕСЕНО в класс Catalog
+// function getCatalogData(cb) {
+//   //Запрос с помощью XMLHttpRequest (синхронный)
+//   let xhr = new XMLHttpRequest();
+//   // xhr.onreadystatechange = function () {
+//   //   if (xhr.readyState == 4 && xhr.status == 200) {
+//   //     return JSON.parse(xhr.responseText);
+//   //   }
+//   // }
+//   xhr.open("GET", urlCatalogData, false);
+//   xhr.send();
+//   if (xhr.readyState == 4 && xhr.status == 200) {
+//     () => {
+//       cb(JSON.parse(xhr.responseText));
+//   }
+//   }
+
+//   //TODO Попробовать асинк, fetch, promise
+// }
+
 class Product {
   constructor(prod) {
     this.id = prod.id;
     this.title = prod.title;
     this.price = prod.price;
-    this.img = prod.img;
+    // this.img = prod.img;
   }
   render() {
     return `<div class="product-item" data-id="${this.id}">
