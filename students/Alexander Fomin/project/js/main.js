@@ -62,36 +62,102 @@ class Product {
 class Cart {
     constructor() {
         this.container = '.btn-cart'
-        this.items = []
-        this.amount = 0;
+        this.elements = []
         this._init()
     }
     _init(product) {
-        _render()
-    };
+        this._setVisible()
+        this._setBuyButton()
+        this._setDelButton()
+    }
 
-    _setInvisble() {}
-    _setVisible() {}
-    _render() {}
-    addItem() {}
+    _setVisible() {
+        document.querySelector('.btn-cart').addEventListener('click', () => {
+            document.querySelector('.cart-block').classList.toggle('invisible');
+        });
+    }
+
+    _setBuyButton() {
+        document.querySelector('.products').addEventListener('click', (evt) => {
+            if (evt.target.classList.contains('buy-btn')) {
+                this.addItem(evt.target.dataset);
+            }
+        })
+    }
+
+    _setDelButton() {
+        document.querySelector('.cart-block').addEventListener('click', (evt) => {
+            if (evt.target.classList.contains('del-btn')) {
+                this.removeItem(evt.target.dataset);
+            }
+        })
+    }
+
+    render() {}
+
+    addItem(productDataset) {
+        let find = this.elements.find(element => element.id === productDataset['id']);
+        if (!find) {
+            let cartItem = new CartItem(productDataset['id'])
+            this.elements.push(cartItem)
+        } else {
+            find.count++
+        }
+        console.log(cart)
+    }
+
+
     removeItem() {}
-    addItem() {}
-   
+
 }
 
 class CartItem {
-    constructor() {
-        this.title = ""
+    constructor(id) {
+        this.id = null
+        this.title = ''
         this.price = null
         this.count = null
+        this.img = ''
+        this._init(id)
     }
 
-    render () {
+    _init(id) {
+        let find = catalog.products.find(el => el.id == id);
+        this.id = id
+        this.title = find.title
+        this.price = find.price
+        this.img = find.img
+        this.count = 1
 
+    }
+
+
+
+    render() {
+        let html = `<div class="cart-item" data-id="${this.id}">
+            <div class="product-bio">
+                <img src="${this.img}" alt="Some image">
+                <div class="product-desc">
+                    <p class="product-title">${this.title}</p>
+                    <p class="product-quantity">Quantity: ${this.count}</p>
+                    <p class="product-single-price">$${this.price} each</p>
+                </div>
+            </div>
+            <div class="right-block">
+                <p class="product-price">${this.count * this.price}</p>
+                <button class="del-btn" data-id="${this.id}">&times;</button>
+            </div>
+        </div>`
+        return html
     }
 }
 
+
+
 let catalog = new Catalog()
+let cart = new Cart()
+//console.log(catalog)
+
 //кнопка скрытия и показа корзины
 // document.querySelector('.btn-cart').addEventListener('click', () => {
 //     document.querySelector('.cart-block').classList.toggle('invisible');
