@@ -4,6 +4,32 @@ const cartImage = 'https://placehold.it/100x80';
 const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+//организовать замену "костылям получения данных" на настоящее получение данных с сети
+
+let xhr;
+
+if (window.XMLHttpRequest) {
+// Chrome, Mozilla, Opera, Safari
+    xhr = new XMLHttpRequest();
+} else if (window.ActiveXObject) {
+    // Internet Explorer
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+}
+
+xhr.open('GET', '../JSON/catalog.json', true);
+xhr.send();
+
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+    // Этот код выполнится после выполнения запроса
+        console.log(xhr);
+        console.log(JSON.parse(xhr.response));
+    }
+};
+
+const promise = new Promise((resolve, reject) => {
+
+});
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
@@ -125,7 +151,7 @@ class CartItem {
 let catalog = new Catalog();
 let item = new CartItem();
 
-console.log(catalog);
+//console.log(catalog);
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
     document.querySelector('.cart-block').classList.toggle('invisible');
