@@ -1,0 +1,23 @@
+main {
+    width: 500px;
+    margin: 30px auto;
+}
+.hamburger-size, .hamburger-fillings, .hamburger-toppings {
+    height: 80px;
+    border: none;
+    color: #8B4513;
+}
+.hamburger-size {
+    background-color: #FFF8DC;
+}
+.hamburger-fillings {
+    background-color: #FFEBCD;
+}
+.hamburger-toppings {
+    background-color: #FFE4C4;
+}
+p {
+    text-align: center;
+    font-size: 30px;
+    color: #8B4513;
+}
