@@ -1,108 +1,25 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const API_URL = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json";
 
-
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-// let userCart = [];
-let list = fetchData();
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
     document.querySelector('.cart-block').classList.toggle('invisible');
 });
+
 //кнопки удаления товара (добавляется один раз)
 document.querySelector('.cart-block').addEventListener('click', (evt) => {
     if (evt.target.classList.contains('del-btn')) {
-        // removeProduct(evt.target);
         userCart.removeItem(evt.target);
     }
 });
+
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener('click', (evt) => {
     if (evt.target.classList.contains('buy-btn')) {
-        // addProduct(evt.target);
         userCart.addItem(evt.target);
     }
 });
 
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData() {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push(createProduct(i));
-    }
-    return arr;
-}
-
-//создание товара
-function createProduct(i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    };
-}
-
-//CART
-
-// // Добавление продуктов в корзину
-// function addProduct(product) {
-//     let productId = +product.dataset.id;
-//     let find = userCart.find(element => element.id === productId);
-//     if (!find) {
-//         userCart.push({
-//             name: product.dataset.name,
-//             id: productId,
-//             img: cartImage,
-//             price: +product.dataset.price,
-//             quantity: 1
-//         });
-//     } else {
-//         find.quantity++;
-//     }
-//     renderCart();
-// }
-
-// //удаление товаров
-// function removeProduct(product) {
-//     let productId = +product.dataset.id;
-//     let find = userCart.find(element => element.id === productId);
-//     if (find.quantity > 1) {
-//         find.quantity--;
-//     } else {
-//         userCart.splice(userCart.indexOf(find), 1);
-//         document.querySelector(`.cart-item[data-id="${productId}"]`).remove();
-//     }
-//     renderCart();
-// }
-
-// //перерендер корзины
-// function renderCart() {
-//     let allProducts = '';
-//     for (let el of userCart) {
-//         allProducts += `<div class="cart-item" data-id="${el.id}">
-//                             <div class="product-bio">
-//                                 <img src="${el.img}" alt="Some image">
-//                                 <div class="product-desc">
-//                                     <p class="product-title">${el.name}</p>
-//                                     <p class="product-quantity">Quantity: ${el.quantity}</p>
-//                                     <p class="product-single-price">$${el.price} each</p>
-//                                 </div>
-//                             </div>
-//                             <div class="right-block">
-//                                 <p class="product-price">${el.quantity * el.price}</p>
-//                                 <button class="del-btn" data-id="${el.id}">&times;</button>
-//                             </div>
-//                         </div>`;
-//     }
-
-//     document.querySelector(`.cart-block`).innerHTML = allProducts;
-// }
 
 class Product {
     constructor(prod) {
@@ -128,24 +45,57 @@ class Product {
 }
 
 class Catalog {
-    constructor(lst) {
+    constructor() {
         this.products = [];
         this.container = '.products';
-        this._init(lst);
+        this.url = "https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json";
+        this._init();
     }
-    _init(lst) {
-        lst.forEach(el => {
-            this.products.push(new Product(el));
-        });
-        this.render();
+    _init() {
+        this.fetchProducts()
+            .then((data) => {
+                this.products = JSON.parse(data);
+                console.log(this.products);
+                this.render();
+            })
+            .catch((errStatus) => {
+                console.log(`Ошибка ${errStatus}`);
+            });
+        // this.products = lst;
+        // lst.forEach(el => {
+        //     this.products.push(new Product(el));
+        // });
+        // this.render();
     }
     render() {
         let trg = document.querySelector(this.container);
         let str = '';
         this.products.forEach(prod => {
-            str += prod.render();
+            let prodItem = new Product(prod);
+            str += prodItem.render();
         });
         trg.innerHTML = str;
+    }
+    fetchProducts() {
+        return new Promise((resolve, reject) => {
+            let request;
+            if (window.XMLHttpRequest) {
+                request = new XMLHttpRequest();
+            } else if (window.ActiveXObject) {
+                request = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    if (request.status == 200) {
+                        resolve(request.responseText);
+                    } else {
+                        reject(request.status);
+                    }
+                }
+            };
+            request.open('GET', this.url, true);
+            request.send();
+        });
     }
 }
 
@@ -153,27 +103,63 @@ class Cart {
     constructor() {
         this.products = [];
         this.container = '.cart-block';
+        this.addItem_url = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json";
+        this.removeItem_url = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json";
     }
     addItem(item) {
-        let itemId = +item.dataset.id;
-        let findItem = this.products.find(el => el.id === itemId);
-        if (!findItem) {
-            this.products.push(new CartItem(item));
-        } else {
-            findItem.increaseQnt();
-        }
-        this._render();
+        this._fetchData(this.addItem_url)
+            .then((data) => {
+                if (JSON.parse(data).result === 1) {
+                    console.log('OK');
+                    let itemId = +item.dataset.id;
+                    let findItem = this.products.find(el => el.id === itemId);
+                    if (!findItem) {
+                        this.products.push(new CartItem(item));
+                    } else {
+                        findItem.increaseQnt();
+                    }
+                    this._render();
+                }
+            })
+            .catch((errStatus) => {
+                console.log(`Ошибка ${errStatus}`);
+            });
+        // let itemId = +item.dataset.id;
+        // let findItem = this.products.find(el => el.id === itemId);
+        // if (!findItem) {
+        //     this.products.push(new CartItem(item));
+        // } else {
+        //     findItem.increaseQnt();
+        // }
+        // this._render();
     }
     removeItem(item) {
-        let itemId = +item.dataset.id;
-        let findItem = this.products.find(el => el.id === itemId);
-        if (findItem.quantity > 1) {
-            findItem.reduceQnt();
-        } else {
-            this.products.splice(this.products.indexOf(findItem), 1);
-            document.querySelector(`.cart-item[data-id="${itemId}"]`).remove();
-        }
-        this._render();
+        this._fetchData(this.removeItem_url)
+            .then((data) => {
+                if (JSON.parse(data).result === 1) {
+                    let itemId = +item.dataset.id;
+                    let findItem = this.products.find(el => el.id === itemId);
+                    if (findItem.quantity > 1) {
+                        findItem.reduceQnt();
+                    } else {
+                        this.products.splice(this.products.indexOf(findItem), 1);
+                        document.querySelector(`.cart-item[data-id="${itemId}"]`).remove();
+                    }
+                    this._render();
+                }
+            })
+            .catch((errStatus) => {
+                console.log(`Ошибка ${errStatus}`);
+            });
+        // let itemId = +item.dataset.id;
+        // let findItem = this.products.find(el => el.id === itemId);
+        // if (findItem.quantity > 1) {
+        //     findItem.reduceQnt();
+        // } else {
+        //     this.products.splice(this.products.indexOf(findItem), 1);
+        //     document.querySelector(`.cart-item[data-id="${itemId}"]`).remove();
+        // }
+        // this._render();
     }
     _render() {
         let allProducts = '';
@@ -196,13 +182,34 @@ class Cart {
 
         document.querySelector(this.container).innerHTML = allProducts;
     }
+    _fetchData(url) {
+        return new Promise((resolve, reject) => {
+            let request;
+            if (window.XMLHttpRequest) {
+                request = new XMLHttpRequest();
+            } else if (window.ActiveXObject) {
+                request = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    if (request.status == 200) {
+                        resolve(request.responseText);
+                    } else {
+                        reject(request.status);
+                    }
+                }
+            };
+            request.open('GET', url, true);
+            request.send();
+        });
+    }
 }
 
 class CartItem {
     constructor(product) {
         this.name = product.dataset.name;
         this.id = +product.dataset.id;
-        this.img = cartImage;
+        this.img =  'https://placehold.it/100x80';
         this.price = +product.dataset.price;
         this.quantity = 1;
     }
@@ -214,9 +221,41 @@ class CartItem {
     }
 }
 
+// function fetchData(url) {
+//     return new Promise((resolve, reject) => {
+//         let request;
+//         if (window.XMLHttpRequest) {
+//             request = new XMLHttpRequest();
+//         } else if (window.ActiveXObject) {
+//             request = new ActiveXObject("Microsoft.XMLHTTP");
+//         }
+//         request.onreadystatechange = function () {
+//             if (request.readyState === 4) {
+//                 if (request.status == 200) {
+//                     resolve(request.responseText);
+//                 } else {
+//                     reject(request.status);
+//                 }
+//             }
+//         };
+//         request.open('GET', url, true);
+//         request.send();
+//     });
+// }
+
 
 // main
 // ------------------------------------------------
 
-let catalog = new Catalog(list);
+let catalog = new Catalog();
 let userCart = new Cart();
+
+// fetchData(API_URL)
+//     .then((data) => {
+//         if (JSON.parse(data).result === 1) {
+//             console.log('OK');
+//         }
+//     })
+//     .catch((errStatus) => {
+//         console.log(`Ошибка ${errStatus}`);
+//     });
