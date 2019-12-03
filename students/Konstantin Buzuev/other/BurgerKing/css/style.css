@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+.container-fluid {
+  background-color: #FCFAFA;
+  width: 100%; }
+
+.container {
+  max-width: 300px;
+  margin: 0 auto;
+  background-color: #90CCD9;
+  padding: 25px; }
+
+.b-orderCaption {
+  text-align: center; }
+
+.b-form {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  max-width: 150px;
+  width: 100%;
+  margin: 0 auto;
+  border: none; }
+  .b-form__fieldset {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    padding-bottom: 10px;
+    border-radius: 15px; }
+  .b-form__legend {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    font-size: 20px; }
+  .b-form__label {
+    display: block;
+    line-height: 16px; }
+  .b-form__size, .b-form__filling, .b-form__topping {
+    margin-right: 5px;
+    font-size: 16px; }
+  .b-form_externalMargin {
+    margin-bottom: 25px; }
+  .b-form_elementsMargin {
+    margin-left: 15px;
+    margin-bottom: 15px; }
+
+.b-fieldset_themeOrange {
+  border-color: #EDA747;
+  background: #f8dfbb;
+  color: #a46610; }
+
+.b-fieldset_themeLightBlue {
+  border-color: #2CA4D7;
+  background: #97d2eb;
+  color: #15546f; }
+
+.b-fieldset_themeDarkBlue {
+  border-color: #31599B;
+  background: #779ad4;
+  color: #12213a; }
+
+.b-fieldset_themeWarning {
+  border-color: #cf6d6d;
+  background: #efcdcd;
+  color: #8e2f2f; }
+
+.b-btnOrder, .b-btnOrder__processingForm {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  max-width: 150px;
+  font-size: 20px;
+  padding: 5px 0px;
+  border-radius: 10px;
+  background-color: lightgreen;
+  color: #116e11; }
+  .b-btnOrder__processingForm {
+    max-width: none;
+    border: 2px solid black;
+    background-color: #fff;
+    text-align: center; }
+/*# sourceMappingURL=style.css.map */

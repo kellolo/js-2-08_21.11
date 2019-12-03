@@ -1,0 +1,17 @@
+.order {
+    width: 600px;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.order__burger, .order__topping {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.order__burgerTitle, .order__toppingTitle {
+    margin-bottom: 20px;
+}
