@@ -2,49 +2,41 @@
   {
     'id_product': 1,
     'product_name': 'Notebook',
-    'img': https://placehold.it/2000x700
     'price': 45600
   },
   {
     'id_product': 2,
     'product_name': 'Display',
-    'img': https://placehold.it/2000x700
     'price': 10000
   }
 {
     'id_product': 3,
     'product_name': 'Keyboard',
-    'img': https://placehold.it/2000x700
     'price': 2000
   }
 {
     'id_product': 4,
     'product_name': 'Mouse',
-    'img': https://placehold.it/2000x700
     'price': 1000
   }
 {
     'id_product': 5,
     'product_name': 'Phones',
-    'img': https://placehold.it/2000x700
     'price': 8000
   }
 {
     'id_product': 6,
     'product_name': 'Router',
-    'img': https://placehold.it/2000x700
     'price': 2500
   }
 {
     'id_product': 7,
     'product_name': 'USB-camera',
-    'img': https://placehold.it/2000x700
     'price': 5000
   }
 {
     'id_product': 8,
     'product_name': 'Gamepad',
-    'img': https://placehold.it/2000x700
     'price': 6000
   }
 ]
