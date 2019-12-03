@@ -24,7 +24,7 @@ button:focus {
     color: #ad0000;
 }
 
-.btn-cart {
+.cart-btn {
     background-color: #fafafa;
     padding: 10px 20px;
     border: 1px solid transparent;
@@ -35,13 +35,13 @@ button:focus {
     box-shadow: 1px 1px 5px #ffffff81, 2px 2px 10px #ffffff85;
 }
 
-.btn-cart:hover {
+.cart-btn:hover {
     background-color: transparent;
     border-color: #fafafa;
     color: #fafafa;
 }
 
-.btn-cart,
+.cart-btn,
 .logo {
     align-self: center;
 }
@@ -63,9 +63,10 @@ p {
     display: flex;
     flex-direction: column;
     width: 200px;
-    border-radius: 5px;
+    border-radius: 10px;
     overflow: hidden;
     margin: 20px 0;
+    border-top: 1px solid #ddd;
 }
 
 img {
@@ -74,7 +75,7 @@ img {
 }
 
 .desc {
-    border: 1px solid #c0c0c040;
+    background: linear-gradient(#ffff, #ddd);
     padding: 15px
 }
 
@@ -92,7 +93,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    width: 350px;
 }
 
 .invisible {
@@ -158,7 +159,7 @@ img {
 }
 
 .product-desc {
-    max-width: 150px;
+    max-width: 200px;
 }
 
 .product-quantity {
