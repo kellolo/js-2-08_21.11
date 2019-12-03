@@ -1,0 +1,49 @@
+h1 {
+  font-size: 2.0rem;
+  font-weight: 700;
+  color: #F50057;
+}
+
+#total-cost,
+#total-cal {
+  font-weight: 700;
+  color: deepskyblue;
+}
+
+main h2 {
+  color: #aaa;
+  padding-left: 32px;
+}
+
+label.form-check-label {
+  color: #6c757d;
+  font-size: 1.25rem;
+  line-height: 0;
+}
+
+.extend-title {
+  color: #aaa;
+  font-size: 1.15rem;
+}
+
+.form-control,
+label.form-check-label {
+  color: #E65100;
+}
+
+.placeholder {
+  margin: 32px;
+  height: 300px;
+  background-color: #ccc;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+}
+
+.fixed-bottom {
+  background-color: #444;
+  color: white;
+  text-align: center;
+}
+.fixed-bottom p {
+  margin-bottom: 4px;
+}

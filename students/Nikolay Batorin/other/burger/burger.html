@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Burger</title>
+    <style>
+        form {
+            width: 350px;
+        }
+        
+        label {
+            display: block;
+            padding: 5px;
+        }
+        
+        h1 {
+            margin: 10px 0;
+        }
+        
+        label:hover {
+            color: #229100;
+            background-color: #deffd1;
+            border-radius: 10px;
+        }
+        
+        #okBtn {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .name {
+            width: 100px;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        
+        .attribute {
+            width: 80px;
+            display: inline-block;
+            text-align: right;
+        }
+        
+        em {
+            color: #c90000;
+            font-size: .7em;
+        }
+        
+        fieldset {
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Некая сеть фастфуда предлагает несколько видов гамбургеров:
+### Маленький (50 рублей, 20 калорий).
+### Большой (100 рублей, 40 калорий).
+### Гамбургер может быть с одним из нескольких видов начинок (обязательно):
+### С сыром (+10 рублей, +20 калорий).
+### С салатом (+20 рублей, +5 калорий).
+### С картофелем (+15 рублей, +10 калорий). 
+### Дополнительно гамбургер можно посыпать приправой (+15 рублей, +0 калорий) и полить майонезом (+20 рублей, +5 калорий). 
+### 3Напишите программу, рассчитывающую стоимость и калорийность гамбургера. 
+Можно использовать примерную архитектуру класса из методички, но можно использовать и свою. -->
+    <h1>Лучший бургер для Вас!</h1>
+    <form action="#" id="uForm">
+        <fieldset>
+            <legend><b>Размер</b></legend>
+            <label>
+                <input type="radio" name="Size" value="big" checked data-price="100" data-calories="40"><span class="name" aria-pressed="true">Большой</span><span class="attribute">100 руб</span><span class="attribute">40 ккал</span>
+            </label>
+            <label>
+                <input type="radio" name="Size" value="small" data-price="50" data-calories="20"><span class="name">Маленький</span><span class="attribute">50 руб</span><span class="attribute">20 ккал</span>
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend><b>Начинка</b> <em>(обязательно)</em></legend>
+            <label aria-required="true">
+                <input type="checkbox" name="Filling" value="chees" data-price="10" data-calories="20"><span class="name">Сыр</span><span class="attribute">10 руб</span><span class="attribute">20 ккал</span>
+            </label>
+            <label>
+                <input type="checkbox" name="Filling" value="salad" data-price="20" data-calories="5"><span class="name">Салат</span><span class="attribute">20 руб</span><span class="attribute">5 ккал</span>
+            </label>
+            <label>
+                <input type="checkbox" name="Filling" value="potato" data-price="15" data-calories="10"><span class="name">Картофель</span><span class="attribute">15 руб</span><span class="attribute">10 ккал</span>
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend><b>Приправы</b></legend>
+            <label>
+                <input type="checkbox" name="Sauce" value="spice" data-price="15" data-calories="0"><span class="name">Приправы</span><span class="attribute">15 руб</span><span class="attribute">0 ккал</span>
+            </label>
+            <label>
+                <input type="checkbox" name="Sauce" value="mayonnaise" data-price="20" data-calories="5"><span class="name">Майонез</span><span class="attribute">20 руб</span><span class="attribute">5 ккал</span>
+            </label>
+        </fieldset>
+    </form>
+    <button id="okBtn">Заказать</button>
+
+    <script>
+        let form = document.querySelector('#uForm')
+        let btn = document.querySelector('#okBtn')
+        let orders = []
+
+        btn.addEventListener('click', addBurger)
+
+        function addBurger() {
+            let newBurger = new Burger('Size', 'Filling', 'Sauce')
+            if (newBurger.Filling.length === 0 || newBurger.Size === null) {
+                alert("Обязательно выбрать начинку")
+            } else {
+                orders.push(newBurger)
+            }
+            console.dir(orders)
+        }
+
+        class Burger {
+            constructor(size, filling, sauce) {
+                this.Size = this._check(size)
+                this.Filling = this._getArray(filling)
+                this.Sauce = this._getArray(sauce)
+                this.Price = this._price(size, filling, sauce)
+                this.Calorific = this._calorific(size, filling, sauce)
+            }
+            _check(attrName) {
+                let obj = document.querySelector(`input[name=${attrName}]:checked`)
+                return obj.value
+            }
+            _getArray(attrName) {
+                let objArr = [...document.querySelectorAll(`input[name=${attrName}]:checked`)]
+                let arr = []
+                objArr.forEach(el => {
+                    arr.push(el.value)
+                })
+                return arr
+            }
+            _price(attrSize, attrFilling, attrSauce) {
+                let obj = document.querySelector(`input[name=${attrSize}]:checked`)
+                let objArr1 = [...document.querySelectorAll(`input[name=${attrFilling}]:checked`)]
+                let objArr2 = [...document.querySelectorAll(`input[name=${attrSauce}]:checked`)]
+                let price = +obj.dataset['price']
+                objArr1.forEach(el => {
+                    price += +el.dataset['price']
+                })
+                objArr2.forEach(el => {
+                    price += +el.dataset['price']
+                })
+                return price
+            }
+            _calorific(attrSize, attrFilling, attrSauce) {
+                let obj = document.querySelector(`input[name=${attrSize}]:checked`)
+                let objArr1 = [...document.querySelectorAll(`input[name=${attrFilling}]:checked`)]
+                let objArr2 = [...document.querySelectorAll(`input[name=${attrSauce}]:checked`)]
+                let calories = +obj.dataset['calories']
+                objArr1.forEach(el => {
+                    calories += +el.dataset['calories']
+                })
+                objArr2.forEach(el => {
+                    calories += +el.dataset['calories']
+                })
+                return calories
+            }
+        }
+    </script>
+</body>
+
+</html>
