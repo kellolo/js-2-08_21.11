@@ -97,7 +97,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    min-width: 300px;
 }
 
 .invisible{
@@ -159,9 +159,9 @@ img {
     color: #474747;
     font-size: 0.5em;
 }
-.product-price{
+/*.product-price{
     margin-left: 30px;
-}
+}*/
 .product-desc{
     max-width: 150px;
 }
@@ -206,6 +206,6 @@ img {
 
 .cart-block .cart-item .right-block > button{
     position: absolute;
-    bottom: 10px;
-    right: -5px;
+    bottom: 0px;
+    right: -10px;
 }
