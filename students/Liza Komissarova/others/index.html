@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        h1 {
+            border: 5px dotted #b1a4ff;
+            width: 430px;
+        }
+        form {
+            width: 300px;
+            background-color: #eedeff;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #e0d2ff;
+        }
+    </style>
+</head>
+<body>
+<h1>Охапка дров - и бургер готов!</h1>
+<form action="#" id="bForm">
+    <p style="font-weight: bold">Выбери размер, дружок:</p>
+    <fieldset>
+        <label>
+            <input type="radio" name="Size" value="small"> Маленький (50 рублей, 20 калорий)
+        </label>
+        <label>
+            <input type="radio" name="Size" value="big"> Большой (100 рублей, 40 калорий)
+        </label>
+    </fieldset>
+    <p style="font-weight: bold">А теперь начинку:</p>
+    <fieldset>
+        <label>
+            <input type="radio" name="Filler" value="cheese"> Сыр(10 рублей, 20 калорий)
+        </label>
+        <label>
+            <input type="radio" name="Filler" value="salad"> Салат (20 рублей, 5 калорий)
+        </label>
+        <label>
+            <input type="radio" name="Filler" value="potato"> Картофель (15 рублей, 10 калорий)
+        </label>
+    </fieldset>
+    <p style="font-weight: bold">Ну и добавки, если хочешь:</p>
+    <fieldset>
+        <label>
+            <input type="checkbox" name="Adds" value="flavouring"> Приправа (15 рублей, 0 калорий)
+        </label>
+        <label>
+            <input type="checkbox" name="Adds" value="mayo"> Майонез (20 рублей, 5 калорий)
+        </label>
+    </fieldset>
+
+</form>
+
+<button id="okBtn">Сделать заказ</button>
+<div class="all"></div>
+
+<script>
+    let prices = [50, 100, 10, 20, 15, 15, 20]
+    let calories = [20, 40, 20, 5, 10, 0, 5]
+    let product = ['small', 'big', 'cheese', 'salad', 'potato', 'flavouring', 'mayo']
+    let uForm = document.querySelector ('#bForm')
+    let btn = document.querySelector ('#okBtn')
+    let block = document.getElementsByClassName('all')[0]
+    btn.addEventListener('click', addBurger)
+
+    function addBurger () {
+        let yourBurger = new Burger  ('Size', 'Filler', 'Adds')
+        console.log(yourBurger)
+    }
+
+    let allProducts = fetchData()
+    console.log(allProducts)
+
+    function fetchData() {
+        let arr = []
+        for (let i = 0; i < product.length; i++) {
+            arr.push(createProduct(i))
+        }
+        return arr
+    }
+
+    function createProduct(i) {
+        return {
+            name: product[i],
+            price: prices[i],
+            calories: calories[i]
+        }
+    }
+
+    class Burger {
+        constructor (size, filler, adds) {
+            this.Size = this._check (size)
+            this.Filler = this._check(filler)
+            this.Adds = this._getAdds (adds)
+            this.findBurger = this._addProduct()
+            this.totalPrice = 0
+            this.totalCalories = 0
+            this._totalSum()
+        }
+
+        _check (attrName) {
+            let obj = document.querySelector (`input[name=${attrName}]:checked`)
+            return obj.value
+        }
+        _getAdds (attrName) {
+            let adds = []
+            let arr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+            arr.forEach(el => adds.push(el.value))
+            return adds
+        }
+        _addProduct() {
+            let find = []
+            find[0] = allProducts.find(element => element.name === this.Size)
+            find[1] = allProducts.find(element => element.name === this.Filler)
+            this.Adds.forEach(el => find.push(allProducts.find(element => element.name === el)))
+            return find
+        }
+        _totalSum() {
+            this.findBurger.forEach(item => {
+                this.totalPrice += item.price
+                this.totalCalories += item.calories
+            })
+            this.render()
+        }
+        render() {
+            let str = ''
+            block.innerHTML = str
+            str = `Стоимость бургера: ${this.totalPrice} рублей. <br>
+                        В нём ${this.totalCalories} калорий.`
+            block.innerHTML = str
+        }
+    }
+</script>
+</body>
+</html>
