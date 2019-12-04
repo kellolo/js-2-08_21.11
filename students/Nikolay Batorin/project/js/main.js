@@ -57,7 +57,7 @@ class CartView {
                         <button class="del-btn" data-id="${cartItem.product.id}">&times;</button>
                     </div>
                 </div>
-                <hr/>`;
+                <hr class="separator"/>`;
     }
 }
 
@@ -109,7 +109,9 @@ class AppController {
     constructor() {
         this.productService = new ProductService();
         this.cart = new CartModel();
-
+        /*
+        this.cart = new CartService();   --- получаем данные, если корзину будем рисовать с бэка
+        */
         document.getElementById("products").addEventListener("click", this.onBuyButtonClick);
         document.getElementById("cart").addEventListener("click", this.onCartButtonClick);
         document.getElementById("cart").addEventListener("click", this.onDeleteButtonClick);
@@ -127,8 +129,21 @@ class AppController {
                 .then(product => {
                     this.cart.addItem(product);
                     this.showCart();
+                    this.postBuyItem(product);
                 });
         }
+    }
+    postBuyItem(product) {
+        const buyOrder = [product, "buy"];
+        let request = new XMLHttpRequest();
+        request.open("POST", "http://JSON корзины");
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200)
+                request.send(buyOrder);
+        }
+        console.log(buyOrder);
+        console.log("request.readyState = ", request.readyState);
     }
     onDeleteButtonClick = (event) => {
         const element = event.target;
@@ -136,7 +151,23 @@ class AppController {
             const productId = +element.dataset.id;
             this.cart.deleteItem(productId);
             this.showCart();
+            this.productService.getProductById(productId)
+                .then(product => {
+                    this.postDeteteItemId(product)
+                });
         }
+    }
+    postDeteteItemId(product) {
+        const deleteOrder = [product, "delete"];
+        let request = new XMLHttpRequest();
+        request.open("POST", "http://JSON корзины");
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200)
+                request.send(deleteOrder);
+        }
+        console.log(deleteOrder);
+        console.log("request.readyState = ", request.readyState);
     }
     onCartButtonClick = (event) => {
         const element = event.target;
@@ -158,6 +189,10 @@ class AppController {
     }
     showCart() {
         new CartView(this.cart).render();
+        /*  отрисовка, если получаем корзину с бэка
+                this.cart.getCart()
+                    .then(products => new CartView(products).render());
+        */
     }
 
 }
@@ -176,10 +211,17 @@ class ProductService {
             .then(products => products.filter(product => product.title.toLowerCase().includes(name.toLowerCase())));
     }
 }
+/* --- позучение козрины с бэка
+class CartService {
+    getCart() {
+        return fetch('http://JSON корзины')
+            .then(response => response.json());
+    }
 
+}
+*/
 const appController = new AppController();
 document.addEventListener('DOMContentLoaded', () => {
     appController.showCatalog();
     appController.showCart();
 });
-

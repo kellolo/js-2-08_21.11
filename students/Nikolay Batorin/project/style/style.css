@@ -112,6 +112,15 @@ img {
     border-bottom: 10px solid white;
 }
 
+.separator {
+    margin: 0 auto 10px;
+    border: 1px solid #e9e9e9;
+}
+
+.separator:last-child {
+    display: none;
+}
+
 .buy-btn,
 .del-btn {
     margin-top: 10px;
@@ -137,7 +146,7 @@ img {
 }
 
 .cart-item:not(:last-child) {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .product-bio {
