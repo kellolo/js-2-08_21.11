@@ -1,5 +1,3 @@
-const API_URL = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json";
-
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -55,17 +53,11 @@ class Catalog {
         this.fetchProducts()
             .then((data) => {
                 this.products = JSON.parse(data);
-                console.log(this.products);
                 this.render();
             })
             .catch((errStatus) => {
                 console.log(`Ошибка ${errStatus}`);
             });
-        // this.products = lst;
-        // lst.forEach(el => {
-        //     this.products.push(new Product(el));
-        // });
-        // this.render();
     }
     render() {
         let trg = document.querySelector(this.container);
@@ -103,14 +95,13 @@ class Cart {
     constructor() {
         this.products = [];
         this.container = '.cart-block';
-        this.addItem_url = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json";
-        this.removeItem_url = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json";
+        this.addItem_url = "https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/addToCart.json";
+        this.removeItem_url = "https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/removeFromCart.json";
     }
     addItem(item) {
         this._fetchData(this.addItem_url)
             .then((data) => {
-                if (JSON.parse(data).result === 1) {
-                    console.log('OK');
+                if (data.result === 1) {
                     let itemId = +item.dataset.id;
                     let findItem = this.products.find(el => el.id === itemId);
                     if (!findItem) {
@@ -119,24 +110,18 @@ class Cart {
                         findItem.increaseQnt();
                     }
                     this._render();
+                } else {
+                    console.log(`Ошибка ${data.result}`);
                 }
             })
             .catch((errStatus) => {
                 console.log(`Ошибка ${errStatus}`);
             });
-        // let itemId = +item.dataset.id;
-        // let findItem = this.products.find(el => el.id === itemId);
-        // if (!findItem) {
-        //     this.products.push(new CartItem(item));
-        // } else {
-        //     findItem.increaseQnt();
-        // }
-        // this._render();
     }
     removeItem(item) {
         this._fetchData(this.removeItem_url)
             .then((data) => {
-                if (JSON.parse(data).result === 1) {
+                if (data.result === 1) {
                     let itemId = +item.dataset.id;
                     let findItem = this.products.find(el => el.id === itemId);
                     if (findItem.quantity > 1) {
@@ -146,20 +131,13 @@ class Cart {
                         document.querySelector(`.cart-item[data-id="${itemId}"]`).remove();
                     }
                     this._render();
+                } else {
+                    console.log(`Ошибка ${data.result}`);
                 }
             })
             .catch((errStatus) => {
                 console.log(`Ошибка ${errStatus}`);
             });
-        // let itemId = +item.dataset.id;
-        // let findItem = this.products.find(el => el.id === itemId);
-        // if (findItem.quantity > 1) {
-        //     findItem.reduceQnt();
-        // } else {
-        //     this.products.splice(this.products.indexOf(findItem), 1);
-        //     document.querySelector(`.cart-item[data-id="${itemId}"]`).remove();
-        // }
-        // this._render();
     }
     _render() {
         let allProducts = '';
@@ -183,25 +161,7 @@ class Cart {
         document.querySelector(this.container).innerHTML = allProducts;
     }
     _fetchData(url) {
-        return new Promise((resolve, reject) => {
-            let request;
-            if (window.XMLHttpRequest) {
-                request = new XMLHttpRequest();
-            } else if (window.ActiveXObject) {
-                request = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            request.onreadystatechange = function () {
-                if (request.readyState === 4) {
-                    if (request.status == 200) {
-                        resolve(request.responseText);
-                    } else {
-                        reject(request.status);
-                    }
-                }
-            };
-            request.open('GET', url, true);
-            request.send();
-        });
+        return fetch(url) .then(dataJSON => dataJSON.json());
     }
 }
 
@@ -209,7 +169,7 @@ class CartItem {
     constructor(product) {
         this.name = product.dataset.name;
         this.id = +product.dataset.id;
-        this.img =  'https://placehold.it/100x80';
+        this.img = 'https://placehold.it/100x80';
         this.price = +product.dataset.price;
         this.quantity = 1;
     }
@@ -221,41 +181,9 @@ class CartItem {
     }
 }
 
-// function fetchData(url) {
-//     return new Promise((resolve, reject) => {
-//         let request;
-//         if (window.XMLHttpRequest) {
-//             request = new XMLHttpRequest();
-//         } else if (window.ActiveXObject) {
-//             request = new ActiveXObject("Microsoft.XMLHTTP");
-//         }
-//         request.onreadystatechange = function () {
-//             if (request.readyState === 4) {
-//                 if (request.status == 200) {
-//                     resolve(request.responseText);
-//                 } else {
-//                     reject(request.status);
-//                 }
-//             }
-//         };
-//         request.open('GET', url, true);
-//         request.send();
-//     });
-// }
-
 
 // main
 // ------------------------------------------------
 
 let catalog = new Catalog();
 let userCart = new Cart();
-
-// fetchData(API_URL)
-//     .then((data) => {
-//         if (JSON.parse(data).result === 1) {
-//             console.log('OK');
-//         }
-//     })
-//     .catch((errStatus) => {
-//         console.log(`Ошибка ${errStatus}`);
-//     });
