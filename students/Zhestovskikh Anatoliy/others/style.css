@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 600px;
+    margin: 0 auto;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+fieldset {
+    padding-bottom: 10px;
+}
+
+.name {
+    width: 200px;
+    padding-left: 20px;
+}
+
+.attribute {
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+}
+
+form {
+    width: 400px;
+}
+
+label {
+    display: flex;
+    padding: 5px;
+}
+
+label:hover {
+    color: #808080;
+}
+
+.orderButton {
+    margin-top: 10px;
+
+}
+
+
+
