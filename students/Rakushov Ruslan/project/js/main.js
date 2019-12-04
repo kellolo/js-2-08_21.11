@@ -1,14 +1,17 @@
 //TODO Заменить заглушки изображений
 //TODO Дописать makeGetRequestLong() как async (done), promise (done), fetch
 //TODO Catalog.render() - обработка пустого каталога
+//TODO Обработка ошибок получения данных в функциях makeGetRequest...
 
 //заглушки (имитация базы данных)
 const image = "https://placehold.it/200x150";
 const imageCart = "https://placehold.it/100x80";
+
+//Адрес api сервера (заглушки)
 url = "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" + "master/students/Rakushov%20Ruslan/Others/responses/";
-urlCatalogData =
-  "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
-  "master/students/Rakushov%20Ruslan/Others/responses/catalogData.json";
+// urlCatalogData =
+//   "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
+//   "master/students/Rakushov%20Ruslan/Others/responses/catalogData.json";
 
 class Catalog {
   constructor() {
@@ -28,13 +31,21 @@ class Catalog {
     //     this.render();
     //   }
     // });
-    makeGetRequestPromiseLong("catalogData.json")
-      .then((data) => {
-        if (data) {
-          data.forEach(prod => this.products.push(new Product(prod)));
-          this.render();
-        }
-      });
+
+    // makeGetRequestPromiseLong("catalogData.json")
+    //   .then((data) => {
+    //     if (data) {
+    //       data.forEach(prod => this.products.push(new Product(prod)));
+    //       this.render();
+    //     }
+    //   });
+
+    makeGetRequestFetch("catalogData.json")
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(prod => this.products.push(new Product(prod)));
+        this.render()
+      })
   }
   // getCatalogData() {
   //   let xhr = new XMLHttpRequest();
@@ -100,7 +111,7 @@ class Cart {
   }
   addCartItem(item) {
     let id = +item.dataset["id"];
-    let curProd = this.findInCart(id);
+    let curProd = this.getIteminCartById(id);
     if (!curProd) {
       let cartItem = new CartItem(item);
       this.products.push(cartItem);
@@ -113,7 +124,7 @@ class Cart {
   }
   delCartItem(item) {
     let id = +item.dataset["id"];
-    let curProd = this.findInCart(id);
+    let curProd = this.getIteminCartById(id);
     if (curProd) {
       curProd.quantity--;
     }
@@ -148,7 +159,7 @@ class Cart {
     }
     document.querySelector(".cart-block").innerHTML = strProducts;
   }
-  findInCart(id) {
+  getIteminCartById(id) {
     let find = this.products.find(prod => parseInt(prod.id) === id);
     return find;
   }
@@ -185,33 +196,42 @@ class CartItem {
 //     return JSON.parse(xhr.responseText);
 //   }
 // }
-//Try async. setTimeout emulates long data downloading
-function makeGetRequestLong(urlPostFix, cb) {
+// //Try async. setTimeout emulates long data downloading
+// function makeGetRequestLong(urlPostFix, cb) {
+//   setTimeout(function() {
+//     let xhr = new XMLHttpRequest();
+//     xhr.onreadystatechange = function() {
+//       if (xhr.readyState == 4 && xhr.status == 200) {
+//         cb(JSON.parse(xhr.responseText));
+//       }
+//     };
+//     xhr.open("GET", url + urlPostFix, true);
+//     xhr.send();
+//   }, 1500);
+// }
+// //Try promise. setTimeout emulates long data downloading
+// function makeGetRequestPromiseLong(urlPostFix) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(function() {
+//       let xhr = new XMLHttpRequest();
+//       xhr.onreadystatechange = function() {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//           resolve(JSON.parse(xhr.responseText));
+//         }
+//       };
+//       xhr.open("GET", url + urlPostFix, true);
+//       xhr.send();
+//     }, 3500);
+//   });
+// }
+//Try fetch. //TODO Is it sync again (without await)?
+// function makeGetRequestFetch(urlPostFix) {
+//   return fetch(url + urlPostFix);
+// }
+function makeGetRequestFetch(urlPostFix) {
   setTimeout(function() {
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        cb(JSON.parse(xhr.responseText));
-      }
-    };
-    xhr.open("GET", url + urlPostFix, true);
-    xhr.send();
-  }, 1500);
-}
-//Try promise. setTimeout emulates long data downloading
-function makeGetRequestPromiseLong(urlPostFix) {
-  return new Promise((resolve, reject) => {
-    setTimeout(function() {
-      let xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          resolve(JSON.parse(xhr.responseText));
-        }
-      };
-      xhr.open("GET", url + urlPostFix, true);
-      xhr.send();
-    }, 3500);
-  });
+    return fetch(url + urlPostFix);
+  },3000);
 }
 
 //-----Start-----
