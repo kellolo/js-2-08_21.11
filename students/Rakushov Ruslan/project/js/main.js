@@ -1,10 +1,11 @@
 //TODO Заменить заглушки изображений
-//TODO Дописать Catalog.getCatalogData() как асинк, fetch, promise
-//TODO Catalog.init(): вызов this.render() сделать с помощью колбэка
+//TODO Дописать makeGetRequestLong() как promise, fetch
+//TODO Catalog.render() - обработка пустого каталога
 
 //заглушки (имитация базы данных)
 const image = "https://placehold.it/200x150";
 const imageCart = "https://placehold.it/100x80";
+url = "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" + "master/students/Rakushov%20Ruslan/Others/responses/";
 urlCatalogData =
   "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
   "master/students/Rakushov%20Ruslan/Others/responses/catalogData.json";
@@ -16,27 +17,39 @@ class Catalog {
     this.init();
   }
   init() {
-    this.getCatalogData();
-    this.render();
+    //this.getCatalogData();
+    // makeGetRequest("catalogData.json").forEach(prod => {
+    //   this.products.push(new Product(prod));
+    // });
+    makeGetRequestLong("catalogData1.json", data => {
+      if (data) {
+        data.forEach(prod => this.products.push(new Product(prod)));
+        this.render();
+      } 
+    });
   }
-  getCatalogData() {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", urlCatalogData, false);
-    xhr.send();
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      JSON.parse(xhr.responseText).forEach(prod => {
-        this.products.push(new Product(prod));
-      });
-    }
-  }
+  // getCatalogData() {
+  //   let xhr = new XMLHttpRequest();
+  //   xhr.open("GET", urlCatalogData, false);
+  //   xhr.send();
+  //   if (xhr.readyState == 4 && xhr.status == 200) {
+  //     JSON.parse(xhr.responseText).forEach(prod => {
+  //       this.products.push(new Product(prod));
+  //     });
+  //   }
+  // }
   render() {
     let trg = document.querySelector(this.container);
-    let str = "";
-    this.products.forEach(prod => {
-      str += prod.render();
-    });
-    trg.innerHTML = str;
-    this._listenToBuyBtnClick();
+    if (this.products.length > 0) {
+      let str = "";
+      this.products.forEach(prod => {
+        str += prod.render();
+      });
+      trg.innerHTML = str;
+      this._listenToBuyBtnClick();
+    } else {
+      trg.innerHTML = '<div class="error-msg">There is no data on server</div>';
+    }
   }
   _listenToBuyBtnClick() {
     document.querySelector(".products").addEventListener("click", evt => {
@@ -153,6 +166,28 @@ class CartItem {
     // this.img = prod.img;
     this.quantity = 0;
   }
+}
+
+function makeGetRequest(urlPostFix) {
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", url + urlPostFix, false);
+  xhr.send();
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    return JSON.parse(xhr.responseText);
+  }
+}
+//Test async
+function makeGetRequestLong(urlPostFix, cb) {
+  setTimeout(function() {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        cb(JSON.parse(xhr.responseText));
+      }
+    }
+    xhr.open("GET", url + urlPostFix, true);
+    xhr.send();
+  }, 1500);
 }
 
 //-----Start-----
