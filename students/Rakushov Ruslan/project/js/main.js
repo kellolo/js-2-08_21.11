@@ -1,5 +1,5 @@
 //TODO Заменить заглушки изображений
-//TODO Дописать makeGetRequestLong() как promise, fetch
+//TODO Дописать makeGetRequestLong() как async (done), promise (done), fetch
 //TODO Catalog.render() - обработка пустого каталога
 
 //заглушки (имитация базы данных)
@@ -21,12 +21,20 @@ class Catalog {
     // makeGetRequest("catalogData.json").forEach(prod => {
     //   this.products.push(new Product(prod));
     // });
-    makeGetRequestLong("catalogData1.json", data => {
-      if (data) {
-        data.forEach(prod => this.products.push(new Product(prod)));
-        this.render();
-      } 
-    });
+
+    // makeGetRequestLong("catalogData1.json", data => {
+    //   if (data) {
+    //     data.forEach(prod => this.products.push(new Product(prod)));
+    //     this.render();
+    //   }
+    // });
+    makeGetRequestPromiseLong("catalogData.json")
+      .then((data) => {
+        if (data) {
+          data.forEach(prod => this.products.push(new Product(prod)));
+          this.render();
+        }
+      });
   }
   // getCatalogData() {
   //   let xhr = new XMLHttpRequest();
@@ -168,26 +176,42 @@ class CartItem {
   }
 }
 
-function makeGetRequest(urlPostFix) {
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", url + urlPostFix, false);
-  xhr.send();
-  if (xhr.readyState == 4 && xhr.status == 200) {
-    return JSON.parse(xhr.responseText);
-  }
-}
-//Test async
+// //Try sync method
+// function makeGetRequest(urlPostFix) {
+//   let xhr = new XMLHttpRequest();
+//   xhr.open("GET", url + urlPostFix, false);
+//   xhr.send();
+//   if (xhr.readyState == 4 && xhr.status == 200) {
+//     return JSON.parse(xhr.responseText);
+//   }
+// }
+//Try async. setTimeout emulates long data downloading
 function makeGetRequestLong(urlPostFix, cb) {
   setTimeout(function() {
     let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
       if (xhr.readyState == 4 && xhr.status == 200) {
         cb(JSON.parse(xhr.responseText));
       }
-    }
+    };
     xhr.open("GET", url + urlPostFix, true);
     xhr.send();
   }, 1500);
+}
+//Try promise. setTimeout emulates long data downloading
+function makeGetRequestPromiseLong(urlPostFix) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          resolve(JSON.parse(xhr.responseText));
+        }
+      };
+      xhr.open("GET", url + urlPostFix, true);
+      xhr.send();
+    }, 3500);
+  });
 }
 
 //-----Start-----
