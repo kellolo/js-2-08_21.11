@@ -9,7 +9,7 @@ const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 // var list = fetchData ();
 let userCart = [],
-    catalogJSON = 
+    catalogJSON = 'https://raw.githubusercontent.com/Archtung/js-2-08_21.11/master/students/Dam%20Quang%20Tung/project/json/catalog.json'
 
 function makeRequest (method, url) {
     return new Promise(function (resolve, reject) {
@@ -46,7 +46,6 @@ makeRequest ('GET', catalogJSON)
     })
     .catch((err) => {
         let products = document.querySelector(".products");
-        products.style.cssText = "grid-template-columns: none;";
         products.innerHTML = `<div>Не удалось загрузить <a href= "${err.url}" target="_blank">данные</a> с сервера, получена ошибка: ${err.status} (${err.statusText})</div>`;
     });
 
@@ -57,20 +56,17 @@ class Catalog {
         this._init ()
     }
     _init () {
-        list.forEach (el => {
-            this.products.push (new Product (el))
-        })
-        this.render ()
+
     }
-    render () {
-        let trg = document.querySelector (this.container)
-        let str = ''
-        this.products.forEach (prod => {
-            str += prod.render ()
-        })
-        trg.innerHTML = str
+    render() {
+    let trg = document.querySelector(this.container);
+    if (this.products.length > 0) {
+      let str = this.products.map(prod => prod.render()).join("");
+      trg.innerHTML = str;
+    } else {
+      trg.innerHTML = '<div class="error-msg">There is no data on server</div>';
     }
-}
+
 
 class Product {
     constructor (prod) {
@@ -132,8 +128,8 @@ class CartItem {
     }
 
     addProduct(product){
-        let productId = +product.dataset['id']; //data-id="1"
-        let find = userCart.find (element => element.id === productId); //товар или false
+        let productId = +product.dataset['id']; 
+        let find = userCart.find (element => element.id === productId); 
         if (!find) {
             userCart.push({
                 name: product.dataset ['name'],
