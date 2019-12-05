@@ -33,9 +33,10 @@ class Catalog {
       .then((data) => {
         if (data) {
           data.forEach(prod => this.products.push(new Product(prod)));
-          this.render();
+          // this.render(); //TODO Где лучше вызывать рендер: тут или в новом .then?
         }
-      });
+      })
+      .then(() => this.render());
 
     // makeGetRequestFetch("catalogData.json")
     //   .then(response => response.json())
@@ -58,10 +59,11 @@ class Catalog {
   render() {
     let trg = document.querySelector(this.container);
     if (this.products.length > 0) {
-      let str = "";
-      this.products.forEach(prod => {
-        str += prod.render();
-      });
+      // let str = "";
+      // this.products.forEach(prod => {
+      //   str += prod.render();
+      // });
+      let str = this.products.map(prod => prod.render()).join("");
       trg.innerHTML = str;
       this._listenToBuyBtnClick();
     } else {
@@ -124,34 +126,22 @@ class Cart {
     let id = +item.dataset["id"];
     let curProd = this.getIteminCartById(id);
     if (curProd) {
-      curProd.quantity--;
+      //   curProd.quantity--;
+      // }
+      if (--curProd.quantity < 1) {
+        let curNode = document.querySelector(`.cart-item[data-id="${curProd.id}"]`);
+        curNode.parentNode.removeChild(curNode);
+        this.products.splice(this.products.indexOf(curProd), 1);
+      }
+      this.render();
     }
-    if (curProd.quantity < 1) {
-      let curNode = document.querySelector(`.cart-item[data-id="${curProd.id}"]`);
-      curNode.parentNode.removeChild(curNode);
-      this.products.splice(this.products.indexOf(curProd), 1);
-    }
-    this.render();
   }
   render() {
-    let strProducts = "";
-    this.products.forEach(prod => {
-      strProducts += `
-      <div class="cart-item" data-id="${prod.id}">
-        <div class="product-bio">
-          <img src="${imageCart}" alt="Some image">
-          <div class="product-desc">
-            <p class="product-title">${prod.title}</p>
-            <p class="product-quantity">Quantity: ${prod.quantity}</p>
-            <p class="product-single-price">${prod.price} руб. each</p>
-          </div>
-        </div>
-        <div class="right-block">
-          <p class="product-price">${prod.quantity * prod.price}</p>
-          <button class="del-btn" data-id="${prod.id}">&times;</button>
-        </div>
-      </div>`;
-    });
+    // let strProducts = "";
+    // this.products.forEach(prod => {
+    //   strProducts += prod.render();
+    // });
+    let strProducts = this.products.map(prod => prod.render()).join("");
     if (strProducts === "") {
       strProducts = "Cart is empty. Add some goods first!";
     }
@@ -169,7 +159,7 @@ class Cart {
   _listenToCartDelBtnClick() {
     document.querySelector(".cart-block").addEventListener("click", evt => {
       if (evt.target.classList.contains("del-btn")) {
-        cart.delCartItem(evt.target); //TODO Вызывать через cart видимо не правильно!
+        cart.delCartItem(evt.target); //TODO Вызывать через cart видимо не правильно! В контроллер?
       }
     });
   }
@@ -182,6 +172,23 @@ class CartItem {
     this.price = prod.dataset["price"];
     // this.img = prod.img;
     this.quantity = 0;
+  }
+  render() {
+    return `
+      <div class="cart-item" data-id="${this.id}">
+        <div class="product-bio">
+          <img src="${imageCart}" alt="Some image">
+          <div class="product-desc">
+            <p class="product-title">${this.title}</p>
+            <p class="product-quantity">Quantity: ${this.quantity}</p>
+            <p class="product-single-price">${this.price} руб. each</p>
+          </div>
+        </div>
+        <div class="right-block">
+          <p class="product-price">${this.quantity * this.price}</p>
+          <button class="del-btn" data-id="${this.id}">&times;</button>
+        </div>
+      </div>`
   }
 }
 
@@ -238,3 +245,4 @@ function makeGetRequestPromiseLong(urlPostFix) {
 //-----Start-----
 let catalog = new Catalog();
 let cart = new Cart();
+//TODO Add Controller class with Start and listeners adding functions (???)
