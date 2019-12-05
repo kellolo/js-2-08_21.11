@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+<header>
+</header>
+<main>
+<form action="#" id = "customerForm" onchange="updateForm()">
+    <fieldset class="hamburger-size">
+        <label>
+            <input type="radio" name="size" data-price = "50" data-cal = "20" value = "МАЛЕНЬКИЙ" checked> Маленький
+        </label>
+        <label >
+            <input type="radio" name="size" data-price = "100" data-cal = "40" value = "БОЛЬШОЙ">Большой
+        </label>
+    </fieldset>
+    <fieldset class="hamburger-fillings">
+        <label>
+            <input type="checkbox" name="filling" data-price = "10" data-cal = "20" value = "с сыром" checked> С Сыром
+        </label>
+        <label>
+            <input type="checkbox" name="filling" data-price = "20" data-cal = "5" value = "с салатом" checked>С Салатом
+        </label>
+        <label>
+            <input type="checkbox" name="filling" data-price = "15" data-cal = "10" value = "с картофелем" checked>С Картофелем
+        </label>
+    </fieldset>
+    <fieldset class="hamburger-toppings">
+        <label>
+            <input type="checkbox" name="topping" data-price = "15" data-cal = "0" value = "с приправой" checked> С приправой
+        </label>
+        <label>
+            <input type="checkbox" name="topping" data-price = "20" data-cal = "5" value = "с майонезом" checked> С майонезом
+        </label>
+    </fieldset>
+    <div class="main"></div>
+</form>
+    <p class = "totalPrice"></p>
+    <p class="totalCal"></p>
+    </main>
+    <script src="main.js"></script>
+</body>
+</html>

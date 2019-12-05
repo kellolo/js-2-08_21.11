@@ -37,6 +37,11 @@ function fetchData () {
 };
 
 //создание товара
+
+//когда хочу задать значение функции по умолчанию, всё выделяется красным. страшно.
+//почему запятая? мю потому, что она задана по умолчанию...
+let sayArrow = () => 'createProduct'//по идее, большую функцию надо заменить на вот это
+
 function createProduct (i) {
     return {
         id: ids[i],
@@ -65,6 +70,7 @@ function createProduct (i) {
     }
 };
 
+let sayArrow = () => 'renderProduct' //ну вот((99(
 //рендер списка товаров (каталога)
 function renderProducts () {
     let arr = [];
@@ -76,9 +82,73 @@ function renderProducts () {
 
 renderProducts ();
 
-//CART
+//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!) (а жаль)
+var userCart = [];
+var list = fetchData ();
+
+
+class Catalog {
+    constructor () {
+        this.products = []
+        this.container = '.products'
+        this._init ()
+    }
+    _init () {
+        list.forEach (el => {
+            this.products.push (new Product (el))
+        })
+        this.render ()
+    }
+    render () {
+        let trg = document.querySelector (this.container)
+        let str = ''
+        this.products.forEach (prod => {
+            str += prod.render ()
+        })
+        trg.innerHTML = str
+    }
+}
+
+class Product {
+    constructor (prod) {
+        this.id = prod.id
+        this.title = prod.title
+        this.price = prod.price
+        this.img = prod.img
+    }
+    render () {
+        return `<div class="product-item" data-id="${this.id}">
+                    <img src="${this.img}" alt="Some img">
+                    <div class="desc">
+                        <h3>${this.title}</h3>
+                        <p>${this.price} $</p>
+                        <button class="buy-btn" 
+                        data-id="${this.id}"
+                        data-name="${this.title}"
+                        data-image="${this.img}"
+                        data-price="${this.price}">Купить</button>
+                    </div>
+                </div>`
+    }
+}
+
+class Cart {
+    constructor (cart) {
+        this.Cart
+    }
+}
+
+class CartItem {
+    constructor (cartItem) {
+        this.CartItem
+    }
+}
+
 
 // Добавление продуктов в корзину
+
+let sayArrow = () => 'addProduct'//и здесь надо изменить функцию на более ёмкую 
+
 function addProduct (product) {
     let productId = +product.dataset['id'];
     let find = userCart.find (element => element.id === productId);
@@ -97,6 +167,9 @@ function addProduct (product) {
 }
 
 //удаление товаров
+
+let sayArrow = () => 'removeProduct' //мб так?
+
 function removeProduct (product) {
     let productId = +product.dataset['id'];
     let find = userCart.find (element => element.id === productId);
@@ -110,6 +183,9 @@ function removeProduct (product) {
 }
 
 //перерендер корзины
+
+let sayArrow = () => 'renderCart'//вот бы оно работало
+
 function renderCart () {
     let allProducts = '';
     for (el of userCart) {
