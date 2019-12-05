@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hamburgers</title>
+    <style>
+        body {
+            margin: 0 auto;
+            padding: 0 20px;
+            font-family: sans-serif;
+            color: #666;
+            
+        }
+        button {
+            margin: 20px;
+            border-radius: 5px;
+            padding: 10px;
+            font-weight: 700;
+            color: #333;
+        }
+        h3 {
+            color: maroon;
+        }
+    </style>
+</head>
+<body>
+    <form action="#" id="burgerForm">
+        <fieldset>
+            <h3>Соберите ваш гамбургер</h3>
+        <fieldset>
+            <h4>Выберите размер гамбургера:</h4>
+            <label>
+                <input type="radio" name="size" value="small"> Маленький (50 рублей, 20 калорий) <br>
+            </label>
+            <label>
+                <input type="radio" name="size" value="big"> Большой (100 рублей, 40 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+                <h4>Выберите одну из начинок гамбургера:</h4>
+            <label>
+                <input type="radio" name="filling" value="cheese"> С сыром (10 рублей, 20 калорий) <br>
+            </label>
+            <label>
+                <input type="radio" name="filling" value="salad"> С салатом (20 рублей, 5 калорий) <br>
+            </label>
+            <label>
+                <input type="radio" name="filling" value="potato"> С картофелем (15 рублей, 10 калорий) <br>
+            </label>
+        </fieldset>
+        <fieldset>
+                <h4>Выберите добавку к гамбургеру:</h4>
+            <label>
+                <input type="checkbox" name="topping" value="flavoring"> Посыпать приправой (15 рублей, 0 калорий) <br>
+            </label>
+            <label>
+                <input type="checkbox" name="topping" value="mayo"> Полить майонезом (20 рублей, 5 калорий)
+            </label>
+        </fieldset>
+    </fieldset>
+    </form>
+
+    <button id="onBtnClick">Собрать гамбургер</button>
+    <div class="getData"></div>
+    <script>
+        const price = [50, 100, 10, 20, 15, 15, 20]
+        const calories = [20, 40, 20, 5 , 10, 0 , 5]
+        const product = ['small', 'big', 'cheese', 'salad', 'potato', 'flavoring', 'mayo']
+        //let burger = []
+        let newBurger = {}
+        let part = initPart ()
+        let btn = document.querySelector ('#onBtnClick')
+        btn.addEventListener ('click', addBurger)
+        btn.addEventListener ('click', addQuantity)
+
+        function addBurger () {
+            newBurger = new Burger ('size', 'filling', 'topping')
+            //burger.push (newBurger)
+        }
+        function addQuantity () {
+            document.querySelector ('.getData').innerHTML = `Итоговая стоимость гамбургера = ${newBurger.calcSum ()} <br>
+        Общее количество калорий = ${newBurger.calcCalories ()}`
+        }
+
+        function initPart () {
+                let arr = []
+                for(let i = 0; i < product.length; i++) {
+                    arr.push (create(i))
+                }
+                return arr
+            }
+
+        function create (i) {
+                return {
+                    param: product[i],
+                    calories: calories[i],
+                    price: price[i]
+                    }
+            }
+
+        class Burger {
+            constructor (size, filling, topping) {
+                this.size = this._check (size)
+                this.filling = this._check (filling)
+                this.topping = this._getArray (topping)
+            }
+            _check (attrName) {
+                let obj = document.querySelector (`input[name=${attrName}]:checked`)
+                return obj.value
+            }
+            _getArray (attrName) {
+                let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                let arr = []
+                objArr.forEach (el => {
+                    arr.push (el.value)
+                })
+                return arr
+            }
+            calcSum () {
+                let sum = 0
+                part.forEach (el => {
+                    if (this.size === el.param || this.filling  === el.param || this.topping.includes (el.param)) {
+                        sum += el.price
+                }                
+                })
+                return sum
+            }
+    
+            calcCalories () {
+                let sum = 0
+                part.forEach (el => {
+                    if (this.size === el.param || this.filling  === el.param || this.topping.includes (el.param)) {
+                        sum += el.calories
+                }
+                })
+                return sum
+        }
+
+    }
+
+</script>
+</body>
+</html>
