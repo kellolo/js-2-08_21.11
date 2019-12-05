@@ -93,7 +93,13 @@ class Cart {
         })
     }
 
-    render() {}
+    _render() {
+        let html = ''
+        for (let el of this.elements) {
+            html += el.render()
+        }
+        document.querySelector(`.cart-block`).innerHTML = html;
+    }
 
     addItem(productDataset) {
         let find = this.elements.find(element => element.id === productDataset['id']);
@@ -103,11 +109,25 @@ class Cart {
         } else {
             find.count++
         }
-        console.log(cart)
+        this._render()
     }
 
 
-    removeItem() {}
+    removeItem(productDataset) {
+        let find = this.elements.find(element => element.id === productDataset['id']);
+        console.log(this.elements)
+        let indexOfEl = this.elements.indexOf(find)
+        if (+find.count == 1) {
+            this.elements.splice(indexOfEl, 1);
+            document.querySelector(`.cart-item[data-id="${find['id']}"]`).remove()
+            console.log(this.elements)
+        } else {
+            this.elements[indexOfEl].count--
+            this._render()
+
+        }
+
+    }
 
 }
 
@@ -128,10 +148,7 @@ class CartItem {
         this.price = find.price
         this.img = find.img
         this.count = 1
-
     }
-
-
 
     render() {
         let html = `<div class="cart-item" data-id="${this.id}">
@@ -154,8 +171,8 @@ class CartItem {
 
 
 
-let catalog = new Catalog()
-let cart = new Cart()
+    let catalog = new Catalog()
+    let cart = new Cart()
 //console.log(catalog)
 
 //кнопка скрытия и показа корзины
@@ -210,55 +227,55 @@ function fetchData() {
 //CART
 
 // Добавление продуктов в корзину
-function addProduct(product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find(element => element.id === productId);
-    if (!find) {
-        userCart.push({
-            name: product.dataset['name'],
-            id: productId,
-            img: cartImage,
-            price: +product.dataset['price'],
-            quantity: 1
-        })
-    } else {
-        find.quantity++
-    }
-    renderCart()
-}
+// function addProduct(product) {
+//     let productId = +product.dataset['id'];
+//     let find = userCart.find(element => element.id === productId);
+//     if (!find) {
+//         userCart.push({
+//             name: product.dataset['name'],
+//             id: productId,
+//             img: cartImage,
+//             price: +product.dataset['price'],
+//             quantity: 1
+//         })
+//     } else {
+//         find.quantity++
+//     }
+//     renderCart()
+// }
 
-//удаление товаров
-function removeProduct(product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find(element => element.id === productId);
-    if (find.quantity > 1) {
-        find.quantity--;
-    } else {
-        userCart.splice(userCart.indexOf(find), 1);
-        document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
-    }
-    renderCart();
-}
+// //удаление товаров
+// function removeProduct(product) {
+//     let productId = +product.dataset['id'];
+//     let find = userCart.find(element => element.id === productId);
+//     if (find.quantity > 1) {
+//         find.quantity--;
+//     } else {
+//         userCart.splice(userCart.indexOf(find), 1);
+//         document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+//     }
+//     renderCart();
+// }
 
-//перерендер корзины
-function renderCart() {
-    let allProducts = '';
-    for (el of userCart) {
-        allProducts += `<div class="cart-item" data-id="${el.id}">
-                            <div class="product-bio">
-                                <img src="${el.img}" alt="Some image">
-                                <div class="product-desc">
-                                    <p class="product-title">${el.name}</p>
-                                    <p class="product-quantity">Quantity: ${el.quantity}</p>
-                                    <p class="product-single-price">$${el.price} each</p>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <p class="product-price">${el.quantity * el.price}</p>
-                                <button class="del-btn" data-id="${el.id}">&times;</button>
-                            </div>
-                        </div>`
-    }
+// //перерендер корзины
+// function renderCart() {
+//     let allProducts = '';
+//     for (el of userCart) {
+//         allProducts += `<div class="cart-item" data-id="${el.id}">
+//                             <div class="product-bio">
+//                                 <img src="${el.img}" alt="Some image">
+//                                 <div class="product-desc">
+//                                     <p class="product-title">${el.name}</p>
+//                                     <p class="product-quantity">Quantity: ${el.quantity}</p>
+//                                     <p class="product-single-price">$${el.price} each</p>
+//                                 </div>
+//                             </div>
+//                             <div class="right-block">
+//                                 <p class="product-price">${el.quantity * el.price}</p>
+//                                 <button class="del-btn" data-id="${el.id}">&times;</button>
+//                             </div>
+//                         </div>`
+//     }
 
-    document.querySelector(`.cart-block`).innerHTML = allProducts;
-}
+//     document.querySelector(`.cart-block`).innerHTML = allProducts;
+// }
