@@ -1,5 +1,5 @@
 let userCart = [],
-    catalogJSON = 'https://raw.githubusercontent.com/Yudaev/js-2-08_21.11/master/students/%D0%AE%D0%B4%D0%B0%D0%B5%D0%B2%20%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/project/JSON/catalog.json';
+    catalogJSON = 'https://raw.githubusercontent.com/shchastny/js-2-08_21.11/master/students/Alexander%20Shchastny/project/json/catalog.json';
 
 function makeRequest (method, url) {
     return new Promise(function (resolve, reject) {
@@ -39,8 +39,6 @@ makeRequest ('GET', catalogJSON)
         products.style.cssText = "grid-template-columns: none;";
         products.innerHTML = `<div>Не удалось загрузить <a href= "${err.url}" target="_blank">данные</a> с сервера, получена ошибка: ${err.status} (${err.statusText})</div>`;
     });
-
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
 
 class Catalog {
     constructor(list){
@@ -193,6 +191,3 @@ function createProduct (i) {
         img: image,
     }
 }
-
-//рендер списка товаров (каталога) - выпилено
-//рендер списка товаров (корзины) - выпилено
