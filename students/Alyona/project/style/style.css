@@ -8,6 +8,11 @@ header{
     color: #fafafa;
     padding: 30px 80px;
 }
+header:hover{
+    box-shadow: 0 5px 0 rgb(26, 58, 82);
+    transition: .3s;
+    background: rgb(46, 84, 109);
+}
 button:focus{
     outline: none;
 }
@@ -26,9 +31,12 @@ button:focus{
     cursor: pointer;
 }
 .btn-cart:hover{
-    background-color: transparent;
+    background-color: #6FC6FF;
     border-color: #fafafa;
-    color: #fafafa;
+}
+.btn-cart:active{
+    background-color: #000000;
+    color: #ffffff;
 }
 .btn-cart, .logo{
     align-self: center;
@@ -58,9 +66,17 @@ p {
     overflow: hidden;
     margin: 20px 0;
 }
+.product-item:hover{
+    box-shadow: 0 5px 0 #3C93D5;
+    transition: .3s;
+    background: #6FC6FF;
+}
 img {
     max-width: 100%;
     height: auto
+}
+img:active {
+    box-shadow: inset 2px 2px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgba(255, 255, 255, 1);
 }
 .desc {
     border: 1px solid #c0c0c040;
