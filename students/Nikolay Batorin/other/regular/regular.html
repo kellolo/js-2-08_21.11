@@ -22,10 +22,12 @@
         
         .red {
             border: 2px solid #bd0000;
+            background-color: #bd000015;
         }
         
         .green {
             border: 2px solid #00960c;
+            background-color: #00960c15;
         }
         
         input:focus {
@@ -37,8 +39,8 @@
 <body>
     <form>
         <input id="name" class="red" type="text" name="formGetName" placeholder="Name" autocomplete="off" onkeyup="chekNameValid();">
-        <input id=" phone" class="red" type="text" name="formGetPhone" placeholder="+7(000)000-0000" autocomplete="off" onkeyup="chekPhoneValid();">
-        <input id=" email" class="red" type="email" name="formGetEmail" placeholder="address@server.domain" autocomplete="off" onkeyup="chekEmailValid();">
+        <input id="phone" class="red" type="text" name="formGetPhone" placeholder="+7(000)000-0000" autocomplete="off" onkeyup="chekPhoneValid();">
+        <input id="email" class="red" type="email" name="formGetEmail" placeholder="address@server.domain" autocomplete="off" onkeyup="chekEmailValid();">
         <input type="submit" value="SEND">
         <input type="reset" value="Clear">
     </form>
@@ -49,18 +51,32 @@
         const regEmail = /^([A-Za-z0-9\.-]+)(@)([A-Za-z0-9\.-]+)(\.)([A-Za-z0-9\.]{2,})$/
 
         function chekNameValid() {
-            const str = document.getElementById("name").value;
-            console.log(str);
-
-            if (str.search(regName) == 0) {
-                console.log(str.search(regName));
-
+            if (document.getElementById("name").value.search(regName) == 0) {
                 document.getElementById("name").classList.remove("red");
                 document.getElementById("name").classList.add("green");
             } else {
                 document.getElementById("name").classList.remove("green");
                 document.getElementById("name").classList.add("red");
+            }
+        }
 
+        function chekPhoneValid() {
+            if (document.getElementById("phone").value.search(regPhone) == 0) {
+                document.getElementById("phone").classList.remove("red");
+                document.getElementById("phone").classList.add("green");
+            } else {
+                document.getElementById("phone").classList.remove("green");
+                document.getElementById("phone").classList.add("red");
+            }
+        }
+
+        function chekEmailValid() {
+            if (document.getElementById("email").value.search(regEmail) == 0) {
+                document.getElementById("email").classList.remove("red");
+                document.getElementById("email").classList.add("green");
+            } else {
+                document.getElementById("email").classList.remove("green");
+                document.getElementById("email").classList.add("red");
             }
         }
     </script>
