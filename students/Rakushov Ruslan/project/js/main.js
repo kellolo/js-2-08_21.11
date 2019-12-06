@@ -10,6 +10,32 @@ const imageCart = "https://placehold.it/100x80";
 //Адрес api сервера (заглушки)
 url = "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" + "master/students/Rakushov%20Ruslan/Others/responses/";
 
+class List {
+  constructor(url, container) {
+    this.url = url;
+    this.container = container;
+    this.items = [];
+    this._init();
+  }
+  _init() {
+    return false; //"Виртуальный" метод - переопределим в дочерних классах
+  }
+  getJson() {
+    fetch(this.url)
+    .then(data => data.json())
+  }
+  render() {
+    const block = document.querySelector(this.container);
+    let str = "";
+    if (this.items.length > 0) {
+      str = this.products.map((prod) => prod.render()).join("");
+    } else {
+      str = '<div class="error-msg">There is no data</div>';
+    }
+    block.innerHTML = str;
+  }
+}
+
 class Catalog {
   constructor() {
     this.products = [];
@@ -30,7 +56,7 @@ class Catalog {
     // });
 
     makeGetRequestPromiseLong("catalogData.json")
-      .then((data) => {
+      .then(data => {
         if (data) {
           data.forEach(prod => this.products.push(new Product(prod)));
           // this.render(); //TODO Где лучше вызывать рендер: тут или в новом .then?
@@ -188,7 +214,7 @@ class CartItem {
           <p class="product-price">${this.quantity * this.price}</p>
           <button class="del-btn" data-id="${this.id}">&times;</button>
         </div>
-      </div>`
+      </div>`;
   }
 }
 
