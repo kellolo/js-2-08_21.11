@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "AMD Ryzen 3",
+    "price": 6000,
+    "img": "https://placehold.it/200x200"
+  },
+  {
+    "id": 2,
+    "title": "Intel Core i3",
+    "price": 11600,
+    "img": "https://placehold.it/200x200"
+  },
+  {
+    "id": 3,
+    "title": "AMD Ryzen 5",
+    "price": 13500,
+    "img": "https://placehold.it/200x200"
+  },
+  {
+    "id": 4,
+    "title": "Intel Core i5",
+    "price": 17500,
+    "img": "https://placehold.it/200x200"
+  },
+  {
+    "id": 5,
+    "title": "AMD Ryzen 7",
+    "price": 25000,
+    "img": "https://placehold.it/200x200"
+  },
+  {
+    "id": 6,
+    "title": "Intel Core i7",
+    "price": 27000,
+    "img": "https://placehold.it/200x200"
+  },
+  {
+    "id": 7,
+    "title": "AMD Ryzen 9",
+    "price": 46800,
+    "img": "https://placehold.it/200x200"
+  },
+  {
+    "id": 8,
+    "title": "Intel Core i9 Coffee Lake R",
+    "price": 36000,
+    "img": "https://placehold.it/200x200"
+  },
+  {
+    "id": 9,
+    "title": "Intel Core i9 Skylake-X Refresh",
+    "price": 145000,
+    "img": "https://placehold.it/200x200"
+  }
+]
