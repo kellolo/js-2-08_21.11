@@ -22,10 +22,10 @@ class List {
             this.items.push(new lists[this.constructor.name](el))
         })
     }
-    _render() {
+    _render(arr = this.items) {
         let el = document.querySelector(this.container)
         el.innerHTML = ''
-        this.items.forEach(product => {
+        arr.forEach(product => {
             el.insertAdjacentHTML('beforeend', product.render())
         })
     }
@@ -48,6 +48,14 @@ class Catalog extends List {
                 this._buyProduct(this._getProduct(+evt.target.dataset['id']));
             }
         })
+        document.querySelector('.search-field').addEventListener('input', (evt) => {
+            this.filter(evt.target.value)
+        })
+    }
+
+    filter(searchText) {
+        let filterArr = this.items.filter(prod => prod.product_name.search(new RegExp(searchText, 'i')) != -1)
+        this._render(filterArr)
     }
 
     _getProduct(productId) {
