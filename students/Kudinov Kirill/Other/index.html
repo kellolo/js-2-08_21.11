@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        form {
+            padding: 5px;
+            width: 400px;
+            border: 1px solid black;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        fieldset {
+            margin-bottom: 10px;
+        }
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <form action="#" id="cForm">
+        <h3>Расчёт стоимости и калорийности бургера</h3>
+        <fieldset>
+            <legend>Определитесь с размером бургера</legend>
+            <label>
+                <input type="radio" name="Size" value="small" data-price="50" data-calories="20" checked> Маленький (50 рублей, 20 калорий).
+            </label>
+            <label>
+                <input type="radio" name="Size" value="big" data-price="100" data-calories="40"> Большой (100 рублей, 40 калорий).
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Выберите начинку</legend>
+            <label>
+                <input type="radio" name="Filling" value="cheese" data-price="10" data-calories="20" checked> С сыром (+10 рублей, +20 калорий).
+            </label>
+            <label>
+                <input type="radio" name="Filling" value="salad" data-price="20" data-calories="5"> С салатом (+20 рублей, +5 калорий).
+            </label>
+            <label>
+                <input type="radio" name="Filling" value="patato" data-price="15" data-calories="10"> С картофелем (+15 рублей, +10 калорий). 
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Дополнительные ингредиенты</legend>
+            <label>
+                <input type="checkbox" name="Ingredients" value="spice" data-price="15" data-calories="0"> Приправа (+15 рублей, +0 калорий).
+            </label>
+            <label>
+                <input type="checkbox" name="Ingredients" value="mayo" data-price="20" data-calories="5"> Майонез (+20 рублей, +5 калорий).
+            </label>
+        </fieldset>
+    </form>
+    <button id="Btn">Рассчитать</button>
+    
+    <script>
+        let form = document.querySelector ('#cForm')
+        let btn = document.querySelector ('#Btn')
+        let burger = {}
+        let arrSum = 0
+        let arrCalories = 0
+
+        btn.addEventListener ('click', calc)
+
+        function calc () {
+            arrSum = 0
+            arrCalories = 0
+            burger = new Burger ('Size', 'Filling', 'Ingredients')
+            console.log(burger);
+            console.log(countPrice ());
+            console.log(countCalories ());
+        }
+
+        function countPrice () {
+            let sum = 0
+            let obj = document.querySelector (`input[name=Size]:checked`)
+            console.dir (obj)
+            sum += +obj.dataset['price']
+            obj = document.querySelector (`input[name=Filling]:checked`)
+            console.dir (obj)
+            sum += +obj.dataset['price']
+            sum += arrSum
+            return sum
+        }
+        function countCalories () {
+            let sum = 0
+            let obj = document.querySelector (`input[name=Size]:checked`)
+            console.dir (obj)
+            sum += +obj.dataset['calories']
+            obj = document.querySelector (`input[name=Filling]:checked`)
+            console.dir (obj)
+            sum += +obj.dataset['calories']
+            sum += arrCalories
+            // burger.Ingredients.forEach (el => {
+            //     let obj = document.querySelector (`input[value=${el.value}]`)
+            //     console.log(el.value)    
+            //     console.dir (obj)
+                    
+            //         // sum += +obj.dataset['calories']
+            // })
+            return sum
+        }
+
+        class Burger {
+            constructor (size, filling, ingredients) {
+                this.Size = this._check (size)
+                this.Filling = this._check (filling)
+                this.Ingredients = this._getArray (ingredients)
+                // this.Price = this._countPrice ()
+                // this.Calories = this._countCalories (data-calories)
+            }
+            _check (attrName) {
+                let obj = document.querySelector (`input[name=${attrName}]:checked`)
+                return obj.value
+            }
+            _getArray (attrName) {
+                let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                let arr = []
+                objArr.forEach (el => {
+                    arr.push (el.value)
+                    let obj = document.querySelector (`input[value=${el.value}]`)
+                    console.dir (obj)
+                    arrSum += +obj.dataset['price']
+                    arrCalories += +obj.dataset['calories']
+                })
+                return arr
+            }
+            
+        }
+    </script>
+</body>
+</html>

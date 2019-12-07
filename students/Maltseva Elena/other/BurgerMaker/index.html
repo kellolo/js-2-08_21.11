@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Burger Maker</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 300px;
+            margin: 20px 0;
+        }
+        fieldset {
+            margin-bottom: 20px; 
+            border: 1px dashed gray;
+        }
+        legend {
+            padding: 0 10px;
+            font-weight: 600;
+        }
+        label {
+            display: block;
+        }
+        button {
+            display: block;
+            margin: 0 auto;
+            height: 35px;
+            width: 230px; 
+            background-color: #fff562; 
+            border-radius: 25px;
+            border: 1px solid black;
+            text-transform: uppercase;
+            font-size: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .result {
+            height: 35px;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="#" id="maker">
+            <fieldset> 
+                <legend>Выберите размер бургера:</legend>
+                <label>
+                        <input type="radio" name='Size' value='small' data-cost='50' data-calories='20' checked> маленький (50 рублей, 20 калорий)
+                </label>
+                <label>
+                        <input type="radio" name='Size' value='big' data-cost='100' data-calories='40'> большой (100 рублей, 40 калорий)
+                </label>
+            </fieldset>
+            <fieldset> 
+                    <legend>Выберите начинку:</legend>
+                    <label>
+                            <input type="radio" name='Filling' value='cheese' data-cost='10' data-calories='20' checked> сыр (+10 рублей, +20 калорий)
+                    </label>
+                    <label>
+                            <input type="radio" name='Filling' value='lettuce' data-cost='20' data-calories='5'> салат (+20 рублей, +5 калорий)
+                    </label>
+                    <label>
+                            <input type="radio" name='Filling' value='potato' data-cost='15' data-calories='10'> картофель (+15 рублей, +10 калорий)
+                    </label>
+            </fieldset>
+            <fieldset> 
+                    <legend>Добавьте приправу по вкусу:</legend>
+                    <label>
+                            <input type="checkbox" name='Dressing' value='spice' data-cost='15' data-calories='0'> специи (+15 рублей, +0 калорий)
+                    </label>
+                    <label>
+                            <input type="checkbox" name='Dressing' value='mayo' data-cost='20' data-calories='5'> майонез (+20 рублей, +5 калорий)
+                    </label>
+            </fieldset>
+        </form>
+        <button class="calc-btn">Рассчитать</button>
+        <div class="result"></div>
+    </div>
+    <script>
+        let btn = document.querySelector('.calc-btn');
+
+        btn.addEventListener ('click', () => burgerCost());
+
+        let myBurger = '';
+
+        function burgerCost () {
+            let order = new Burger ('Size', 'Filling', 'Dressing');
+            myBurger = `<div class="cost-kcal">Стоимость: ${order.cost} рублей<br>Энергетическая ценность: ${order.energy} калорий</div>`;
+            document.querySelector('.result').innerHTML = `${myBurger}`;
+        }
+        
+        class Burger {
+            constructor (size, fill, dress) {
+                this.size = this._check(size);
+                this.filling = this._check(fill);
+                this.dressing = this._getArray(dress);
+                this.cost = this._cost();
+                this.energy = this._energy();
+            }
+            _check(attrName) {
+                let choice = document.querySelector(`input[name=${attrName}]:checked`);
+                let prop = {value: choice.value, cost: +choice.dataset['cost'], kcal: +choice.dataset['calories']};
+                return prop;
+            }
+            _getArray(attrName) {
+                let arr = [...document.querySelectorAll(`input[name=${attrName}]:checked`)];
+                let choiceArr = [];
+                arr.forEach (choice => {
+                    choiceArr.push({value: choice.value, cost: +choice.dataset['cost'], kcal: +choice.dataset['calories']})
+                });
+                return choiceArr;
+            }
+            _cost() {
+                let cost = this.size.cost + this.filling.cost; 
+                if (this.dressing.length > 0) {
+                   this.dressing.forEach (el => {cost += el.cost});
+                   return cost;
+                } else return cost;
+            }
+            _energy() {
+                let kcal = this.size.kcal + this.filling.kcal; 
+                if (this.dressing.length > 0) {
+                   this.dressing.forEach (el => {kcal += el.kcal});
+                   return kcal;
+                } else return kcal;
+            }
+        }
+
+    </script>
+</body>
+</html>
