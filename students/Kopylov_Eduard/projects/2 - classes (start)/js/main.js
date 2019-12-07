@@ -6,6 +6,7 @@ const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
+const MY_API = 'https://raw.githubusercontent.com/KPEKZ/DataBase/master/responses/catalogData.json'
 
 // клонировал репозиторий, добавил товары, но если вставлю ссылку, то не работет https://github.com/KPEKZ/DataBase/blob/master/responses/catalogData.json
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
