@@ -101,7 +101,8 @@ inputsRules = [
 
 inputsRules.forEach(val => new FormHandler(val.id, val.regEx, val.err));
 
-const str = `Hi, I am Greek 'geek' from Geekbrains`;
-const regexp = /( \'[a-z]+\' )/gi;
+let task1 = document.getElementById('task1-start');
+document.getElementById('task1-end').innerText = task1.outerText.replace(/'/gm, '"');
 
-console.log(str.replace(regexp, '+$1+'));
+let task2 = document.getElementById('task2-start');
+document.getElementById('task2-end').innerText = task2.outerText.replace(/('(?![a-zа-я]))|((?<![а-яa-z])')/gmi, '"');
