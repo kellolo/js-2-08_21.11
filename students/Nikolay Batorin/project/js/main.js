@@ -22,7 +22,6 @@ class CatalogView {
                 </div>`;
     }
 }
-
 class CartView {
     constructor(cart) {
         this.cart = cart;
@@ -60,7 +59,6 @@ class CartView {
                 <hr class="separator"/>`;
     }
 }
-
 class CartModel {
     constructor() {
         this.items = [];
@@ -93,25 +91,20 @@ class CartModel {
         return this.items.reduce((total, nextCartItem) => total + nextCartItem.getCost(), 0);
     }
 }
-
 class CartItem {
     constructor(product) {
         this.product = product;
         this.quantity = 1;
     }
-
     getCost() {
         return this.product.price * this.quantity;
     }
 }
-
 class AppController {
     constructor() {
         this.productService = new ProductService();
+        this.cartService = new CartService();
         this.cart = new CartModel();
-        /*
-        this.cart = new CartService();   --- если корзину будем рисовать с бэка
-        */
         document.getElementById("products").addEventListener("click", this.onBuyButtonClick);
         document.getElementById("cart").addEventListener("click", this.onCartButtonClick);
         document.getElementById("cart").addEventListener("click", this.onDeleteButtonClick);
@@ -125,25 +118,34 @@ class AppController {
         const element = event.target;
         if (element.classList.contains('buy-btn')) {
             const productId = +element.dataset.id;
-            this.productService.getProductById(productId)
-                .then(product => {
-                    const result = new CartService().postBuyItemId(productId);
-                    /* if (result) {      - если сервак принимает данные, то исполняем на фронте          */
-                    this.cart.addItem(product);
-                    this.showCart();
-                    /* } */
-                });
+
+            this.cartService.addProductToCart(productId)
+            
+                .then(result => {
+                    if (result.result === 1) {
+                        this.productService.getProductById(productId)
+                            .then(product => {
+                                this.cart.addItem(product);
+                                this.showCart();
+                            });
+                    }
+                })
         }
     }
     onDeleteButtonClick = (event) => {
         const element = event.target;
         if (element.classList.contains('del-btn')) {
             const productId = +element.dataset.id;
-            const result = new CartService().postDeteteItemId(productId);
-            /* if (result) {      - если сервак принимает данные, то исполняем на фронте          */
-            this.cart.deleteItem(productId);
-            this.showCart();
-            /* } */
+            this.cartService.deteteCartItem(productId)
+                .then(result => {
+                    if (result.result === 1) {
+                        this.productService.getProductById(productId)
+                            .then(product => {
+                                this.cart.deleteItem(productId);
+                                this.showCart();
+                            });
+                    }
+                })
         }
     }
     onCartButtonClick = (event) => {
@@ -161,20 +163,12 @@ class AppController {
         } else {
             this.showCatalog();
         }
-
         return false;
     }
     showCart() {
         new CartView(this.cart).render();
-        /*  
-        отрисовка, если получаем корзину с бэка
-        this.cart.getCart()
-            .then(products => new CartView(products).render());
-        */
     }
-
 }
-
 class ProductService {
     getProducts() {
         return fetch('https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/goods.json')
@@ -191,39 +185,17 @@ class ProductService {
 }
 class CartService {
     getCart() {
-        return fetch('http://JSON корзины')
+        return fetch('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json')
             .then(response => response.json());
     }
-    postBuyItemId(id) {
-        const buyOrder = [id, "buy"];
-        const result = false;
-        let request = new XMLHttpRequest();
-        request.open("POST", "http://JSON корзины");
-        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        request.onreadystatechange = function() {
-            console.log("request.readyState = ", request.readyState);
-            if (request.readyState == 4 && request.status == 200) {
-                request.send(buyOrder);
-                result = true;
-            }
-        }
-        console.log(buyOrder);
-        return result;
+    addProductToCart(productId) {
+        return fetch('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json', {
+        }).then(response => response.json());
     }
-    postDeteteItemId(id) {
-        const deleteOrder = [id, "delete"];
-        let request = new XMLHttpRequest();
-        request.open("POST", "http://JSON корзины");
-        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {
-                request.send(deleteOrder);
-                result = true;
-            }
-        }
-        console.log(deleteOrder);
+    deteteCartItem(productId) {
+        return fetch('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json', {
+        }).then(response => response.json());
     }
-
 }
 const appController = new AppController();
 document.addEventListener('DOMContentLoaded', () => {
