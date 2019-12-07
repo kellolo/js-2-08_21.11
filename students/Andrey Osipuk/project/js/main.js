@@ -8,39 +8,45 @@ const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
 var userCart = [];
-var list = fetchData ();
-
 
 class Catalog {
-    constructor () {
+    constructor() {
         this.products = []
         this.container = '.products'
-        this._init ()
+        this._init()
     }
-    _init () {
-        list.forEach (el => {
-            this.products.push (new Product (el))
-        })
-        this.render ()
+    _init() {
+        const URL = 'https://raw.githubusercontent.com/wedeploy-examples/supermarket-web-example/master/products.json'
+        fetch(URL)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach((el, idx) => {
+                    el.id = idx
+                    el.img = `https://raw.githubusercontent.com/wedeploy-examples/supermarket-web-example/master/ui/assets/images/${idx}.jpg`
+                    this.products.push(new Product(el))
+                })
+            })
+            .then(data => this.render())
+
     }
-    render () {
-        let trg = document.querySelector (this.container)
+    render() {
+        let trg = document.querySelector(this.container)
         let str = ''
-        this.products.forEach (prod => {
-            str += prod.render ()
+        this.products.forEach(prod => {
+            str += prod.render()
         })
         trg.innerHTML = str
     }
 }
 
 class Product {
-    constructor (prod) {
+    constructor(prod) {
         this.id = prod.id
         this.title = prod.title
         this.price = prod.price
         this.img = prod.img
     }
-    render () {
+    render() {
         return `<div class="product-item" data-id="${this.id}">
                     <img src="${this.img}" alt="Some img">
                     <div class="desc">
@@ -61,11 +67,11 @@ class Cart {
         this.arr = arr; //массив объектов корзины
     }
 
-    deleteAll () {
+    deleteAll() {
         //метод очистки корзины
     }
 
-    render () {
+    render() {
         //метод рендер
     }
 
@@ -79,20 +85,20 @@ class CartItem {
         this.img = product.img;
     }
 
-    deleteItem () {
+    deleteItem() {
         //метод очистки корзины
     }
 
-    changeQuantity () {
+    changeQuantity() {
         //метод изменения количества товара
     }
 
-    render () {
+    render() {
         //метод рендер
     }
 }
 
-let catalog = new Catalog ()
+let catalog = new Catalog()
 //кнопка скрытия и показа корзины
 // document.querySelector('.btn-cart').addEventListener('click', () => {
 //     document.querySelector('.cart-block').classList.toggle('invisible');
@@ -110,63 +116,41 @@ let catalog = new Catalog ()
 //     }
 // })
 
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
-
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    }
-};
-
-//рендер списка товаров (каталога) - выпилено
-
-
 //CART
 
 // Добавление продуктов в корзину
-function addProduct (product) {
+function addProduct(product) {
     let productId = +product.dataset['id']; //data-id="1"
-    let find = userCart.find (element => element.id === productId); //товар или false
+    let find = userCart.find(element => element.id === productId); //товар или false
     if (!find) {
-        userCart.push ({
-            name: product.dataset ['name'],
+        userCart.push({
+            name: product.dataset['name'],
             id: productId,
             img: cartImage,
             price: +product.dataset['price'],
             quantity: 1
         })
-    }  else {
+    } else {
         find.quantity++
     }
-    renderCart ()
+    renderCart()
 }
 
 //удаление товаров
-function removeProduct (product) {
+function removeProduct(product) {
     let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
+    let find = userCart.find(element => element.id === productId);
     if (find.quantity > 1) {
         find.quantity--;
     } else {
         userCart.splice(userCart.indexOf(find), 1);
         document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
     }
-    renderCart ();
+    renderCart();
 }
 
 //перерендер корзины
-function renderCart () {
+function renderCart() {
     let allProducts = '';
     for (el of userCart) {
         allProducts += `<div class="cart-item" data-id="${el.id}">
@@ -187,3 +171,4 @@ function renderCart () {
 
     document.querySelector(`.cart-block`).innerHTML = allProducts;
 }
+
