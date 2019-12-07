@@ -3,18 +3,18 @@
     "countGoods": 2,
     "contents": [
       {
-        "id": 123,
-        "title": "Ноутбук",
-        "price": 45600,
+        "id": 1,
+        "title": "Notebook",
+        "price": 1000,
         "img": "https://placehold.it/100x80",
         "quantity": 1
       },
       {
-        "id": 456,
-        "title": "Мышка",
-        "price": 1000,
+        "id": 4,
+        "title": "Mouse",
+        "price": 10,
         "img": "https://placehold.it/100x80",
-        "quantity": 1
+        "quantity": 2
       }
     ]
   }
