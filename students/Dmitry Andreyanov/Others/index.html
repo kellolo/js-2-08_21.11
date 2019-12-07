@@ -7,11 +7,15 @@
     <title>Шаурменная</title>
     <style>
         form {
-            width: 500px
+            width: 500px;
+            margin: 10px 20px;
         }
         label {
             display: block;
             margin-bottom: 10px;
+        }
+        button, div {
+            margin: 5px 20px;
         }
     </style>
 </head>
@@ -19,77 +23,98 @@
     <form action="#" id="uForm">
         <fieldset>
             <label>
-                <input type="radio" name="Title"> Маленькая шаурма (50 рублей, 20 калорий)
+                <input type="radio" name="size" data-price = "50" data-calorific = "20" checked> Маленькая шаурма (50 рублей, 20 калорий)
             </label>
             <label>
-                <input type="radio" name="Title"> Большая шаурма (100 рублей, 40 калорий)
-            </label>
-        </fieldset>
-        <fieldset>
-            <label>
-                <input type="radio" name="Gender" value="male" data-mother="0"> С сыром (+10 рублей, +20 калорий)
-            </label>
-            <label>
-                <input type="radio" name="Gender" value="female" data-mother="1"> С салатом (+20 рублей, +5 калорий)
-            </label>
-            <label>
-                <input type="radio" name="Gender" value="female" data-mother="1"> С картофелем (+15 рублей, +10 калорий)
+                <input type="radio" name="size" data-price = "100" data-calorific = "40"> Большая шаурма (100 рублей, 40 калорий)
             </label>
         </fieldset>
         <fieldset>
             <label>
-                <input type="checkbox" name="Hobbies" value="eat"> Дополнительно: посыпать приправой (+15 рублей, +0 калорий)
+                <input type="radio" name="ingredient" data-price = "10" data-calorific = "20" checked> С сыром (+10 рублей, +20 калорий)
             </label>
             <label>
-                <input type="checkbox" name="Hobbies" value="gym"> Дополнительно: полить майонезом (+20 рублей, +5 калорий)
+                <input type="radio" name="ingredient" data-price = "20" data-calorific = "5"> С салатом (+20 рублей, +5 калорий)
+            </label>
+            <label>
+                <input type="radio" name="ingredient" data-price = "15" data-calorific = "10"> С картофелем (+15 рублей, +10 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="checkbox" name="addition" data-price = "15" data-calorific = "0"> Дополнительно: посыпать приправой (+15 рублей, +0 калорий)
+            </label>
+            <label>
+                <input type="checkbox" name="addition" data-price = "20" data-calorific = "5"> Дополнительно: полить майонезом (+20 рублей, +5 калорий)
             </label>
         </fieldset>
     </form>
 
     <button id="okBtn">Оформить заказ!</button>
-    
+
+    <div id="order">Ваш заказ: </div>
+
     <script>
-        let form = document.querySelector ('#uForm')
+ //       let form = document.querySelector ('#uForm')
         let btn = document.querySelector ('#okBtn')
-        let users = []
+        let order = document.querySelector ('#order')
 
-        btn.addEventListener ('click', addUser)
+        btn.addEventListener ('click', makeProduct)
 
-        function addUser () {
-            let newUser = new User ('Name', 'Age', 'Gender', 'Hobbies')
-            users.push (newUser)
+        function makeProduct() {
+            let product = new Product()
+            product.cooking(order)
         }
 
-        class User {
-            constructor (name, age, gender, hobbies) {
-                this.Name = this._text (name)
-                this.Age = this._text (age)
-                this.Gender = this._check (gender)
-                this.Hobbies = this._getArray (hobbies)
-                this.canBeMother = this._checkMom (gender)
+        class Product {
+            constructor(){
+                this.price = 0
+                this.calorific = 0
+                this._calc()
             }
-            _text (attrName) {
-                let obj = document.querySelector (`input[name=${attrName}]`)
-                return obj.value
-            }
-            _check (attrName) {
-                let obj = document.querySelector (`input[name=${attrName}]:checked`)
-                return obj.value
-            }
-            _getArray (attrName) {
-                let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
-                let arr = []
-                objArr.forEach (el => {
-                    arr.push (el.value)
+            _calc(){
+                let ob = [...document.querySelectorAll(`input:checked`)]
+                ob.forEach( el => {
+                    this.price += +el.dataset['price']
+                    this.calorific += +el.dataset['calorific']
                 })
-                return arr
             }
-            _checkMom (attrName) {
-                let obj = document.querySelector (`input[name=${attrName}]:checked`)
-                console.dir (obj)
-                return +obj.dataset['mother'] ? true : false
+            cooking (htmlElement){
+                htmlElement.innerHTML = `Ваш заказ на сумму: ${this.price} рублей, калорийность: ${this.calorific} ккал.`
             }
+
         }
+
+        // class User {
+        //     constructor (name, age, gender, hobbies) {
+        //         this.Name = this._text (name)
+        //         this.Age = this._text (age)
+        //         this.Gender = this._check (gender)
+        //         this.Hobbies = this._getArray (hobbies)
+        //         this.canBeMother = this._checkMom (gender)
+        //     }
+        //     _text (attrName) {
+        //         let obj = document.querySelector (`input[name=${attrName}]`)
+        //         return obj.value
+        //     }
+        //     _check (attrName) {
+        //         let obj = document.querySelector (`input[name=${attrName}]:checked`)
+        //         return obj.value
+        //     }
+        //     _getArray (attrName) {
+        //         let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+        //         let arr = []
+        //         objArr.forEach (el => {
+        //             arr.push (el.value)
+        //         })
+        //         return arr
+        //     }
+        //     _checkMom (attrName) {
+        //         let obj = document.querySelector (`input[name=${attrName}]:checked`)
+        //         console.dir (obj)
+        //         return +obj.dataset['mother'] ? true : false
+        //     }
+        // }
 
         // class Human {
         //     constructor (nam, ag, gen) {
