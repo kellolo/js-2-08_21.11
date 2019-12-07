@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        label {
+            display: block;
+        }
+
+        .valid {
+            border-color: #3f1;
+            background-color: #fff;
+        }
+
+        .valid:focus {
+            outline: none;
+        }
+
+        .invalid {
+            border-color: #900;
+            background-color: #FDD;
+        }
+
+        .invalid:focus {
+            outline: none;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+
+        .error {
+            color: #900;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="#" id="validForm" novalidate>
+        <fieldset>
+            <label>Имя: <input type="text" id="name"></label>
+            <div class="name error hidden">Имя должно состоять только из букв</div>
+            <label>Телефон: <input type="text" id="phone"></label>
+            <div class="phone error hidden">Телефон должен иметь вид +7(000)000-0000</div>
+            <label>E-mail: <input type="email" id="mail"></label>
+            <div class="mail error hidden">E-mail должен иметь вид mymail@mail.ru</div>
+            <label>Текст: <textarea type="text" id="text"></textarea></label>
+            <div class="text error hidden">Введите произвольный текст</div>
+        </fieldset>
+        <button id="submit">Отправить</button>
+    </form>
+    <script>
+        //1. Дан большой текст, в котором для оформления прямой речи используются одинарные кавычки. 
+        //   Придумать шаблон, который заменяет одинарные кавычки на двойные.
+        // 2. Улучшить шаблон так, чтобы в конструкциях типа aren't одинарная кавычка не заменялась на двойную.
+        let str = "'sdfadsdf sfasdfsf' sdfsf'sdf sdfsdf 'werwer werwe we rw w1123'"
+        let reg = /('(?![a-zа-я]))|((?<![а-яa-z])')/gmi
+        console.log(str.replace(reg, '"'))
+        // 3. *Создать форму обратной связи с полями: Имя, Телефон, E-mail, текст, кнопка Отправить
+        class Validator {
+            constructor(container, items = []) {
+                this.element = document.querySelector(container)
+                this.items = items
+                this._init()
+            }
+            _init() {
+                this.element.addEventListener('submit', (evt) => {
+                    if (!this.validate()) {
+                        console.log('invalid')
+                        evt.preventDefault()
+                    } else {
+                        console.log('valid')
+                    }
+                })
+            }
+            validate() {
+                let validity = true
+                this.items.forEach(elem => {
+                    if (!elem.validate()) {
+                        validity = false
+                    }
+                })
+                return validity
+            }
+        }
+
+        class Input {
+            constructor(container, errContainer, regExp) {
+                this.element = document.querySelector(container)
+                this.errorEl = document.querySelector(errContainer)
+                this.regExp = regExp
+                this._init()
+            }
+            _init() {
+                this.element.addEventListener('input', (evt) => {
+                    this.validate()
+                })
+            }
+            validate() {
+                let valid = this.element.value.search(this.regExp) != - 1
+                this.element.classList.toggle('invalid', !valid)
+                this.element.classList.toggle('valid', valid)
+                this.errorEl.classList.toggle('hidden', valid)
+                return valid
+            }
+        }
+
+        let validator = new Validator('#validForm', [
+            new Input('#name', '.name', /[a-zа-я]+/i),
+            new Input('#phone', '.phone', /\+\d\(\d{3}\)\d{3}-\d{4}/i),
+            new Input('#mail', '.mail', /^([a-z.-]+)@([a-z]+).([a-z]+)$/i),
+            new Input('#text', '.text', /\w+/)
+        ])
+    </script>
+</body>
+
+</html>
