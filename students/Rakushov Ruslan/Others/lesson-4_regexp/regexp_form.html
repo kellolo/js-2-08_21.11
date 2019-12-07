@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>RegExp Form</title>
+    <style>
+      * {
+        margin: 0;
+      }
+      fieldset {
+        display: flex;
+        flex-direction: column;
+      }
+      .inp {
+        min-width: 200px;
+        width: 300px;
+        margin: 30px 0;
+      }
+      .label {
+        display: inline-block;
+        width: 20%;
+      }
+      .noValid {
+        border: 1px solid red;
+        color: red;
+      }
+      input:focus {
+      }
+    </style>
+  </head>
+  <body>
+    <form action="#" novalidate>
+      <fieldset>
+        <div class="inp">
+          <span class="label">Name:</span>
+          <input type="text" name="name" id="name" placeholder="Name" />
+        </div>
+        <div class="inp">
+          <span class="label">Phone:</span>
+          <input type="tel" name="tel" id="tel" placeholder="+7(000)000-0000" />
+        </div>
+        <div class="inp">
+          <span class="label">Email:</span>
+          <input type="email" name="email" id="email" placeholder="Email" />
+        </div>
+        <div class="inp">
+          <span class="label">Message:</span>
+          <textarea name="text" id="text"></textarea>
+        </div>
+        <button onclick="validate()">Send</button>
+      </fieldset>
+    </form>
+
+    <script>
+      class Validator {
+        constructor(nameId, telId, emailId, textId) {
+          this.fieldsToValidate = {};
+          this.fieldsToValidate.nameId = nameId;
+          this.fieldsToValidate.telId = telId;
+          this.fieldsToValidate.emailId = emailId;
+          this.fieldsToValidate.textId = textId;
+
+          this.regexp = {};
+          this.regexp.nameRegexp = /^[a-zA-Zа-яА-я]+$/;
+          this.regexp.telRegexp = /\+?7([\(\-]?)[0-9]{3}([\)\-]?)[0-9]{3}-?[0-9]{4}/;
+          this.regexp.emailRegexp = /1/;
+          this.regexp.textRegexp = /./;
+        }
+        validateItem(id) {
+          let itemText = document.querySelector(`#${id}`).value;
+          let test = this.regexp[`${id}Regexp`].test(itemText);
+          // return test;
+          if (!test) {
+            this.makeNoValid(id);
+          } else {
+            this.makeValid(id);
+          }
+        }
+        validateAll() {
+          for (let i in this.fieldsToValidate) {
+            this.validateItem(this.fieldsToValidate[i]);
+            // if (!this.validateItem(this.fieldsToValidate[i])) {
+            //   this.makeNoValid(this.fieldsToValidate[i]);
+            // } else {
+            //   this.makeValid(this.fieldsToValidate[i]);
+            // }
+          }
+        }
+        makeNoValid(id) {
+          document.querySelector(`#${id}`).classList.add("noValid");
+        }
+        makeValid(id) {
+          document.querySelector(`#${id}`).classList.remove("noValid");
+        }
+      }
+
+      let validator = new Validator("name", "tel", "email", "text");
+      function validate() {
+        event.preventDefault();
+        validator.validateAll();
+      }
+      document.querySelector("form").addEventListener("keyup", 
+        event => {
+          console.log("event");
+          validator.validateItem(event.target.id);}
+      );
+      // function quoteReplace(text1, text2, res1, res2, regexp, replacer) {
+      //   let str1 = document.querySelector(`#${text1}`).value;
+      //   let str2 = document.querySelector(`#${text2}`).value;
+      //   let res1Block = document.querySelector(`#${res1}`);
+      //   let res2Block = document.querySelector(`#${res2}`);
+
+      //   let reg = document.querySelector(`#${regexp}`).value;
+      //   newReg = new RegExp(reg, "gm");
+
+      //   let repl = document.querySelector(`#${replacer}`).value;
+
+      //   newStr1 = str1.replace(newReg, repl);
+      //   newStr2 = str2.replace(newReg, repl);
+
+      //   res1Block.innerText = newStr1;
+      //   res2Block.innerText = newStr2;
+      //   event.preventDefault();
+      // }
+    </script>
+  </body>
+</html>
