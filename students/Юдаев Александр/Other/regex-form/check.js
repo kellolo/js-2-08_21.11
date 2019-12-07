@@ -101,14 +101,7 @@ inputsRules = [
 
 inputsRules.forEach(val => new FormHandler(val.id, val.regEx, val.err));
 
-let newText = "don't miss new 'iPhone'";
-let patt = /\'[A-z]+\'/;
-let repl = '"$1"';
-console.log(newText.replace(patt, repl))
+const str = `Hi, I am Greek 'geek' from Geekbrains`;
+const regexp = /( \'[a-z]+\' )/gi;
 
-
-function quotesCheck() {
-    document.getElementById('word').innerHTML = document.getElementById('text')
-        .value
-        .replace(/^'|(\s)'|'(\s)|'$/g, '$1"$2');
-}
+console.log(str.replace(regexp, '+$1+'));
