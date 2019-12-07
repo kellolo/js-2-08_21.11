@@ -1,0 +1,80 @@
+/**
+    Danger
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+
+    Submit
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+*/
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+form {
+    width: 300px;
+    display: block;
+}
+label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+label:nth-last-child(2) {
+    color: #ccc;
+    font-size: 12px;
+}
+
+label:last-child {
+    justify-content: center;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 30px;
+    color: #FF2F53;
+}
+
+input {
+    width: 200px;
+    outline: none;
+    height: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+input[type="button"] {
+    background-color: #00CFE7;
+    cursor: pointer;
+
+}
+
+input[type="button"]:hover {
+ background-color: #00ddf5;
+ cursor: pointer;
+}
+
+ input[type="button"]:active {
+     background-color: #00DBF3;
+     cursor: pointer;
+ }
+
+textarea {
+    display: block;
+    width: 100%;
+    min-height: 150px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+button {
+
+}
