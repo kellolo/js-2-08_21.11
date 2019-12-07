@@ -27,7 +27,7 @@ class Burger {
         return objArr.map(el => el.value);
     }
     _count(dataName) {
-        let objArr = [...document.querySelectorAll(`input:checked`)];
+        let objArr = [...document.querySelectorAll(`form[name="burgerForm"] input:checked`)];
         return objArr.reduce((acc, obj) => acc += +obj.dataset[dataName], 0);
     }
     show(prop) {
