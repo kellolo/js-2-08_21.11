@@ -1,14 +1,8 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const catalogData = 'https://raw.githubusercontent.com/LenaMaltseva/online-store-api/master/responses/catalogData.json';
 
-
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
 
 class Catalog {
     constructor () {
@@ -17,10 +11,16 @@ class Catalog {
         this._init ();
     }
     _init () {
-        list.forEach (el => {
-            this.products.push (new Product (el))
-        })
-        this.render ()
+        fetchData (catalogData)
+            .then(dataJSON => JSON.parse(dataJSON))     // будет выпелено вместе с Promise
+        //  .then(dataJSON => dataJSON.json())          // будет использоваться при получении данных через Fetch 
+            .then(data => {
+                data.forEach (el => {
+                this.products.push (new Product (el))
+                this.render ()
+                })
+            })
+            .catch(err => {document.querySelector(this.container).innerText = `Ошибка загрузки данных ${err}`})
     }
     render () {
         let trg = document.querySelector(this.container);
@@ -34,17 +34,17 @@ class Catalog {
 
 class Product {
     constructor (product) {
-        this.id = product.id;
-        this.title = product.title;
+        this.id = product.id_product;
+        this.title = product.product_name;
         this.price = product.price;
-        this.img = product.img;
+        this.img = image;
     }
     render () {
         return `<div class="product-item" data-id="${this.id}">
                     <img src="${this.img}" alt="Some img">
                     <div class="desc">
                         <h3>${this.title}</h3>
-                        <p>${this.price} $</p>
+                        <p>${this.price} rub.</p>
                         <button class="buy-btn" 
                         data-id="${this.id}"
                         data-name="${this.title}"
@@ -106,7 +106,7 @@ class CartItem {
                         <div class="product-desc">
                             <p class="product-title">${this.title}</p>
                             <p class="product-quantity">Quantity: ${this.quantity}</p>
-                            <p class="product-single-price">$${this.price} each</p>
+                            <p class="product-single-price">${this.price} rub. each</p>
                         </div>
                     </div>
                     <div class="right-block">
@@ -137,21 +137,24 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
     }
 })
 
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
-
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    }
-};
+//имитация загрузки данных с сервера
+function fetchData (url) {
+    return new Promise ((resolve, reject) => {
+        let xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status == 200) {
+                    resolve (xhr.responseText)
+                } else {
+                    reject (xhr.status)
+                }
+            }
+        }
+        xhr.open('GET', url, true) 
+        xhr.send()
+    })
+}
+// по п.3 из ДЗ сделала получение данных через Promise, потом поменяю на Fetch
+// function fetchData (url) {
+//     return fetch (url)
+// }
