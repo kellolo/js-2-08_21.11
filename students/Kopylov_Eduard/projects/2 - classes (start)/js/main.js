@@ -5,11 +5,66 @@ const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', '
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
 
+// клонировал репозиторий, добавил товары, но если вставлю ссылку, то не работет https://github.com/KPEKZ/DataBase/blob/master/responses/catalogData.json
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = fetchData(); // добавил для проверки корзины на работоспособность
-var list = fetchData ();
+var userCart = []; //товары в корзине
+var list = fetchData();
 
+    async function makeGETRequest(url, callback) {
+        var xhr;
+    
+        if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) { 
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    
+        xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            return callback(JSON.parse(xhr.responseText));
+        }
+        }
+    
+        xhr.open('GET', url, true);
+        xhr.send();
+        
+    }
+
+    function callb(data)
+    {
+        let arr = [];
+
+        for(let i =0; i< data.length;i++)
+        {
+            arr.push(data[i])
+        }
+        
+    
+        return arr;
+    }
+
+    makeGETRequest(API_URL, callb);
+   
+                //создание массива объектов - имитация загрузки данных с сервера
+function fetchData () {
+    let arr = [];
+    for (let i = 0; i < items.length; i++) {
+        arr.push (createProduct (i));
+    }
+    return arr
+};
+
+//создание товара
+function createProduct (i) {
+    return {
+        id: ids[i],
+        title: items[i],
+        price: prices[i],
+        img: image,
+    }
+};
 
 class Catalog {
     constructor () {
@@ -18,6 +73,9 @@ class Catalog {
         this._init ()
     }
     _init () {
+
+
+        
         list.forEach (el => {
             this.products.push (new Product (el))
         })
@@ -39,6 +97,7 @@ class Product {
         this.title = prod.title
         this.price = prod.price
         this.img = prod.img
+        
     }
     render () {
         return `<div class="product-item" data-id="${this.id}">
@@ -124,40 +183,23 @@ class CartItem {
 let catalog = new Catalog ()
 let carts = new Cart();
 //кнопка скрытия и показа корзины
-// document.querySelector('.btn-cart').addEventListener('click', () => {
-//     document.querySelector('.cart-block').classList.toggle('invisible');
-// });
+document.querySelector('.btn-cart').addEventListener('click', () => {
+    document.querySelector('.cart-block').classList.toggle('invisible');
+});
 // //кнопки удаления товара (добавляется один раз)
-// document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-//     if (evt.target.classList.contains ('del-btn')) {
-//         removeProduct (evt.target);
-//     }
-// })
+document.querySelector('.cart-block').addEventListener ('click', (evt) => {
+    if (evt.target.classList.contains ('del-btn')) {
+        removeProduct (evt.target);
+    }
+})
 // //кнопки покупки товара (добавляется один раз)
-// document.querySelector('.products').addEventListener ('click', (evt) => {
-//     if (evt.target.classList.contains ('buy-btn')) {
-//         addProduct (evt.target);
-//     }
-// })
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
+document.querySelector('.products').addEventListener ('click', (evt) => {
+    if (evt.target.classList.contains ('buy-btn')) {
+        addProduct (evt.target);
     }
-    return arr
-};
+})
 
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    }
-};
+
 
 //рендер списка товаров (каталога) - выпилено
 
@@ -195,7 +237,7 @@ function removeProduct (product) {
     renderCart ();
 }
 
-//перерендер корзины -------- перенес в функцию render класса CartItem
+//перерендер корзины
 function renderCart () {
     let allProducts = '';
     for (el of userCart) {
@@ -217,3 +259,6 @@ function renderCart () {
 
     document.querySelector(`.cart-block`).innerHTML = allProducts;
 }
+
+
+
