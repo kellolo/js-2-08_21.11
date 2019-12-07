@@ -45,6 +45,7 @@ class List {
     }
     _render () {
         let block = document.querySelector (this.container);
+        block.innerHTML ="";
         this.products.forEach (item => {
             block.insertAdjacentHTML ('beforeend', item.render ());
         });
@@ -81,7 +82,16 @@ class Cart extends List {
                     let itemId = +item.dataset.id;
                     let findItem = this.products.find(el => el.id_product === itemId);
                     if (!findItem) {
-                        this.products.push(new CartItem(item));
+                        //заглушка для БД
+                        let prod = {
+                            id : +item.dataset.id,
+                            title : item.dataset.name,
+                            price : +item.dataset.price,
+                            img : "https://placehold.it/100x80",  
+                            quantity : 1
+                        }
+                        //                        
+                        this.products.push(new CartItem(prod));
                     } else {
                         findItem.increaseQnt();
                     }
@@ -115,27 +125,6 @@ class Cart extends List {
                 console.log(`Ошибка ${errStatus}`);
             });
     }
-    // _render() {
-    //     let allProducts = '';
-    //     for (let el of this.products) {
-    //         allProducts += `<div class="cart-item" data-id="${el.id}">
-    //                         <div class="product-bio">
-    //                             <img src="${el.img}" alt="Some image">
-    //                             <div class="product-desc">
-    //                                 <p class="product-title">${el.name}</p>
-    //                                 <p class="product-quantity">Quantity: ${el.quantity}</p>
-    //                                 <p class="product-single-price">$${el.price} each</p>
-    //                             </div>
-    //                         </div>
-    //                         <div class="right-block">
-    //                             <p class="product-price">${el.quantity * el.price}</p>
-    //                             <button class="del-btn" data-id="${el.id}">&times;</button>
-    //                         </div>
-    //                     </div>`;
-    //     }
-
-    //     document.querySelector(this.container).innerHTML = allProducts;
-    // }
     _fetchData(url) {
         return fetch(url) .then(dataJSON => dataJSON.json());
     }
@@ -165,28 +154,7 @@ class Item {
 }
 
 class Product extends Item {}
-// class Product {
-//     constructor(prod) {
-//         this.id = prod.id;
-//         this.title = prod.title;
-//         this.price = prod.price;
-//         this.img = prod.img;
-//     }
-//     render() {
-//         return `<div class="product-item" data-id="${this.id}">
-//                     <img src="${this.img}" alt="Some img">
-//                     <div class="desc">
-//                         <h3>${this.title}</h3>
-//                         <p>${this.price} $</p>
-//                         <button class="buy-btn" 
-//                         data-id="${this.id}"
-//                         data-name="${this.title}"
-//                         data-image="${this.img}"
-//                         data-price="${this.price}">Купить</button>
-//                     </div>
-//                 </div>`;
-//     }
-// }
+
 class CartItem extends Item {
     constructor(product) {
         super(product);
