@@ -10,11 +10,11 @@
 </head>
 
 <body>
-    <form>
+    <form name="burgerForm">
         <fieldset>
             <legend>Выберите бургер</legend>
             <label>
-                <input type="radio" name="burgerSize" value="big" data-calories="40" data-price="100"> Большой (100 рублей, 40 калорий).
+                <input type="radio" name="burgerSize" value="big" data-calories="40" data-price="100" checked> Большой (100 рублей, 40 калорий).
             </label>
             <label>
                 <input type="radio" name="burgerSize" value="small" data-calories="20" data-price="50"> Маленький (50 рублей, 20 калорий). 
@@ -23,7 +23,7 @@
         <fieldset>
             <legend>Выберите начинку</legend>
             <label>
-                <input type="radio" name="burgerFilling" value="cheese" data-calories="20" data-price="10"> Сыр (+10 рублей, +20 калорий). 
+                <input type="radio" name="burgerFilling" value="cheese" data-calories="20" data-price="10" checked> Сыр (+10 рублей, +20 калорий). 
             </label>
             <label>
                 <input type="radio" name="burgerFilling" value="salad" data-calories="5" data-price="20"> Салат (+20 рублей, +5 калорий). 
@@ -38,7 +38,7 @@
                 <input type="checkbox" name="burgerRelish" value="flavouring" data-calories="0" data-price="15"> Приправа (+15 рублей, +0 калорий).
             </label>
             <label>
-                <input type="checkbox" name="burgerRelish" value="mayo" data-calories="10" data-price="15"> Майонез (+20 рублей, +5 калорий).
+                <input type="checkbox" name="burgerRelish" value="mayo" data-calories="5" data-price="20"> Майонез (+20 рублей, +5 калорий).
             </label>
         </fieldset>
     </form>
