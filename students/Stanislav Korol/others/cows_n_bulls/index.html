@@ -56,66 +56,97 @@
     </section>
 
     <script>
-        const resultsDiv = document.querySelector("#results");
-        const tryInput = document.querySelector("#tryInput");
-        let difficulty = 4;
-        const testUserBtn = document.querySelector("#testUserTry");
-        const startBtn = document.querySelector("#startGame");
+        class Game {
+            constructor(resId, inId, btnId, startBtnId, diffId){
+                this.resultsDiv = document.querySelector(resId);
+                this.tryInput = document.querySelector(inId);
+                this.testUserBtn = document.querySelector(btnId);
+                this.startBtn = document.querySelector(startBtnId);
+                this.difficultySelect = document.querySelector(diffId);
+                
+                this.difficulty = 4; 
+                this.tryCount = 0;
+                this.code = "";
 
-        let myString = "";
-        let tryCount = 0;
-
-        function startGame(){
-            difficulty = +document.querySelector("#difficulty").value;
-
-            let numsArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-            for (let i = 0; i < difficulty; i++){
-                let rndIndex = Math.ceil(Math.random() * numsArr.length);
-                myString += numsArr[rndIndex];
-                numsArr.splice(rndIndex, 1);
-            }
-            tryInput.max = Math.pow(10, difficulty) - 1;
-            testUserBtn.removeAttribute("disabled");
-            tryCount = 0;
-        }
-
-        function testUserTry(){
-            let error = false;
-            
-            const userInput = [...tryInput.value];
-            if (userInput.length !== difficulty) {
-                resultsDiv.innerHTML = `Число должно быть ${difficulty}-значным`;
-                return false;
+                this._init();
             }
 
-            for (let i = 0; i < userInput.length; i++) {
-                const el = userInput[i];
-                if (userInput.filter(item => item == el).length > 1) {
-                    resultsDiv.innerHTML = "Цифры в числе не должны повторяться";
-                    return false;
+            _init(){
+                this.testUserBtn.addEventListener("click", (evt) => {
+                    this._checkUserTry();
+                });
+                this.startBtn.addEventListener("click", (evt) => {
+                    this._startGame();
+                });
+            }
+
+            _startGame(){
+                this._getDifficulty();
+                this._generateNewCode();
+                this.testUserBtn.removeAttribute("disabled");
+                this.tryCount = 0;
+            }
+
+            _getDifficulty(){
+                this.difficulty = +this.difficultySelect.value;
+            }
+
+            _generateNewCode(){
+                this.code = "";
+                let numsArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                for (let i = 0; i < this.difficulty; i++){
+                    let rndIndex = Math.ceil(Math.random() * numsArr.length);
+                    this.code += numsArr[rndIndex];
+                    numsArr.splice(rndIndex, 1);
                 }
             }
 
-            tryCount++;
-            
-            let numMatches = 0;
-            let posMatches = 0;
+            _checkUserTry(){
+                const userInput = [...this.tryInput.value];
+                if (this._userInputIsCorrect(userInput)){
 
-            const myStringArr = [...myString];
-            for (let i = 0; i < userInput.length; i++){
-                if (myStringArr.indexOf(userInput[i]) > -1) numMatches++;
-                if (myStringArr[i] === userInput[i]) posMatches++;
+                    this.tryCount++;
+                    
+                    let numMatches = 0;
+                    let posMatches = 0;
+
+                    const codeArr = [...this.code];
+                    for (let i = 0; i < userInput.length; i++){
+                        if (codeArr.indexOf(userInput[i]) > -1) numMatches++;
+                        if (codeArr[i] === userInput[i]) posMatches++;
+                    }
+
+                    this._checkResults(numMatches, posMatches);
+                }
             }
 
-            if (numMatches === difficulty && posMatches === difficulty) {
-                resultsDiv.innerHTML = `Число угадано! Кол-во попыток: <b>${tryCount}</b>`;
-                testUserBtn.setAttribute("disabled", true);
+            _userInputIsCorrect(userInput){
+                if (userInput.length !== this.difficulty) {
+                    this.resultsDiv.innerHTML = `Число должно быть ${difficulty}-значным`;
+                    return false;
+                }
+
+                for (let i = 0; i < userInput.length; i++) {
+                    const el = userInput[i];
+                    if (userInput.filter(item => item == el).length > 1) {
+                        this.resultsDiv.innerHTML = "Цифры в числе не должны повторяться";
+                        return false;
+                    }
+                }
+
+                return true;
             }
-            else resultsDiv.innerHTML = `Попытка: <b>${tryCount}</b><br>Количество коров: <b>${numMatches}</b><br>Количество быков: <b>${posMatches}</b>.`;
+
+            _checkResults(numMatches, posMatches){
+                if (numMatches === this.difficulty && posMatches === this.difficulty) {
+                    this.resultsDiv.innerHTML = `Число угадано! Кол-во попыток: <b>${this.tryCount}</b>`;
+                    this.testUserBtn.setAttribute("disabled", true);
+                }
+                else this.resultsDiv.innerHTML = `Попытка: <b>${this.tryCount}</b><br>Количество коров: <b>${numMatches}</b><br>Количество быков: <b>${posMatches}</b>.`;
+            }
         }
 
-        testUserBtn.addEventListener("click", testUserTry);
-        startBtn.addEventListener("click", startGame);
+        const game = new Game("#results", "#tryInput", "#testUserTry", "#startGame", "#difficulty");
     </script>
 </body>
 </html>
