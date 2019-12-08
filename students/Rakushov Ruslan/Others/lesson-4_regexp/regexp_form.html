@@ -35,15 +35,15 @@
       <fieldset>
         <div class="inp">
           <span class="label">Name:</span>
-          <input type="text" name="name" id="name" placeholder="Name" />
+          <input type="text" name="name" id="name" placeholder="Name" autocomplete="off"/>
         </div>
         <div class="inp">
           <span class="label">Phone:</span>
-          <input type="tel" name="tel" id="tel" placeholder="+7(000)000-0000" />
+          <input type="tel" name="tel" id="tel" placeholder="+7(000)000-0000"  autocomplete="off"/>
         </div>
         <div class="inp">
           <span class="label">Email:</span>
-          <input type="email" name="email" id="email" placeholder="Email" />
+          <input type="email" name="email" id="email" placeholder="Email"  autocomplete="off"/>
         </div>
         <div class="inp">
           <span class="label">Message:</span>
@@ -65,7 +65,9 @@
           this.regexp = {};
           this.regexp.nameRegexp = /^[a-zA-Zа-яА-я]+$/;
           this.regexp.telRegexp = /\+?7([\(\-]?)[0-9]{3}([\)\-]?)[0-9]{3}-?[0-9]{4}/;
-          this.regexp.emailRegexp = /1/;
+          this.regexp.emailRegexp = /[\w]{3,}(\.?)@[\w]{3,}\.[\w]{2,}/;
+          //from https://developer.mozilla.org/ru/docs/Learn/HTML/Forms/Валидация_формы
+          //^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$
           this.regexp.textRegexp = /./;
         }
         validateItem(id) {
