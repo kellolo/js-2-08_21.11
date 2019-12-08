@@ -77,7 +77,7 @@ class Cart {
         });
     }
 
-    _setBuyButton() {
+_setBuyButton() {
         document.querySelector('.products').addEventListener('click', (evt) => {
             if (evt.target.classList.contains('buy-btn')) {
                 this.addItem(evt.target.dataset);
