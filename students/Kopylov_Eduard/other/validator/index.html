@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .b-formfield{
+            margin: auto;
+            max-width: fit-content;
+        }
+        .b-formfield input, .b-formfield #btn
+        {
+            display: block;
+            margin: auto;
+        }
+
+    </style>
+
+    <script>
+            document.addEventListener('DOMContentLoaded', function()
+            {
+
+                let name = document.querySelector('#name');
+                let phone = document.querySelector('#phone');
+                let ML =  document.querySelector('#ML');
+                name.addEventListener('input', function(event) {
+
+
+                })
+                  
+                phone.addEventListener('input', function(event) {
+
+                        let str = /^[a-z]/gi
+
+                        if (phone.value.length !=str) console.log('no ok')
+                })
+                
+                ML.addEventListener('input', function(event) {
+
+
+                })
+
+            })
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form action="#" class="b-formfield">
+            <fieldset><input type="text" placeholder="Имя" id="name"></fieldset>
+            <fieldset><input type="text" placeholder="Телефон" id="phone"></fieldset>
+            <fieldset><input type="text" placeholder="mail" id="ML" required pattern="\S+@[a-z]+.[a-z]+"></fieldset>
+            <fieldset><textarea name="textin" id="" cols="30" rows="10"></textarea></fieldset>
+            <fieldset><button id="btn" type="submit">Отправить</button></fieldset>
+
+        </form>
+    </div>
+</body>
+</html>
