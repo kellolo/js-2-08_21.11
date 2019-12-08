@@ -8,11 +8,12 @@ const image = "https://placehold.it/200x150";
 const imageCart = "https://placehold.it/100x80";
 
 //Адрес api сервера (заглушки)
-url = "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" + "master/students/Rakushov%20Ruslan/Others/responses/";
+urlAPI =
+  "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" + "master/students/Rakushov%20Ruslan/Others/responses/";
 
 class List {
   constructor(url, container) {
-    this.url = url;
+    this.url = urlAPI + url;
     this.container = container;
     this.items = [];
     this._init();
@@ -21,14 +22,25 @@ class List {
     return false; //"Виртуальный" метод - переопределим в дочерних классах
   }
   getJson() {
-    fetch(this.url)
-    .then(data => data.json())
+    // return fetch(this.url).then(data => data.json());
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            resolve(JSON.parse(xhr.responseText));
+          }
+        };
+        xhr.open("GET", this.url, true);
+        xhr.send();
+      }, 1500);
+    });
   }
   render() {
     const block = document.querySelector(this.container);
     let str = "";
     if (this.items.length > 0) {
-      str = this.products.map((prod) => prod.render()).join("");
+      str = this.items.map(prod => prod.render()).join("");
     } else {
       str = '<div class="error-msg">There is no data</div>';
     }
@@ -36,65 +48,18 @@ class List {
   }
 }
 
-class Catalog {
-  constructor() {
-    this.products = [];
-    this.container = ".products";
-    this.init();
-  }
-  init() {
-    //this.getCatalogData();
-    // makeGetRequest("catalogData.json").forEach(prod => {
-    //   this.products.push(new Product(prod));
-    // });
-
-    // makeGetRequestLong("catalogData1.json", data => {
-    //   if (data) {
-    //     data.forEach(prod => this.products.push(new Product(prod)));
-    //     this.render();
-    //   }
-    // });
-
-    makeGetRequestPromiseLong("catalogData.json")
-      .then(data => {
-        if (data) {
-          data.forEach(prod => this.products.push(new Product(prod)));
-          // this.render(); //TODO Где лучше вызывать рендер: тут или в новом .then?
-        }
-      })
-      .then(() => this.render());
-
-    // makeGetRequestFetch("catalogData.json")
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     data.forEach(prod => this.products.push(new Product(prod)));
-    //     this.render()
-    //   })
-  }
-  //Try sync
-  // getCatalogData() {
-  //   let xhr = new XMLHttpRequest();
-  //   xhr.open("GET", urlCatalogData, false);
-  //   xhr.send();
-  //   if (xhr.readyState == 4 && xhr.status == 200) {
-  //     JSON.parse(xhr.responseText).forEach(prod => {
-  //       this.products.push(new Product(prod));
-  //     });
-  //   }
-  // }
-  render() {
-    let trg = document.querySelector(this.container);
-    if (this.products.length > 0) {
-      // let str = "";
-      // this.products.forEach(prod => {
-      //   str += prod.render();
-      // });
-      let str = this.products.map(prod => prod.render()).join("");
-      trg.innerHTML = str;
-      this._listenToBuyBtnClick();
-    } else {
-      trg.innerHTML = '<div class="error-msg">There is no data on server</div>';
-    }
+class Catalog extends List {
+  _init() {
+    this.getJson()
+      .then(data =>
+        data.forEach(item => {
+          this.items.push(new Product(item));
+        })
+      )
+      .then(() => {
+        this.render();
+        this._listenToBuyBtnClick();
+      });
   }
   _listenToBuyBtnClick() {
     document.querySelector(".products").addEventListener("click", evt => {
@@ -105,13 +70,149 @@ class Catalog {
   }
 }
 
-class Product {
-  constructor(prod) {
-    this.id = prod.id;
-    this.title = prod.title;
-    this.price = prod.price;
-    // this.img = prod.img;
+class Cart extends List {
+  _init() {
+    this.getJson()
+      .then(data =>
+        data.contents.forEach(item => {
+          this.items.push(new CartItem(item));
+        })
+      )
+      .then(() => {
+        this.render();
+        this._listenToCartBtnClick();
+        this._listenToCartDelBtnClick();
+      });
   }
+  _listenToCartBtnClick() {
+    document.querySelector(".btn-cart").addEventListener("click", () => {
+      document.querySelector(".cart-block").classList.toggle("invisible");
+    });
+  }
+  _listenToCartDelBtnClick() {
+    document.querySelector(".cart-block").addEventListener("click", evt => {
+      if (evt.target.classList.contains("del-btn")) {
+        cart.delCartItem(evt.target); //TODO Вызывать через cart видимо не правильно! В контроллер?
+      }
+    });
+  }
+  addCartItem(item) {
+    let id = +item.dataset["id"];
+    let curProd = this.getItemInCartById(id);
+    if (!curProd) {
+      let cartItem = new CartItem({
+        id: `${item.dataset["id"]}`,
+        title: `${item.dataset["name"]}`,
+        price: `${item.dataset["price"]}`,
+      });
+      this.quantity = 0;
+      this.items.push(cartItem);
+      cartItem.quantity = 1;
+      this.render();
+    } else {
+      curProd.quantity++;
+    }
+    this.render();
+  }
+  delCartItem(item) {
+    let id = +item.dataset["id"];
+    let curProd = this.getItemInCartById(id);
+    if (curProd) {
+      if (--curProd.quantity < 1) {
+        let curNode = document.querySelector(`.cart-item[data-id="${curProd.id}"]`);
+        curNode.parentNode.removeChild(curNode);
+        this.items.splice(this.items.indexOf(curProd), 1);
+      }
+      this.render();
+    }
+  }
+  getItemInCartById(id) {
+    let find = this.items.find(prod => parseInt(prod.id) === id);
+    return find;
+  }
+}
+
+// class Catalog {
+//   constructor() {
+//     this.products = [];
+//     this.container = ".products";
+//     this.init();
+//   }
+//   init() {
+//     //this.getCatalogData();
+//     // makeGetRequest("catalogData.json").forEach(prod => {
+//     //   this.products.push(new Product(prod));
+//     // });
+
+//     // makeGetRequestLong("catalogData1.json", data => {
+//     //   if (data) {
+//     //     data.forEach(prod => this.products.push(new Product(prod)));
+//     //     this.render();
+//     //   }
+//     // });
+
+//     makeGetRequestPromiseLong("catalogData.json")
+//       .then(data => {
+//         if (data) {
+//           data.forEach(prod => this.products.push(new Product(prod)));
+//           // this.render(); //TODO Где лучше вызывать рендер: тут или в новом .then?
+//         }
+//       })
+//       .then(() => this.render());
+
+//     // makeGetRequestFetch("catalogData.json")
+//     //   .then(response => response.json())
+//     //   .then(data => {
+//     //     data.forEach(prod => this.products.push(new Product(prod)));
+//     //     this.render()
+//     //   })
+//   }
+//   //Try sync
+//   // getCatalogData() {
+//   //   let xhr = new XMLHttpRequest();
+//   //   xhr.open("GET", urlCatalogData, false);
+//   //   xhr.send();
+//   //   if (xhr.readyState == 4 && xhr.status == 200) {
+//   //     JSON.parse(xhr.responseText).forEach(prod => {
+//   //       this.products.push(new Product(prod));
+//   //     });
+//   //   }
+//   // }
+//   render() {
+//     let trg = document.querySelector(this.container);
+//     if (this.products.length > 0) {
+//       // let str = "";
+//       // this.products.forEach(prod => {
+//       //   str += prod.render();
+//       // });
+//       let str = this.products.map(prod => prod.render()).join("");
+//       trg.innerHTML = str;
+//       this._listenToBuyBtnClick();
+//     } else {
+//       trg.innerHTML = '<div class="error-msg">There is no data on server</div>';
+//     }
+//   }
+//   _listenToBuyBtnClick() {
+//     document.querySelector(".products").addEventListener("click", evt => {
+//       if (evt.target.classList.contains("buy-btn")) {
+//         cart.addCartItem(evt.target); //TODO Вызывать через cart видимо не правильно!
+//       }
+//     });
+//   }
+// }
+
+class Item {
+  constructor(item) {
+    this.id = item.id;
+    this.title = item.title;
+    this.price = item.price;
+  }
+  render() {
+    return false;
+  }
+}
+
+class Product extends Item {
   render() {
     return `<div class="product-item" data-id="${this.id}">
                     <img src="${image}" alt="Some img">
@@ -128,76 +229,73 @@ class Product {
   }
 }
 
-class Cart {
-  constructor() {
-    this.products = [];
-    this._listenToCartBtnClick();
-    this._listenToCartDelBtnClick();
-    this.render();
-  }
-  addCartItem(item) {
-    let id = +item.dataset["id"];
-    let curProd = this.getIteminCartById(id);
-    if (!curProd) {
-      let cartItem = new CartItem(item);
-      this.products.push(cartItem);
-      cartItem.quantity = 1;
-      this.render();
-    } else {
-      curProd.quantity++;
-    }
-    this.render();
-  }
-  delCartItem(item) {
-    let id = +item.dataset["id"];
-    let curProd = this.getIteminCartById(id);
-    if (curProd) {
-      //   curProd.quantity--;
-      // }
-      if (--curProd.quantity < 1) {
-        let curNode = document.querySelector(`.cart-item[data-id="${curProd.id}"]`);
-        curNode.parentNode.removeChild(curNode);
-        this.products.splice(this.products.indexOf(curProd), 1);
-      }
-      this.render();
-    }
-  }
-  render() {
-    // let strProducts = "";
-    // this.products.forEach(prod => {
-    //   strProducts += prod.render();
-    // });
-    let strProducts = this.products.map(prod => prod.render()).join("");
-    if (strProducts === "") {
-      strProducts = "Cart is empty. Add some goods first!";
-    }
-    document.querySelector(".cart-block").innerHTML = strProducts;
-  }
-  getIteminCartById(id) {
-    let find = this.products.find(prod => parseInt(prod.id) === id);
-    return find;
-  }
-  _listenToCartBtnClick() {
-    document.querySelector(".btn-cart").addEventListener("click", () => {
-      document.querySelector(".cart-block").classList.toggle("invisible");
-    });
-  }
-  _listenToCartDelBtnClick() {
-    document.querySelector(".cart-block").addEventListener("click", evt => {
-      if (evt.target.classList.contains("del-btn")) {
-        cart.delCartItem(evt.target); //TODO Вызывать через cart видимо не правильно! В контроллер?
-      }
-    });
-  }
-}
+// class Cart {
+//   constructor() {
+//     this.products = [];
+//     this._listenToCartBtnClick();
+//     this._listenToCartDelBtnClick();
+//     this.render();
+//   }
+//   addCartItem(item) {
+//     let id = +item.dataset["id"];
+//     let curProd = this.getIteminCartById(id);
+//     if (!curProd) {
+//       let cartItem = new CartItem(item);
+//       this.products.push(cartItem);
+//       cartItem.quantity = 1;
+//       this.render();
+//     } else {
+//       curProd.quantity++;
+//     }
+//     this.render();
+//   }
+//   delCartItem(item) {
+//     let id = +item.dataset["id"];
+//     let curProd = this.getIteminCartById(id);
+//     if (curProd) {
+//       //   curProd.quantity--;
+//       // }
+//       if (--curProd.quantity < 1) {
+//         let curNode = document.querySelector(`.cart-item[data-id="${curProd.id}"]`);
+//         curNode.parentNode.removeChild(curNode);
+//         this.products.splice(this.products.indexOf(curProd), 1);
+//       }
+//       this.render();
+//     }
+//   }
+//   render() {
+//     // let strProducts = "";
+//     // this.products.forEach(prod => {
+//     //   strProducts += prod.render();
+//     // });
+//     let strProducts = this.products.map(prod => prod.render()).join("");
+//     if (strProducts === "") {
+//       strProducts = "Cart is empty. Add some goods first!";
+//     }
+//     document.querySelector(".cart-block").innerHTML = strProducts;
+//   }
+//   getIteminCartById(id) {
+//     let find = this.products.find(prod => parseInt(prod.id) === id);
+//     return find;
+//   }
+//   _listenToCartBtnClick() {
+//     document.querySelector(".btn-cart").addEventListener("click", () => {
+//       document.querySelector(".cart-block").classList.toggle("invisible");
+//     });
+//   }
+//   _listenToCartDelBtnClick() {
+//     document.querySelector(".cart-block").addEventListener("click", evt => {
+//       if (evt.target.classList.contains("del-btn")) {
+//         cart.delCartItem(evt.target); //TODO Вызывать через cart видимо не правильно! В контроллер?
+//       }
+//     });
+//   }
+// }
 
-class CartItem {
-  constructor(prod) {
-    this.id = prod.dataset["id"];
-    this.title = prod.dataset["name"];
-    this.price = prod.dataset["price"];
-    // this.img = prod.img;
-    this.quantity = 0;
+class CartItem extends Item {
+  constructor(item) {
+    super(item);
+    this.quantity = item.quantity;
   }
   render() {
     return `
@@ -242,23 +340,23 @@ class CartItem {
 //   }, 1500);
 // }
 
-// //Try promise. setTimeout emulates long data downloading
-function makeGetRequestPromiseLong(urlPostFix) {
-  return new Promise((resolve, reject) => {
-    setTimeout(function() {
-      let xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          resolve(JSON.parse(xhr.responseText));
-        }
-      };
-      xhr.open("GET", url + urlPostFix, true);
-      xhr.send();
-    }, 3500);
-  });
-}
+// // //Try promise. setTimeout emulates long data downloading
+// function makeGetRequestPromiseLong(urlPostFix) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(function() {
+//       let xhr = new XMLHttpRequest();
+//       xhr.onreadystatechange = function() {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//           resolve(JSON.parse(xhr.responseText));
+//         }
+//       };
+//       xhr.open("GET", url + urlPostFix, true);
+//       xhr.send();
+//     }, 3500);
+//   });
+// }
 
-//Try fetch. //TODO Is it sync again (without await)?
+// //Try fetch. //TODO Is it sync again (without await)?
 // function makeGetRequestFetch(urlPostFix) {
 //   return fetch(url + urlPostFix);
 // }
@@ -269,6 +367,6 @@ function makeGetRequestPromiseLong(urlPostFix) {
 // }
 
 //-----Start-----
-let catalog = new Catalog();
-let cart = new Cart();
+let catalog = new Catalog("catalogData.json", ".products");
+let cart = new Cart("getBasket.json", ".cart-block");
 //TODO Add Controller class with Start and listeners adding functions (???)
