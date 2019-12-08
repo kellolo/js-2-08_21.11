@@ -9,7 +9,8 @@ const imageCart = "https://placehold.it/100x80";
 
 //Адрес api сервера (заглушки)
 urlAPI =
-  "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" + "master/students/Rakushov%20Ruslan/Others/responses/";
+  "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
+  "master/students/Rakushov%20Ruslan/Others/responses/";
 
 class List {
   constructor(url, container) {
@@ -24,7 +25,7 @@ class List {
   getJson() {
     // return fetch(this.url).then(data => data.json());
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
+      setTimeout(() => {  //Simulate long data downloading
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 200) {
@@ -39,8 +40,9 @@ class List {
   render() {
     const block = document.querySelector(this.container);
     let str = "";
-    if (this.items.length > 0) {
-      str = this.items.map(prod => prod.render()).join("");
+    let curProdList = this.filteredItems ? this.filteredItems : this.items;
+    if (curProdList.length > 0) {
+      str = curProdList.map(prod => prod.render()).join("");
     } else {
       str = '<div class="error-msg">There is no data</div>';
     }
@@ -49,6 +51,10 @@ class List {
 }
 
 class Catalog extends List {
+  constructor(url, container) {
+    super(url, container);
+    this.filteredItems = [];
+  }
   _init() {
     this.getJson()
       .then(data =>
@@ -57,15 +63,32 @@ class Catalog extends List {
         })
       )
       .then(() => {
+        this.filteredItems = this.items;
         this.render();
         this._listenToBuyBtnClick();
+        this._listenToSearchBtnClick();
       });
+  }
+  filterItems(searchString) {
+    if (!searchString) {
+      this.filteredItems = this.items;
+    } else {
+      let searchRegexp = new RegExp(`${searchString}+`, "gi")
+      this.filteredItems = this.items.filter(item => searchRegexp.test(item.title));
+    }
+    this.render();
   }
   _listenToBuyBtnClick() {
     document.querySelector(".products").addEventListener("click", evt => {
       if (evt.target.classList.contains("buy-btn")) {
         cart.addCartItem(evt.target); //TODO Вызывать через cart видимо не правильно!
       }
+    });
+  }
+  _listenToSearchBtnClick() {
+    document.querySelector(".btn-search").addEventListener("click", evt => {
+      let searchString = document.querySelector(".search-field").value;
+      catalog.filterItems(searchString); //TODO Вызывать через catalog видимо не правильно!
     });
   }
 }
