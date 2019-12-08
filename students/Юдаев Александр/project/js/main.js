@@ -1,24 +1,56 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+let userCart = [],
+    catalogJSON = 'https://raw.githubusercontent.com/Yudaev/js-2-08_21.11/master/students/%D0%AE%D0%B4%D0%B0%D0%B5%D0%B2%20%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/project/JSON/catalog.json';
 
+function makeRequest (method, url) {
+    return new Promise(function (resolve, reject) {
+        let xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = function () {
+            if (this.status >= 200 && this.status < 300) {
+                resolve(xhr.response);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText,
+                    url: url
+                });
+            }
+        };
+        xhr.onerror = function () {
+            reject({
+                status: this.status,
+                statusText: xhr.statusTextt,
+                url: url
+            });
+        };
+        xhr.send();
+    });
+}
+
+makeRequest ('GET', catalogJSON)
+    .then((data) =>{
+       return JSON.parse(data);
+    })
+    .then((list) => {
+        new Catalog(list);
+    })
+    .catch((err) => {
+        let products = document.querySelector(".products");
+        products.style.cssText = "grid-template-columns: none;";
+        products.innerHTML = `<div>Не удалось загрузить <a href= "${err.url}" target="_blank">данные</a> с сервера, получена ошибка: ${err.status} (${err.statusText})</div>`;
+    });
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
-
 
 class Catalog {
-    constructor(){
+    constructor(list){
         this.products = [];
         this.container = '.products';
+        this.list = list;
         this._init();
     }
     _init(){
-        list.forEach (el => {
+        this.list.forEach (el => {
             this.products.push(new Product (el));
         });
         this.render()
@@ -99,7 +131,7 @@ class CartItem {
             userCart.push({
                 name: product.dataset ['name'],
                 id: productId,
-                img: cartImage,
+                img: 'https://placehold.it/100x80',
                 price: +product.dataset['price'],
                 quantity: 1
             })
@@ -122,10 +154,10 @@ class CartItem {
     }
 }
 
-let catalog = new Catalog();
+
 let item = new CartItem();
 
-console.log(catalog);
+//console.log(catalog);
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
     document.querySelector('.cart-block').classList.toggle('invisible');
