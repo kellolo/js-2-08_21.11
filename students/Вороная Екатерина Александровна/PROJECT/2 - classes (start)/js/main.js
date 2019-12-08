@@ -1,14 +1,14 @@
 //заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+// const image = 'https://placehold.it/200x150';
+// const cartImage = 'https://placehold.it/100x80';
+// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
+// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
+// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
+// var userCart = [];
+// var list = fetchData ();
 
 
 class Catalog {
@@ -57,9 +57,9 @@ class Product {
 }
 
 class Cart {
-    constructor () {
-        this.products = []
-    }
+    // constructor () {
+    //     this.products = []
+    // }
 
 }
 
@@ -107,23 +107,23 @@ let catalog = new Catalog ()
 // })
 
 //создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
+// function fetchData () {
+//     let arr = [];
+//     for (let i = 0; i < items.length; i++) {
+//         arr.push (createProduct (i));
+//     }
+//     return arr
+// };
 
 //создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    }
-};
+// function createProduct (i) {
+//     return {
+//         id: ids[i],
+//         title: items[i],
+//         price: prices[i],
+//         img: image,
+//     }
+// };
 
 //рендер списка товаров (каталога) - выпилено
 
@@ -183,3 +183,43 @@ function renderCart () {
 
     document.querySelector(`.cart-block`).innerHTML = allProducts;
 }
+
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+
+class GoodsList {
+
+    fetchGoods() {
+
+        fetch(API + '/catalogData.json')
+            .then(response => response.json())
+    .then(products => {
+
+            this.goods = products
+        this.render()
+    });
+    }
+    render() {
+
+        let elem = document.querySelector('.products')
+        let htmlStr = '';
+
+        this.goods.forEach(elem => {
+
+            htmlStr += `<div class="product-item">
+            <img src="https://placehold.it/200x150" class="product-img">
+            <div class="product-desc">
+                <h2 class="product-name">${elem.product_name}</h2>
+                <p class="product-price">${elem.price} &#36;</p>
+                <button id=${elem.id_product} class="product-btn" onclick="addItemToCart(this)" >Купить</button>
+            </div>
+        </div>`
+
+    })
+
+        elem.innerHTML = htmlStr
+    }
+
+}
+
+const list = new GoodsList();
+list.fetchGoods();

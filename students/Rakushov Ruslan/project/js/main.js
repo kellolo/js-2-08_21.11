@@ -1,161 +1,274 @@
+//TODO Заменить заглушки изображений
+//DONE Дописать makeGetRequestLong() как async (done), promise (done), fetch (done)
+//DONE Catalog.render() - обработка пустого каталога
+//TODO Обработка ошибок получения данных в функциях makeGetRequest...
+
 //заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const image = "https://placehold.it/200x150";
+const imageCart = "https://placehold.it/100x80";
 
+//Адрес api сервера (заглушки)
+url = "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" + "master/students/Rakushov%20Ruslan/Others/responses/";
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
-
+class List {
+  constructor(url, container) {
+    this.url = url;
+    this.container = container;
+    this.items = [];
+    this._init();
+  }
+  _init() {
+    return false; //"Виртуальный" метод - переопределим в дочерних классах
+  }
+  getJson() {
+    fetch(this.url)
+    .then(data => data.json())
+  }
+  render() {
+    const block = document.querySelector(this.container);
+    let str = "";
+    if (this.items.length > 0) {
+      str = this.products.map((prod) => prod.render()).join("");
+    } else {
+      str = '<div class="error-msg">There is no data</div>';
+    }
+    block.innerHTML = str;
+  }
+}
 
 class Catalog {
-    constructor () {
-        this.products = []
-        this.container = '.products'
-        this._init ()
+  constructor() {
+    this.products = [];
+    this.container = ".products";
+    this.init();
+  }
+  init() {
+    //this.getCatalogData();
+    // makeGetRequest("catalogData.json").forEach(prod => {
+    //   this.products.push(new Product(prod));
+    // });
+
+    // makeGetRequestLong("catalogData1.json", data => {
+    //   if (data) {
+    //     data.forEach(prod => this.products.push(new Product(prod)));
+    //     this.render();
+    //   }
+    // });
+
+    makeGetRequestPromiseLong("catalogData.json")
+      .then(data => {
+        if (data) {
+          data.forEach(prod => this.products.push(new Product(prod)));
+          // this.render(); //TODO Где лучше вызывать рендер: тут или в новом .then?
+        }
+      })
+      .then(() => this.render());
+
+    // makeGetRequestFetch("catalogData.json")
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     data.forEach(prod => this.products.push(new Product(prod)));
+    //     this.render()
+    //   })
+  }
+  //Try sync
+  // getCatalogData() {
+  //   let xhr = new XMLHttpRequest();
+  //   xhr.open("GET", urlCatalogData, false);
+  //   xhr.send();
+  //   if (xhr.readyState == 4 && xhr.status == 200) {
+  //     JSON.parse(xhr.responseText).forEach(prod => {
+  //       this.products.push(new Product(prod));
+  //     });
+  //   }
+  // }
+  render() {
+    let trg = document.querySelector(this.container);
+    if (this.products.length > 0) {
+      // let str = "";
+      // this.products.forEach(prod => {
+      //   str += prod.render();
+      // });
+      let str = this.products.map(prod => prod.render()).join("");
+      trg.innerHTML = str;
+      this._listenToBuyBtnClick();
+    } else {
+      trg.innerHTML = '<div class="error-msg">There is no data on server</div>';
     }
-    _init () {
-        list.forEach (el => {
-            this.products.push (new Product (el))
-        })
-        this.render ()
-    }
-    render () {
-        let trg = document.querySelector (this.container)
-        let str = ''
-        this.products.forEach (prod => {
-            str += prod.render ()
-        })
-        trg.innerHTML = str
-    }
+  }
+  _listenToBuyBtnClick() {
+    document.querySelector(".products").addEventListener("click", evt => {
+      if (evt.target.classList.contains("buy-btn")) {
+        cart.addCartItem(evt.target); //TODO Вызывать через cart видимо не правильно!
+      }
+    });
+  }
 }
 
 class Product {
-    constructor (prod) {
-        this.id = prod.id
-        this.title = prod.title
-        this.price = prod.price
-        this.img = prod.img
-    }
-    render () {
-        return `<div class="product-item" data-id="${this.id}">
-                    <img src="${this.img}" alt="Some img">
+  constructor(prod) {
+    this.id = prod.id;
+    this.title = prod.title;
+    this.price = prod.price;
+    // this.img = prod.img;
+  }
+  render() {
+    return `<div class="product-item" data-id="${this.id}">
+                    <img src="${image}" alt="Some img">
                     <div class="desc">
                         <h3>${this.title}</h3>
-                        <p>${this.price} $</p>
+                        <p>${this.price} руб.</p>
                         <button class="buy-btn" 
                         data-id="${this.id}"
                         data-name="${this.title}"
-                        data-image="${this.img}"
+                        data-image="${image}"
                         data-price="${this.price}">Купить</button>
                     </div>
-                </div>`
-    }
+                </div>`;
+  }
 }
 
 class Cart {
-    //HW
+  constructor() {
+    this.products = [];
+    this._listenToCartBtnClick();
+    this._listenToCartDelBtnClick();
+    this.render();
+  }
+  addCartItem(item) {
+    let id = +item.dataset["id"];
+    let curProd = this.getIteminCartById(id);
+    if (!curProd) {
+      let cartItem = new CartItem(item);
+      this.products.push(cartItem);
+      cartItem.quantity = 1;
+      this.render();
+    } else {
+      curProd.quantity++;
+    }
+    this.render();
+  }
+  delCartItem(item) {
+    let id = +item.dataset["id"];
+    let curProd = this.getIteminCartById(id);
+    if (curProd) {
+      //   curProd.quantity--;
+      // }
+      if (--curProd.quantity < 1) {
+        let curNode = document.querySelector(`.cart-item[data-id="${curProd.id}"]`);
+        curNode.parentNode.removeChild(curNode);
+        this.products.splice(this.products.indexOf(curProd), 1);
+      }
+      this.render();
+    }
+  }
+  render() {
+    // let strProducts = "";
+    // this.products.forEach(prod => {
+    //   strProducts += prod.render();
+    // });
+    let strProducts = this.products.map(prod => prod.render()).join("");
+    if (strProducts === "") {
+      strProducts = "Cart is empty. Add some goods first!";
+    }
+    document.querySelector(".cart-block").innerHTML = strProducts;
+  }
+  getIteminCartById(id) {
+    let find = this.products.find(prod => parseInt(prod.id) === id);
+    return find;
+  }
+  _listenToCartBtnClick() {
+    document.querySelector(".btn-cart").addEventListener("click", () => {
+      document.querySelector(".cart-block").classList.toggle("invisible");
+    });
+  }
+  _listenToCartDelBtnClick() {
+    document.querySelector(".cart-block").addEventListener("click", evt => {
+      if (evt.target.classList.contains("del-btn")) {
+        cart.delCartItem(evt.target); //TODO Вызывать через cart видимо не правильно! В контроллер?
+      }
+    });
+  }
 }
 
 class CartItem {
-    //HW
+  constructor(prod) {
+    this.id = prod.dataset["id"];
+    this.title = prod.dataset["name"];
+    this.price = prod.dataset["price"];
+    // this.img = prod.img;
+    this.quantity = 0;
+  }
+  render() {
+    return `
+      <div class="cart-item" data-id="${this.id}">
+        <div class="product-bio">
+          <img src="${imageCart}" alt="Some image">
+          <div class="product-desc">
+            <p class="product-title">${this.title}</p>
+            <p class="product-quantity">Quantity: ${this.quantity}</p>
+            <p class="product-single-price">${this.price} руб. each</p>
+          </div>
+        </div>
+        <div class="right-block">
+          <p class="product-price">${this.quantity * this.price}</p>
+          <button class="del-btn" data-id="${this.id}">&times;</button>
+        </div>
+      </div>`;
+  }
 }
 
-let catalog = new Catalog ()
-//кнопка скрытия и показа корзины
-// document.querySelector('.btn-cart').addEventListener('click', () => {
-//     document.querySelector('.cart-block').classList.toggle('invisible');
-// });
-// //кнопки удаления товара (добавляется один раз)
-// document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-//     if (evt.target.classList.contains ('del-btn')) {
-//         removeProduct (evt.target);
-//     }
-// })
-// //кнопки покупки товара (добавляется один раз)
-// document.querySelector('.products').addEventListener ('click', (evt) => {
-//     if (evt.target.classList.contains ('buy-btn')) {
-//         addProduct (evt.target);
-//     }
-// })
+// //Try sync method
+// function makeGetRequest(urlPostFix) {
+//   let xhr = new XMLHttpRequest();
+//   xhr.open("GET", url + urlPostFix, false);
+//   xhr.send();
+//   if (xhr.readyState == 4 && xhr.status == 200) {
+//     return JSON.parse(xhr.responseText);
+//   }
+// }
 
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
+// //Try async. setTimeout emulates long data downloading
+// function makeGetRequestLong(urlPostFix, cb) {
+//   setTimeout(function() {
+//     let xhr = new XMLHttpRequest();
+//     xhr.onreadystatechange = function() {
+//       if (xhr.readyState == 4 && xhr.status == 200) {
+//         cb(JSON.parse(xhr.responseText));
+//       }
+//     };
+//     xhr.open("GET", url + urlPostFix, true);
+//     xhr.send();
+//   }, 1500);
+// }
 
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    }
-};
-
-//рендер списка товаров (каталога) - выпилено
-
-
-//CART
-
-// Добавление продуктов в корзину
-function addProduct (product) {
-    let productId = +product.dataset['id']; //data-id="1"
-    let find = userCart.find (element => element.id === productId); //товар или false
-    if (!find) {
-        userCart.push ({
-            name: product.dataset ['name'],
-            id: productId,
-            img: cartImage,
-            price: +product.dataset['price'],
-            quantity: 1
-        })
-    }  else {
-        find.quantity++
-    }
-    renderCart ()
+// //Try promise. setTimeout emulates long data downloading
+function makeGetRequestPromiseLong(urlPostFix) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          resolve(JSON.parse(xhr.responseText));
+        }
+      };
+      xhr.open("GET", url + urlPostFix, true);
+      xhr.send();
+    }, 3500);
+  });
 }
 
-//удаление товаров
-function removeProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (find.quantity > 1) {
-        find.quantity--;
-    } else {
-        userCart.splice(userCart.indexOf(find), 1);
-        document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
-    }
-    renderCart ();
-}
+//Try fetch. //TODO Is it sync again (without await)?
+// function makeGetRequestFetch(urlPostFix) {
+//   return fetch(url + urlPostFix);
+// }
+// function makeGetRequestFetch(urlPostFix) {
+//   setTimeout(function() {
+//     return fetch(url + urlPostFix);
+//   },3000);
+// }
 
-//перерендер корзины
-function renderCart () {
-    let allProducts = '';
-    for (el of userCart) {
-        allProducts += `<div class="cart-item" data-id="${el.id}">
-                            <div class="product-bio">
-                                <img src="${el.img}" alt="Some image">
-                                <div class="product-desc">
-                                    <p class="product-title">${el.name}</p>
-                                    <p class="product-quantity">Quantity: ${el.quantity}</p>
-                                    <p class="product-single-price">$${el.price} each</p>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <p class="product-price">${el.quantity * el.price}</p>
-                                <button class="del-btn" data-id="${el.id}">&times;</button>
-                            </div>
-                        </div>`
-    }
-
-    document.querySelector(`.cart-block`).innerHTML = allProducts;
-}
+//-----Start-----
+let catalog = new Catalog();
+let cart = new Cart();
+//TODO Add Controller class with Start and listeners adding functions (???)
