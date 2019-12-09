@@ -4,13 +4,13 @@
 //TODO Обработка ошибок получения данных в функциях makeGetRequest...
 
 //заглушки (имитация базы данных)
-const image = "https://placehold.it/200x150";
-const imageCart = "https://placehold.it/100x80";
+// const image = "https://placehold.it/200x150";
+// const imageCart = "https://placehold.it/100x80";
 
 //Адрес api сервера (заглушки)
-urlAPI =
-  "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
-  "master/students/Rakushov%20Ruslan/Others/responses/";
+// urlAPI =
+//   "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
+//   "master/students/Rakushov%20Ruslan/Others/responses/";
 
 class List {
   constructor(url, container) {
@@ -25,7 +25,8 @@ class List {
   getJson() {
     // return fetch(this.url).then(data => data.json());
     return new Promise((resolve, reject) => {
-      setTimeout(() => {  //Simulate long data downloading
+      setTimeout(() => {
+        //Simulate long data downloading
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 200) {
@@ -73,7 +74,7 @@ class Catalog extends List {
     if (!searchString) {
       this.filteredItems = this.items;
     } else {
-      let searchRegexp = new RegExp(`${searchString}+`, "gi")
+      let searchRegexp = new RegExp(`${searchString}+`, "gi");
       this.filteredItems = this.items.filter(item => searchRegexp.test(item.title));
     }
     this.render();
@@ -155,6 +156,58 @@ class Cart extends List {
   }
 }
 
+class Item {
+  constructor(item) {
+    this.id = item.id;
+    this.title = item.title;
+    this.price = item.price;
+  }
+  render() {
+    return false;
+  }
+}
+
+class Product extends Item {
+  render() {
+    return `<div class="product-item" data-id="${this.id}">
+                    <img src="${image}" alt="Some img">
+                    <div class="desc">
+                        <h3>${this.title}</h3>
+                        <p>${this.price} руб.</p>
+                        <button class="buy-btn" 
+                        data-id="${this.id}"
+                        data-name="${this.title}"
+                        data-image="${image}"
+                        data-price="${this.price}">Купить</button>
+                    </div>
+                </div>`;
+  }
+}
+
+class CartItem extends Item {
+  constructor(item) {
+    super(item);
+    this.quantity = item.quantity;
+  }
+  render() {
+    return `
+      <div class="cart-item" data-id="${this.id}">
+        <div class="product-bio">
+          <img src="${imageCart}" alt="Some image">
+          <div class="product-desc">
+            <p class="product-title">${this.title}</p>
+            <p class="product-quantity">Quantity: ${this.quantity}</p>
+            <p class="product-single-price">${this.price} руб. each</p>
+          </div>
+        </div>
+        <div class="right-block">
+          <p class="product-price">${this.quantity * this.price}</p>
+          <button class="del-btn" data-id="${this.id}">&times;</button>
+        </div>
+      </div>`;
+  }
+}
+
 // class Catalog {
 //   constructor() {
 //     this.products = [];
@@ -224,34 +277,6 @@ class Cart extends List {
 //   }
 // }
 
-class Item {
-  constructor(item) {
-    this.id = item.id;
-    this.title = item.title;
-    this.price = item.price;
-  }
-  render() {
-    return false;
-  }
-}
-
-class Product extends Item {
-  render() {
-    return `<div class="product-item" data-id="${this.id}">
-                    <img src="${image}" alt="Some img">
-                    <div class="desc">
-                        <h3>${this.title}</h3>
-                        <p>${this.price} руб.</p>
-                        <button class="buy-btn" 
-                        data-id="${this.id}"
-                        data-name="${this.title}"
-                        data-image="${image}"
-                        data-price="${this.price}">Купить</button>
-                    </div>
-                </div>`;
-  }
-}
-
 // class Cart {
 //   constructor() {
 //     this.products = [];
@@ -315,30 +340,6 @@ class Product extends Item {
 //   }
 // }
 
-class CartItem extends Item {
-  constructor(item) {
-    super(item);
-    this.quantity = item.quantity;
-  }
-  render() {
-    return `
-      <div class="cart-item" data-id="${this.id}">
-        <div class="product-bio">
-          <img src="${imageCart}" alt="Some image">
-          <div class="product-desc">
-            <p class="product-title">${this.title}</p>
-            <p class="product-quantity">Quantity: ${this.quantity}</p>
-            <p class="product-single-price">${this.price} руб. each</p>
-          </div>
-        </div>
-        <div class="right-block">
-          <p class="product-price">${this.quantity * this.price}</p>
-          <button class="del-btn" data-id="${this.id}">&times;</button>
-        </div>
-      </div>`;
-  }
-}
-
 // //Try sync method
 // function makeGetRequest(urlPostFix) {
 //   let xhr = new XMLHttpRequest();
@@ -390,6 +391,58 @@ class CartItem extends Item {
 // }
 
 //-----Start-----
-let catalog = new Catalog("catalogData.json", ".products");
-let cart = new Cart("getBasket.json", ".cart-block");
+// let catalog = new Catalog("catalogData.json", ".products");
+// let cart = new Cart("getBasket.json", ".cart-block");
 //TODO Add Controller class with Start and listeners adding functions (???)
+
+//------------------------------------------------------------
+//|--                          Vue                         --|
+//------------------------------------------------------------
+
+const app = new Vue({
+  el: "#app",
+  data: {
+    shopName: "E-SHOP. developed with Vue",
+    urlAPI:
+      "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
+      "master/students/Rakushov%20Ruslan/Others/responses/",
+    urlCatalogData: "catalogData.json",
+    urlBasketData: "getBasket.json",
+    image: "https://placehold.it/200x150",
+    imageCart: "https://placehold.it/100x80",
+    catalog: {
+      vItems: [],
+      vFilteredItems: [],
+      vSearchString: "",
+    },
+    cart: {
+      vItems: [],
+      totalSum: 0,
+    },
+  },
+  methods: {
+    getJson(url) {
+      // return fetch(this.url).then(data => data.json());
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          //Simulate long data downloading
+          let xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              resolve(JSON.parse(xhr.responseText));
+            }
+          };
+          xhr.open("GET", url, true);
+          xhr.send();
+        }, 1500);
+      });
+    },
+  },
+  computed: {},
+  mounted() {
+    this.getJson(this.urlAPI + this.urlCatalogData).then(data => {
+      data.forEach(item => this.catalog.vItems.push(new Product(item)));
+      this.catalog.vFilteredItems = this.catalog.vItems;
+    });
+  },
+});

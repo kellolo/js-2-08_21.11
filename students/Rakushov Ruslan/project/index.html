@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/style.css">
-</head>
-<body>
-    <header>
-        <div class="logo">E-shop</div>
+    <link rel="stylesheet" href="style/normalize.css" />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="logo">{{ shopName }}</div>
         <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+          <form action="#" class="search-form">
+            <input type="text" class="search-field" />
+            <button class="btn-search" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+          <button class="btn-cart" type="button">Корзина</button>
+          <div class="cart-block invisible"></div>
         </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
+      </header>
+      <main>
+        <div class="products">
+            <div class="product-item" :data-id="prod.id"  v-for="prod in catalog.vFilteredItems">
+                <img :src="image" alt="Some img">
+                <div class="desc">
+                    <h3>{{ prod.title }}</h3>
+                    <p>{{ prod.price }} руб.</p>
+                    <button class="buy-btn" 
+                    :data-id="prod.id" 
+                    :data-name="prod.title" 
+                    :data-image="image" 
+                    :data-price="prod.price">Купить</button>
+                </div>
+            </div>
+        </div>
+      </main>
+    </div>
 
-
-
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+      integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>
