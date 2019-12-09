@@ -437,6 +437,16 @@ const app = new Vue({
         }, 1500);
       });
     },
+    filterItems() {
+      let searchString = this.catalog.vSearchString;
+      if (!searchString) {
+        this.catalog.vFilteredItems = this.catalog.vItems;
+      } else {
+        let searchRegexp = new RegExp(`${searchString}+`, "gi");
+        this.catalog.vFilteredItems = this.catalog.vItems.filter(item => searchRegexp.test(item.title));
+      }
+      
+    }
   },
   computed: {},
   mounted() {

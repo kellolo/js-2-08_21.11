@@ -12,8 +12,8 @@
         <div class="logo">{{ shopName }}</div>
         <div class="cart">
           <form action="#" class="search-form">
-            <input type="text" class="search-field" />
-            <button class="btn-search" type="submit">
+            <input type="text" class="search-field" v-model="catalog.vSearchString"/>
+            <button class="btn-search" type="submit" @click="filterItems">
               <i class="fas fa-search"></i>
             </button>
           </form>
