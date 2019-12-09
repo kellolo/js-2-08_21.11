@@ -416,6 +416,7 @@ const app = new Vue({
       vSearchString: "",
     },
     cart: {
+      isVisible: false,
       vItems: [],
       totalSum: 0,
     },
@@ -445,7 +446,10 @@ const app = new Vue({
         let searchRegexp = new RegExp(`${searchString}+`, "gi");
         this.catalog.vFilteredItems = this.catalog.vItems.filter(item => searchRegexp.test(item.title));
       }
-      
+
+    },
+    toggleCartVisibility() {
+      this.cart.isVisible = !this.cart.isVisible;
     }
   },
   computed: {},
@@ -453,6 +457,9 @@ const app = new Vue({
     this.getJson(this.urlAPI + this.urlCatalogData).then(data => {
       data.forEach(item => this.catalog.vItems.push(new Product(item)));
       this.catalog.vFilteredItems = this.catalog.vItems;
+    });
+    this.getJson(this.urlAPI + this.urlBasketData).then(data => {
+      data.contents.forEach(item => this.cart.vItems.push(new CartItem(item)));
     });
   },
 });
