@@ -1,12 +1,13 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+//const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
+//const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
+//const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const api = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-let list = fetchData ()
+//let list = fetchData ()
 let userCart = []
 let fullCart
 
@@ -34,7 +35,8 @@ class Product {
         this.id = product.id
         this.title = product.title
         this.price = product.price
-        this.img = product.img
+        //this.img = product.img
+        this.img = image
     }
     render() {
         return `<div class="product-item" data-id="${this.id}"> 
@@ -65,22 +67,22 @@ renderProducts ();
 */ 
 
 //создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
+/* function fetchData () {
     let arr = [];
     for (let i = 0; i < items.length; i++) {
         arr.push (createProduct (i));
     }
     return arr
-};
+}; */
 
 //создание товара
-function createProduct (i) {
+/* function createProduct (i) {
     return {
         id: ids[i],
         //name: items[i],
         title: items[i],
         price: prices[i],
-        img: image /*,
+        img: image */ /*,
         quantity: 0,
         createTemplate: function () {
             return `<div class="product-item" data-id="${this.id}">
@@ -99,9 +101,9 @@ function createProduct (i) {
 
         /*add: function() {
             this.quantity++
-        }*/
+        }*/ /*
     }
-};
+}; */
 
 class Catalog {
 	constructor (block) {
@@ -109,12 +111,24 @@ class Catalog {
 		this.container = '.products'
 		this._init ()
 	}
+	/*
 	_init () {
 		list.forEach (el => {
 			this.products.push (new Product (el))
 		})
 		this.render ()
 	}
+	*/	
+    _init () {
+        fetch(api)
+            .then(d => d.json())
+            .then(data => {
+                data.forEach (product => {
+                    this.products.push (new Product (product))
+                })
+            })
+            .finally(() => this.render ())
+    }
 	render () {
 		let block = document.querySelector (this.container) 
 		let str = ''
@@ -188,7 +202,8 @@ class CartItem {
     constructor(product) {
         this.title = product.dataset['name']
         this.id = product.dataset['id']
-        this.img = product.dataset['image']
+        //this.img = product.dataset['image']
+        this.img = cartImage
         this.price = product.dataset['price']
         this.quantity = 1
     }
