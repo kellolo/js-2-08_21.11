@@ -13,10 +13,10 @@ const cartImage = 'https://placehold.it/100x80';
 
 class Product {
     constructor(prod) {
-        this.id = prod.id
-        this.title = prod.title
-        this.price = prod.price
-        this.img = prod.img
+        this.id = prod.id;
+        this.title = prod.title;
+        this.price = prod.price;
+        this.img = prod.img;
     }
     render() {
         return `<div class="product-item" data-id="${this.id}">
@@ -40,13 +40,13 @@ class Catalog {
         this._init()
     }
     _init() {
-        let list = []
-        let url = 'https://raw.githubusercontent.com/Konstantin-Buzuev/online-store-api/master/catalogData.json'
+        let list = [];
+        let url = 'https://raw.githubusercontent.com/Konstantin-Buzuev/online-store-api/master/catalogData.json';
         this._catalogFetch(url)
             .then(dataJSON => dataJSON.json())
             .then(data => {
                 data.forEach(el => {
-                    let newProd = new Object;
+                    let newProd = new Object(0)
                     newProd.id = el.id_product
                     newProd.title = el.product_name
                     newProd.price = el.price
@@ -73,11 +73,11 @@ class Catalog {
         })
         trg.innerHTML = str
         let buttons = [...document.getElementsByClassName("buy-btn")]
-                    buttons.forEach( button => {
-                        button.addEventListener("click", function () {
-                            cart.addItem(button);
-                        })
-                    })
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                cart.addItem(button);
+            })
+        })
     }
 }
 
@@ -131,10 +131,10 @@ class Cart {
     }
     _createItem(product) {
         return {
-            id: +product.dataset['id'],
-            title: product.dataset['name'],
-            img: product.dataset['image'],
-            price: product.dataset['price'],
+            id: +product.dataset.id,
+            title: product.dataset.name,
+            img: product.dataset.image,
+            price: product.dataset.price,
         }
     }
     _calculateCost() {
