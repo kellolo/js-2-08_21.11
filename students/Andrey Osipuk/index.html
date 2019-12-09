@@ -5,139 +5,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        form {
-            width: 400px
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-    </style>
+    <title>Lesson 3</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <form action="#" id="uForm">
-        <fieldset>
-            <legend>Размер гамбургера</legend>
-            <label>
-                <input type="radio" name="size" value="big" checked> Большой (100 рублей, 40 калорий)
-            </label>
-            <label>
-                <input type="radio" name="size" value="small"> Маленький (50 рублей, 20 калорий)
-            </label>
-        </fieldset>
-        <fieldset>
-            <legend>Выбрать начинку</legend>
-            <label>
-                <input type="radio" name="filling" value="cheese" checked> С сыром (+10 рублей, +20 калорий)
-            </label>
-            <label>
-                <input type="radio" name="filling" value="salad"> С салатом (+20 рублей, +5 калорий)
-            </label>
-            <label>
-                <input type="radio" name="filling" value="potato"> С картофелем (+15 рублей, +10 калорий)
-            </label>
-        </fieldset>
-        <fieldset>
-            <legend>Выбрать добавку</legend>
-            <label>
-                <input type="checkbox" name="additions" value="seasoning" checked> Приправа (+15 рублей, +0 калорий)
-            </label>
-            <label>
-                <input type="checkbox" name="additions" value="mayonnaise"> Майонез (+20 рублей, +5 калорий)
-            </label>
-        </fieldset>
-        <fieldset>
-                <legend>Ваш заказ</legend>
-                <p>Сумма: <span id="summa" style="font-weight: bold"></span></p>
-                <p>Калории: <span id="calories" style="font-weight: bold"></span></p>
-            </fieldset>
-    </form>
-    <br>
-    <button id="okBtn">Сделать заказ</button>
-    <script>
-        let form = document.querySelector('#uForm')
-        let btn = document.querySelector('#okBtn')
-        let parametrs = {
-            big: {
-                price: 100,
-                calories: 40,
-            },
-            small: {
-                price: 50,
-                calories: 20,
-            },
-            cheese: {
-                price: 10,
-                calories: 20,
-            },
-            salad: {
-                price: 20,
-                calories: 5,
-            },
-            potato: {
-                price: 15,
-                calories: 10,
-            },
-            seasoning: {
-                price: 15,
-                calories: 0,
-            },
-            mayonnaise: {
-                price: 20,
-                calories: 5,
-            },
-        };
+    <div class="form-wrap">
+        <div class="profile"><img src="https://html5book.ru/wp-content/uploads/2016/10/profile-image.png">
+            <h1>Регистрация</h1>
+        </div>
+        <div class="forma">
+            <div>
+                <label for="name">Имя</label>
+                <input type="text" data-name="name">
+            </div>
+            <div>
+                <label for="phone">Телефон</label>
+                <input type="text" data-name="phone" id="online_phone" name="phone" type="tel" maxlength="50"
+                    required="required" placeholder="+7(___)___-__-__">
+            </div>
+            <div>
+                <label for="email">E-mail</label>
+                <input type="text" data-name="email">
+            </div>
+            <div>
+                <label for="text">О вас</label>
+                <textarea name="text"></textarea>
+            </div>
+            <button id="submit">Отправить</button>
+        </div>
+    </div>
+</body>
+<script>
+    //str.replace(/(\B'|'\B)/g, '"') 1 и 2 задание в одной регулярке
+    //не работает на русских символах
+    const obj = {
+        name: {
+            signature: 'имени',
+            regexp: /^[a-zA-Zа-яА-Я]{1,20}(\s[a-zA-Zа-яА-Я]{1,20})?$/,
+        },
+        phone: {
+            signature: 'телефона',
+            regexp: /^\+7\([0-9]{3}\)\d{3}\-\d{2}\-\d{2}$/,
+        },
+        email: {
+            signature: 'e-mail',
+            regexp: /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/,
+        },
+    };
 
-        btn.addEventListener('click', () => {
-            size = document.querySelector(`input[name='size']:checked`).value
-            filling = document.querySelector(`input[name='filling']:checked`).value
-            additions = [...document.querySelectorAll(`input[name='additions']:checked`)].map(el => el.value)
-            let newHamburger = new Hamburger(size, filling, additions)
-            document.getElementById('summa').innerText = newHamburger.getSum();
-            document.getElementById('calories').innerText = newHamburger.getCalories();
-        });
+    let button = [...document.querySelectorAll('input')];
+    button.forEach(el => el.addEventListener('change', (e) => {
+        const check = new Check(e.target.dataset.name);
+        check.checkInput();
+    })
+    )
 
-        class Hamburger {
-            constructor(size, filling, additions) {
-                this.size = size;
-                this.filling = filling;
-                this.additions = additions;
-            }
-
-            showParametrs() {
-                console.log(this);
-                console.log(this.size, this.filling, this.additions);
-            }
-            getSum() {
-                this.summa = 0;
-                this.summa += parametrs[this.size].price;
-                this.summa += parametrs[this.filling].price;
-
-                this.additions.forEach(element => {
-                    this.summa += parametrs[element].price;
-                });
-
-                return this.summa;
-            }
-            getCalories() {
-                this.calories = 0;
-                this.calories += parametrs[this.size].calories;
-                this.calories += parametrs[this.filling].calories;
-
-                this.additions.forEach(element => {
-                    this.calories += parametrs[element].calories;
-                });
-
-                return this.calories;
+    class Check {
+        constructor(name = null) {
+            this.name = name
+        }
+        checkInput() {
+            const $input = document.querySelector(`input[data-name=${this.name}]`);
+            if (obj[this.name].regexp.test($input.value)) {
+                $input.style.border = '2px solid green';
+                $input.parentElement.querySelector('p') ? $input.parentElement.querySelector('p').remove() : null
+            } else {
+                $input.style.border = '2px solid red';
+                $input.parentElement.querySelector('p') ? $input.parentElement.querySelector('p').remove() : null
+                $input.insertAdjacentHTML('afterend', `<p>Не правильный ввод ${obj[this.name].signature}</p>`)
             }
         }
+    }
 
-
-    </script>
-</body>
+    //Хрень , которую я скачал для красивого инпута телефона
+    //Можно всю ту вакханалию, которая ниже сделать проще?
+    function setCursorPosition(pos, e) {
+        // e.focus();
+        if (e.setSelectionRange) e.setSelectionRange(pos, pos);
+        else if (e.createTextRange) {
+            var range = e.createTextRange();
+            range.collapse(true);
+            range.moveEnd("character", pos);
+            range.moveStart("character", pos);
+            range.select()
+        }
+    }
+    function mask(e) {
+        //console.log('mask',e);
+        var matrix = this.placeholder,// .defaultValue
+            i = 0,
+            def = matrix.replace(/\D/g, ""),
+            val = this.value.replace(/\D/g, "");
+        def.length >= val.length && (val = def);
+        matrix = matrix.replace(/[_\d]/g, function (a) {
+            return val.charAt(i++) || "_"
+        });
+        this.value = matrix;
+        i = matrix.lastIndexOf(val.substr(-1));
+        i < matrix.length && matrix != this.placeholder ? i++ : i = matrix.indexOf("_");
+        setCursorPosition(i, this)
+    }
+    window.addEventListener("DOMContentLoaded", function () {
+        var input = document.querySelector("#online_phone");
+        input.addEventListener("input", mask, false);
+        // input.focus();
+        setCursorPosition(3, input);
+    });
+</script>
 
 </html>

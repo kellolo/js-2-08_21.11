@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            width: 500px;
+        }
+
+        form input, form button {
+            height: 40px;
+            margin: 5px;
+            padding-left: 10px;
+            margin: 0 0 5px;
+        }
+        form p{
+            height: 15px;
+            margin: 5px;
+            padding-left: 10px;
+            color: #bd0000;
+            margin: 0 0 15px;
+
+        }
+
+        .red {
+            border: 2px solid #bd0000;
+            background-color: #bd000015;
+        }
+
+        .green {
+            border: 2px solid #00960c;
+            background-color: #00960c15;
+        }
+
+        input:focus {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="contact-form">
+        <input id="name" type="text" name="formGetName" placeholder="Name" autocomplete="off" />
+        <p id="name_error"></p>
+        <input id="phone" type="text" name="formGetPhone" placeholder="+7(000)000-0000" autocomplete="off" />
+        <p id="phone_error"></p>
+        <input id="email" type="email" name="formGetEmail" placeholder="address@server.domain" autocomplete="off" />
+        <p id="email_error"></p>
+        <button type="button" id="okBtn" onclick="send()">SEND</button>
+        <input type="reset" value="Clear">
+    </form>
+
+    <script>
+        class ContactFormValidator {
+            validationErrors = new Map();
+            validationRules = {
+                "name": {
+                    test: /^([A-Za-zА-Яа-яЁё]+)$/,
+                    message: "Имя должно содержать одно слово"
+                },
+                "phone": {
+                    test: /^([+][7][(][0-9]{3}[)][0-9]{3}[-][0-9]{4})$/,
+                    message: "Телефон не соответствует +7(000)000-0000"
+                },
+                "email": {
+                    test: /^([A-Za-z0-9\.-]+)(@)([A-Za-z0-9\.-]+)(\.)([A-Za-z0-9\.]{2,3})$/,
+                    message: "Емейл не соответствует name@server.domain"
+                }
+            }
+
+            constructor(onValidate) {
+                this._onValidate = onValidate;
+
+                document.getElementById("name").addEventListener("input", this._handleValueChange);
+                document.getElementById("phone").addEventListener("input", this._handleValueChange);
+                document.getElementById("email").addEventListener("input", this._handleValueChange);
+                document.getElementById("contact-form").addEventListener("reset", this._handleReset)
+            }
+
+            _handleValueChange = (e) => {
+                const $element = e.target;
+                this._validateElement($element);
+            }
+
+            _handleReset = () => {
+                for (const [_, validationResult] of this.validationErrors) {
+                    validationResult.isDirty = false;
+                    validationResult.isValid = false;
+                }
+
+                if (this._onValidate) {
+                    this._onValidate(this.validationErrors);
+                }
+            }
+
+            _validateElement($element) {
+                const validationResult = this._validateField($element.id, $element.value);
+                this.validationErrors.set($element.id, validationResult);
+
+                if (this._onValidate) {
+                    this._onValidate(this.validationErrors);
+                }
+            }
+
+            _validateField(fieldName, value) {
+                const validationRule = this.validationRules[fieldName];
+
+                if (value === "") {
+                    return {
+                        isDirty: false
+                    }
+                }
+
+                if (validationRule && value.search(validationRule.test) === 0) {
+                    return {
+                        isDirty: true,
+                        isValid: true
+                    };
+                }
+
+                return {
+                    isDirty: true,
+                    isValid: false,
+                    message: validationRule.message
+                };
+            }
+
+            validate = () => {
+                if (this.validationErrors.size === 0) {
+                    return false;
+                }
+
+                let isValid = true;
+                for (const [_, validationResult] of this.validationErrors) {
+                    isValid &= validationResult.isValid;
+                }
+
+                return isValid;
+            }
+        }
+
+        function showError($element, isDirty, isValid, message = "") {
+            const VALID_CLASSNAME = "green";
+            const ERROR_CLASSNAME = "red";
+
+            if (!isDirty) {
+                $element.classList.remove(VALID_CLASSNAME, ERROR_CLASSNAME);
+                showMessage($element, null);
+                return;
+            }
+
+            if (isValid) {
+                $element.classList.remove(ERROR_CLASSNAME);
+                $element.classList.add(VALID_CLASSNAME);
+                showMessage($element, null);
+            } else {
+                $element.classList.remove(VALID_CLASSNAME);
+                $element.classList.add(ERROR_CLASSNAME);
+                showMessage($element, message);
+            }
+        }
+
+        function showMessage($element, message) {
+            const messageId = `${$element.id}_error`;
+            const $messageElement = document.getElementById(messageId);
+
+            $messageElement.innerHTML = message || "";
+        }
+
+        function handleValidation(validationErrors) {
+            for (const [fieldId, validationResult] of validationErrors) {
+                const $element = document.getElementById(fieldId);
+                showError($element, validationResult.isDirty, validationResult.isValid, validationResult.message);
+            }
+        }
+
+        function send() {
+            if (contactFormValidator.validate()) {
+                alert("Отправляем");
+            }
+        }
+
+        const contactFormValidator = new ContactFormValidator(handleValidation);
+    </script>
+</body>
+
+</html>

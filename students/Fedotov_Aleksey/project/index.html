@@ -7,26 +7,120 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+
+    <div id="app">
+            
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" @click = "toShowCart" type="button">Корзина</button>
+                <div class="cart-block" v-if = "showCart" >
+                    <div class="cart-item" v-for = "cartItem of cart" v-bind:data-id = "cartItem.id_product">
+                        <div class="product-bio">
+                            <img src="https://placehold.it/100x80" alt="Some image">
+                            <div class="product-desc">
+                                <p class="product-title">{{cartItem.product_name}}</p>
+                                <p class="product-quantity">Quantity: {{cartItem.quantity}}</p>
+                                <p class="product-single-price">{{cartItem.price}} each</p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price">{{cartItem.quantity*cartItem.price}}</p>
+                            <button @click = "deleteFromCart" class="del-btn" v-bind:data-id = "cartItem.id_product">&times;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="products">
+            <div class="product-item" v-for="product of products">
+                <img src="https://placehold.it/200x150" alt="Some img">
+                <div class="desc">
+                    <h3>{{product.product_name}}</h3>
+                    <p>{{product.price}}</p>
+                    <button @click = "addToCart" class="buy-btn"
+                        data-image = "https://placehold.it/200x150"
+                        v-bind:data-id = "product.id_product"
+                        v-bind:data-name = "product.product_name"
+                        v-bind:data-price = "product.price"
+                        >Купить</button>
+                </div>
+            </div>
         </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
+    </div>
 
 
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="js/main.js"></script> -->
+    <script>
+        let app = new Vue({
+            el:'#app',
+            data: {
+                url: 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/catalog',
+                products: [],
+                cart: [],
+                name: 'alex',
+                showCart: false
+            },
+            methods: {
+                getJSON (url) {
+                    return fetch(url)
+                        .then(data => data.json());
+                },
+                addToCart(event) {
+                    console.log(event.target.dataset['name']);
+                    let added = this.inCart(event.target.dataset['id']);
+                    if (added != -1) {
+                        this.cart[added].quantity++;
+                    }
+                    else {
+                        let item = {
+                            id_product:event.target.dataset['id'],
+                            product_name: event.target.dataset['name'],
+                            price: event.target.dataset['price'],
+                            quantity: 1
+                        };
+                        this.cart.push(item);
+                    }
+                },
+                inCart(id) {
+                    return this.cart.findIndex(elem => elem.id_product === id);
+                },
+                toShowCart() {
+                    this.showCart = !this.showCart;
+                },
+                deleteFromCart(event) {
+                    console.log(event.target);
+                    let removeItem = this.inCart(event.target.dataset['id']);
+                    if (this.cart[removeItem].quantity > 1){
+                        this.cart[removeItem].quantity--;
+                    } else {
+                        this.cart.splice(removeItem,1);
+                    }
+                }
+            },
+            computed: {
+
+            },
+            mounted() {
+                this.getJSON(this.url)
+                    .then(data => {this.products = data})
+                    .then(() => {console.log(this.products)});
+                    console.log("Загрузка файлов");
+            },
+            created() {
+
+            }
+        })
+    </script>
 </body>
 </html>
