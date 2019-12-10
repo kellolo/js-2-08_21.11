@@ -33,7 +33,7 @@
                         </div>
                         <div class="right-block">
                             <p class="product-price">{{cartItem.quantity*cartItem.price}}</p>
-                            <button @click = "deleteFromCart" class="del-btn" v-bind:data-id = "cartItem.id_product">&times;</button>
+                            <button @click = "deleteFromCart" class="del-btn" v-bind:data-id = "cartItem.id_product" v-bind:data-price = "cartItem.price">&times;</button>
                         </div>
                     </div>
                 </div>
@@ -67,8 +67,12 @@
             el:'#app',
             data: {
                 url: 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/catalog',
+                urlBasket: 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/getUserBasket.json',
+                urlDeletFromBasket: 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/deleteFromUserBasket.json',
                 products: [],
                 cart: [],
+                amount: 0,
+                countGoods: 0,
                 name: 'alex',
                 showCart: false,
                 notInCart: true
@@ -86,36 +90,45 @@
                     }
                     else {
                         let item = {
-                            id_product:event.target.dataset['id'],
+                            id_product:+event.target.dataset['id'],
                             product_name: event.target.dataset['name'],
-                            price: event.target.dataset['price'],
+                            price: +event.target.dataset['price'],
                             quantity: 1
                         };
                         this.cart.push(item);
                         this.notInCart = false;
                     }
+                    this.countGoods++;
+                    this.amount = this.amount + (+event.target.dataset['price']);
                 },
                 inCart(id) {
-                    return this.cart.findIndex(elem => elem.id_product === id);
+                    return this.cart.findIndex(elem => elem.id_product == id);
                 },
                 deleteFromCart(event) {
-                    console.log(event.target);
-                    let removeItem = this.inCart(event.target.dataset['id']);
-                    if (this.cart[removeItem].quantity > 1){
-                        this.cart[removeItem].quantity--;
-                    } else {
-                        this.cart.splice(removeItem,1);
-                    }
-                    if (this.cart.length === 0) {
-                        this.notInCart = true;
-                    }
+                    this.getJSON(this.urlDeletFromBasket)
+                    .then(data => {if (data.result == 1) {
+                        let removeItem = this.inCart(event.target.dataset['id']);
+                        if (this.cart[removeItem].quantity > 1){
+                            this.cart[removeItem].quantity--;
+                        } else {
+                            this.cart.splice(removeItem,1);
+                        }
+                        if (this.cart.length === 0) {
+                            this.notInCart = true;
+                        }
+                        this.countGoods--;
+                        this.amount = this.amount - event.target.dataset['price'];
+                        } else {
+                            alert("Вы не можете удалить товар из корзины");
+                        }
+                    })
                 },
                 toShowCart() {
                     this.showCart = !this.showCart;
                 },
                 toSearch() {
                     let inputSearch = document.getElementById("searchInput").value;
-                    let reg = new RegExp(inputSearch, "i"); //`/${document.getElementById("searchInput").value}/i`;
+                    let reg = new RegExp(inputSearch, "i"); 
                     let searchProduct = [];
                     this.products = [];
                     this.getJSON(this.url)
@@ -132,11 +145,20 @@
                 }
             },
             computed: {
+                inCart(id) {
+                    return this.cart.findIndex(elem => elem.id_product == id);
+                }
             },
             mounted() {
                 this.getJSON(this.url)
                     .then(data => {this.products = data})
                     .then(() => {console.log(this.products)});
+                    console.log("Загрузка файлов");
+                this.getJSON(this.urlBasket)
+                    .then(data => {this.cart = data.contents;
+                        this.amount = +data.amount;
+                        this.countGoods = +data.countGoods})
+                    .then(() => {console.log(this.cart)});
                     console.log("Загрузка файлов");
             },
             created() {
