@@ -14,13 +14,14 @@
             <div class="logo">E-shop</div>
             <div class="cart">
                 <form action="#" class="search-form">
-                    <input type="text" class="search-field">
-                    <button class="btn-search" type="submit">
+                    <input id = "searchInput" type="text" class="search-field">
+                    <button @click = "toSearch" class="btn-search" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
                 <button class="btn-cart" @click = "toShowCart" type="button">Корзина</button>
                 <div class="cart-block" v-if = "showCart" >
+                    <p v-if = notInCart>Товаров нет</p>
                     <div class="cart-item" v-for = "cartItem of cart" v-bind:data-id = "cartItem.id_product">
                         <div class="product-bio">
                             <img src="https://placehold.it/100x80" alt="Some image">
@@ -69,7 +70,8 @@
                 products: [],
                 cart: [],
                 name: 'alex',
-                showCart: false
+                showCart: false,
+                notInCart: true
             },
             methods: {
                 getJSON (url) {
@@ -90,13 +92,11 @@
                             quantity: 1
                         };
                         this.cart.push(item);
+                        this.notInCart = false;
                     }
                 },
                 inCart(id) {
                     return this.cart.findIndex(elem => elem.id_product === id);
-                },
-                toShowCart() {
-                    this.showCart = !this.showCart;
                 },
                 deleteFromCart(event) {
                     console.log(event.target);
@@ -106,10 +106,32 @@
                     } else {
                         this.cart.splice(removeItem,1);
                     }
+                    if (this.cart.length === 0) {
+                        this.notInCart = true;
+                    }
+                },
+                toShowCart() {
+                    this.showCart = !this.showCart;
+                },
+                toSearch() {
+                    let inputSearch = document.getElementById("searchInput").value;
+                    let reg = new RegExp(inputSearch, "i"); //`/${document.getElementById("searchInput").value}/i`;
+                    let searchProduct = [];
+                    this.products = [];
+                    this.getJSON(this.url)
+                        .then(data => {searchProduct = data})
+                        .then(() => {
+                            searchProduct.forEach(element => {
+                            console.log('reg', inputSearch);
+                            console.log(element.product_name);
+                            if (reg.test(element.product_name)) {
+                                this.products.push(element);
+                            }
+                        });
+                    });
                 }
             },
             computed: {
-
             },
             mounted() {
                 this.getJSON(this.url)
