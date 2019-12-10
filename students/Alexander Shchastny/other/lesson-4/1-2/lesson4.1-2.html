@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h3>Исходник</h3>
+            <p class="textOriginal">'We aren't giving you anything. get out!'</p>
+        </div>
+    </div>
+</body>
+<script>
+    let content = document.querySelector(".textOriginal").textContent
+    let reg = /('(?![a-zа-я]))|((?<![а-яa-z])')/gmi
+    let textValid = content.replace(reg, '"')
+    document.querySelector('.container').innerHTML += `<div><h3>Преобразованный</h3><p class="textValid">${textValid}</p></div>`
+</script>
+
+</html>

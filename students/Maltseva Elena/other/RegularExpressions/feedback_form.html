@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <title>Форма обратной связи</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+        .container {
+            width: 400px;
+            margin: 20px;
+        }
+        fieldset {
+            margin-bottom: 30px; 
+            border: none;
+        }
+        legend {
+            font-weight: 600;
+            color: #25466d;
+            margin-bottom: 5px;
+        }
+        .term {
+            margin: 0 0 10px 0;
+            font-size: 12px;
+            font-weight: 100;
+            color: #a0a0a0;
+        }
+        .success {
+            color: #018a3f;
+            border: 1px dashed #018a3f;
+        }
+        .error {
+            color: #b61919;
+            border: 1px dashed #b61919;
+        }
+        input, textarea {
+            height: 30px;
+            width: 100%;
+            margin-top: 10px;
+            padding: 0 0 5px 2px;
+            font-size: 14px;
+            color: #25466d;
+            border: none;
+            border-bottom: 1px solid #25466d;
+        }
+        input::placeholder, textarea::placeholder {
+            font-weight: 100;
+            color: #a0a0a0;
+        }
+        input:focus, textarea:focus {
+            color: #25466d;
+            font-weight: 600;
+            outline: none;
+            border-bottom: 1px solid #25466d;
+        }
+        textarea {
+            margin-top: 10px;
+            height: 50px;
+        }
+        button {
+            display: block;
+            height: 35px;
+            width: 105px;
+            padding: 0;
+            color: white;
+            background-color: #25466d; 
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition-duration: .3s;
+        }
+        button:hover {
+            background-color: #4d88d1;
+        } 
+
+    </style>
+</head>
+<body class="container">
+    <form action="#" id="feedBack">
+        <fieldset>
+            <legend>Имя*</legend>
+            <div class="validation term termName">
+                Поле может содержать только буквы
+                <input type="text" name="Name" placeholder="Введите имя" required>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Телефон*</legend>
+            <div class="validation term termTel">
+                Поле должно иметь вид +7(000)000-0000
+                <input type="tel" name="Tel" placeholder="+7(000)000-0000" required>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>E-mail*</legend>
+            <div class="validation term termEmail">
+                Поле должно иметь вид mymail@mail.ru или my.mail@mail.ru или my-mail@mail.ru
+                <input type="email" name="Email" placeholder="mymail@mail.ru" required>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Вопросы и комментарии</legend>
+            <textarea name="QuesComm" placeholder="Текст вопроса, комментарии"></textarea>
+        </fieldset>
+        <div class="term">*поля, обязательные для заполнения</div>
+        <button type="submit" class="submit">Отправить</button>
+    </form>
+    <script>
+        const regExps = {
+            Name: /^[a-zа-я-]+$/i,
+            Tel: /^(\+7\(\d{3}\)\d{3})\-(\d{4})$/,
+            Email: /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/i
+        }
+        let allInputs = document.querySelectorAll(`input`)
+        let btn = document.querySelector(`.submit`)
+
+        allInputs.forEach(item => {
+            item.addEventListener('focus', () => {
+                let input = new Input(item.name)
+            })
+        })
+
+        class Input {
+            constructor(name) {
+                this.input = document.querySelector(`input[name=${name}]`)
+                this.term = document.querySelector(`.term${name}`)
+                this.pattern = regExps[name]
+                this._validate()
+            }
+            _validate () {
+                this.input.addEventListener ('input', (event) =>{
+                    if (this.pattern.test(event.target.value)) {
+                        this.term.classList.add('success')
+                        this.term.classList.remove('error')
+                    } else {
+                        this.term.classList.add('error')
+                        this.term.classList.remove('success')
+                    }
+                })
+            }
+        }
+
+        btn.addEventListener('click', () => {
+            alert('Данные успешно отправлены')
+        })
+    </script>
+</body>
+</html>
