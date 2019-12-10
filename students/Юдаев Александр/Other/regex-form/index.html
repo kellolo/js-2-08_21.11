@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Проверка формы</title>
+</head>
+<body>
+<p>1. Дан большой текст, в котором для оформления прямой речи используются одинарные кавычки. Придумать шаблон, который заменяет одинарные кавычки на двойные.</p>
+<p>Было: <span id="task1-start">'Ну, Заяц!' — закричал Волк. — 'Ну, погоди!'</span></p>
+<p>Стало: <span id="task1-end"></span></p>
+
+<p>2. Улучшить шаблон так, чтобы в конструкциях типа aren't одинарная кавычка не заменялась на двойную.</p>
+<p>Было: <span id="task2-start">Д'артаньян и 'три' мушкетера</span></p>
+<p>Стало: <span id="task2-end"></span></p>
+<p>3. *Создать форму обратной связи с полями: Имя, Телефон, E-mail, текст, кнопка Отправить. При нажатии на кнопку Отправить произвести валидацию полей следующим образом:</p>
+<form action="#">
+    <label for="name">Имя:<input id="name" type="text" placeholder="Роман"></label>
+    <label for="tel">Телефон: <input id="tel" type="text" placeholder="+7(000)000-0000"></label>
+    <label for="mail">E-mail: <input id="mail" type="email" placeholder="mymail@mail.ru"></label>
+    <label>Сообщeние: <textarea id="message"></textarea></label>
+    <label>Заполните все поля для отправки формы</label>
+    <label for="send"><input id="send" type="button" value="Отправить"></label>
+</form>
+<script src="check.js"></script>
+</body>
+</html>
