@@ -1,0 +1,47 @@
+form {
+    width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label, textarea, input {
+    width: 450px;
+    height: 25px;
+}
+
+label {
+    margin-bottom: 10px;
+}
+
+button {
+    width: 150px;
+    height: 60px;
+    margin: 20px
+}
+
+label {
+    display: block;
+}
+.valid {
+    border-color: #3f1;
+    background-color: #fff;
+}
+.valid:focus {
+    outline: none;
+}
+.invalid {
+    border-color: #900;
+    background-color: #FDD;
+}
+.invalid:focus {
+    outline: none;
+}
+.hidden {
+    visibility: hidden;
+}
+.error {
+    color: #900;
+    margin-bottom: 20px;
+}

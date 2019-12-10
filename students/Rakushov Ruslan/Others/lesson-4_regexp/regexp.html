@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>RegExp</title>
+    <style>
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .area,
+      .result {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+      textarea,
+      .result-text {
+        width: 48%;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 16px;
+        overflow-wrap: break-word;
+      }
+      button,
+      input {
+        margin: 5px;
+      }
+      .result-text {
+        height: 150px;
+        border: 1px solid grey;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <form action="#">
+        <div class="area">
+          <textarea name="text1" id="text1" rows="10">
+'Lorem ipsum. Perspicia repellendusvoluptas. Dolor aren't excepturi 'expedita', nulla "reiciendis" vitae , amet dolorem perspiciatis.'</textarea>
+          <textarea name="text2" id="text2" rows="10">
+'Соображения порядка, а также 'гражданского' сознания в формировании ключевых, особенно 'вот такие', компонентов. Таким образом, структура организации напрямую изменения ряда параметров. Дорогие друзья, "начало" повседневной работы анализа дальнейших направлений развития проекта.'</textarea>
+        </div>
+        <div>Regular expression to find: <input type="text" id="regexp" name="regexp" value="\B'|'\B"></div>
+        <div>Text to add: <input type="text" id="replacer" name="replacer" value='"'></div>
+        <button id="btn"
+          onclick='quoteReplace("text1", "text2", "result-text1", "result-text2", "regexp", "replacer")'>
+          Replace
+        </button>
+      </form>
+      <div class="result">
+        <div class="result-text" id="result-text1"></div>
+        <div class="result-text" id="result-text2"></div>
+
+    <script>
+      function quoteReplace(text1, text2, res1, res2, regexp, replacer) {
+        let str1 = document.querySelector(`#${text1}`).value;
+        let str2 = document.querySelector(`#${text2}`).value;
+        let res1Block = document.querySelector(`#${res1}`);
+        let res2Block = document.querySelector(`#${res2}`);
+
+        let reg = document.querySelector(`#${regexp}`).value;
+        newReg = new RegExp(reg, "gm");
+
+        let repl =document.querySelector(`#${replacer}`).value;
+
+        newStr1 = str1.replace(newReg, repl);
+        newStr2 = str2.replace(newReg, repl);
+
+        res1Block.innerText = newStr1;
+        res2Block.innerText = newStr2;
+        event.preventDefault();
+      }
+    </script>
+  </body>
+</html>

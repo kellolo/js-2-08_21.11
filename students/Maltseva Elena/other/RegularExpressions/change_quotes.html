@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Direct speech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            width: 360px;
+            padding: 10px 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+        textarea {
+            height: 80px;
+            width: 300px;
+            padding: 5px;
+            font-size: 14px;
+            color: #25466d;
+            border: none;
+            border-bottom: 1px solid #25466d;
+            background-color: #e2efff;
+            border-radius: 5px;
+        }
+        textarea::placeholder {
+            color: #25466d;
+        }
+        textarea:focus {
+            font-weight: 600;
+            outline: none;
+        }
+        .text {
+            margin: 20px 0;
+            font-size: 16px;
+            color: #25466d;
+        }
+        .text_example {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+        button {
+            display: block;
+            width: auto;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            color: #25466d;
+            background-color: white; 
+            border: 1px solid #25466d;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 300;
+            cursor: pointer;
+            transition-duration: .3s;
+        }
+        button:hover {
+            background-color: #25466d;
+            color: white;
+        } 
+    </style>
+</head>
+<body>
+    <p class="text text_example">
+        <b>Пример текста для редактирования:</b><br>
+        She answered, 'No, I can't...' <br>
+        We exclaimed, 'It's so easy!' 
+    </p>
+    <textarea class="text text_initial" placeholder="Текст для редактирования"></textarea>
+    <button onclick="allQuotesChange()">Заменить ВСЕ одинарные кавычки</button>
+    <button onclick="extQuotesChange()">Заменить ВНЕШНИЕ одинарные кавычки</button>
+    <div class="text text_changed"></div>
+    <script>
+        let origBlock = document.querySelector('.text_initial')
+        let chngBlock = document.querySelector('.text_changed')
+
+        function allQuotesChange () {
+            let chngText = origBlock.value.replace(/'/gm, '"')
+            chngBlock.insertAdjacentHTML("beforeend", `<p class="text">${chngText}</p>`)
+        }
+        function extQuotesChange () {
+            let chngText = origBlock.value.replace(/(\B')|('\B)/gm, '"')
+            chngBlock.insertAdjacentHTML("beforeend", `<p class="text">${chngText}</p>`)
+        }
+    </script>
+</body>
+</html>

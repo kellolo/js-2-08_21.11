@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript :: Уровень 2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+  <h1>Урок 4. Регулярные выражения</h1>
+  
+  <div class="container">
+    <div class="task-description">
+      <ol>
+        <li>Дан большой текст, в котором для оформления прямой речи используются одинарные кавычки. Придумать шаблон, который заменяет одинарные кавычки на двойные.</li>
+        <li>Улучшить шаблон так, чтобы в конструкциях типа <strong><i>aren't</i></strong> одинарная кавычка не заменялась на двойную.</li>
+      </ol>
+    </div>
+    <div class="solution">
+      <textarea id="txt-test">'I am' – I'm:  'I'm planning to write a book someday.'
+'You are' – You're:  'You're going to have a lot of fun with your new puppy.'
+'She is' – She's:  'She's always on time.'
+'It is' – It's: 'I can't believe it's snowing again.'
+'Do not' – Don't: 'I don't like anchovies.'
+'He would' – He'd: 'He'd like to go fishing in Alaska.'
+'Let us' – Let's: 'Let's start saving more money each month.'
+'She would have' – She would've: 'If she would've paid attention in class, she would have passed.'
+'Who is' – Who's: 'Who's there?'
+'They had' – They'd: 'They weren't hungry, because they'd already eaten.'
+      </textarea>
+        <button class="btn" id="btn-test">Заменить ' на "</button>
+    </div>
+  </div>
+    
+  <div class="container">
+    <div class="task-description">
+      <ol start="3"><li>*Создать форму обратной связи с полями: Имя, Телефон, E-mail, текст, кнопка Отправить. При нажатии на кнопку Отправить произвести валидацию полей следующим образом:
+        <ol>
+          <li>Имя содержит только буквы.
+          <li>Телефон имеет вид +7(000)000-0000.
+          <li>E-mail имеет вид mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+          <li>Текст произвольный.
+          <li>Если одно из полей не прошло валидацию, необходимо выделить это поле красной рамкой и сообщить пользователю об ошибке.
+        </ol>
+      </li>
+    </div>
+    
+    <div class="solution">
+      <form id="feedback" class="col-md-offset-1 col-md-6" action="#" method="post">
+        <div><input id="u_name" class="mail-attr" type="text" pattern="^[a-zа-яё]+$" placeholder="Имя:" autofocus required autocomplete="off"></div>
+        <div><input id="u_tel" class="mail-attr" type="tel" pattern="\+([1-9]{1})\([0-9]{3}\)[0-9]{3}-[0-9]{4}" placeholder="Телефон: +#(###)###-####" required autocomplete="off"></div>
+        <div><input id="u_email" class="mail-attr" type="email" pattern="([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,8})" placeholder="E-mail:" required autocomplete="off"></div>
+        <div><textarea id="u_msg" placeholder="Текст:" required></textarea></div>
+        <input class="btn" id="btn-send" type="submit" value="Отправить">
+      </form>
+    </div>
+
+  </div>
+
+  <script src="./js/app.js"></script>
+  
+</body>
+</html>
