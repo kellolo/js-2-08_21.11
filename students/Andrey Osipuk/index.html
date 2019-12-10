@@ -1,87 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Lesson 3</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
-    <script>
-        // vars: a = undefined, ...
-        // ES5
-        
-        // var a
-
-        // setTimeout (function () {
-        //     a = 0
-        // }, 0)
-
-        // console.log (a)
-
-        // setTimeout (function () {
-        //     console.log (a)
-        // }, 1000)
-        // window.newGlobalVariable = 'lol'
-        // // ES6
-        // let b = 1
-        // const c = []
-        
-        // console.log (aa)
-        // const aa = 0
-
-        // Шаблонные строки
-        // let str = 'Мама мыла '
-
-        // let what = prompt ('Введите, что мыла мама')
-
-        // console.log (str + what)
-        // console.log (`Ответ: ${str} ${what === '1' ? 'Раму' : 'Пилораму'}`)
-
-        //Стрелочные функции 
-        // function sayHi (par) {
-        //     let ans = 'Hi' + par
-        //     return ans
-        // }
-
-        // let sayArrow = par => {
-        //     let answ = 'Hi' + par
-        //     return answ
-        // }
-
-        // console.log (sayHi())
-        // console.log (sayArrow())
-
-        // let olya = {
-        //     name: 'Olga',
-        //     sayHi: function () {
-        //         console.log (`Hello! I am ${this.name}`)
-        //         console.log (this)
-        //     }
-        // }
-
-        // let kolya = {
-        //     name: 'Kolya',
-        //     sayHi: () => {
-        //         console.log (`Hello! I am ${this.name}`)
-        //         console.log (this)
-        //     }
-        // }
-
-        // let str = prompt ('Введите четырехзначное число')
-        // console.log (str)
-
-        // let a = [...str] // spread оператор, который приводит любое итерируемое данное к массиву
-
-        //Деструктуризация
-        let names = ['Olya', 'Kolya', 'Tolya', 'Vladimir']
-
-        // let name1 = names [0]
-        // let name2 = names [1]
-        // ...
-
-        let [name1, name2, name3, name4] = names
-    </script>
+    <div class="form-wrap">
+        <div class="profile"><img src="https://html5book.ru/wp-content/uploads/2016/10/profile-image.png">
+            <h1>Регистрация</h1>
+        </div>
+        <div class="forma">
+            <div>
+                <label for="name">Имя</label>
+                <input type="text" data-name="name">
+            </div>
+            <div>
+                <label for="phone">Телефон</label>
+                <input type="text" data-name="phone" id="online_phone" name="phone" type="tel" maxlength="50"
+                    required="required" placeholder="+7(___)___-__-__">
+            </div>
+            <div>
+                <label for="email">E-mail</label>
+                <input type="text" data-name="email">
+            </div>
+            <div>
+                <label for="text">О вас</label>
+                <textarea name="text"></textarea>
+            </div>
+            <button id="submit">Отправить</button>
+        </div>
+    </div>
 </body>
+<script>
+    //str.replace(/(\B'|'\B)/g, '"') 1 и 2 задание в одной регулярке
+    //не работает на русских символах
+    const obj = {
+        name: {
+            signature: 'имени',
+            regexp: /^[a-zA-Zа-яА-Я]{1,20}(\s[a-zA-Zа-яА-Я]{1,20})?$/,
+        },
+        phone: {
+            signature: 'телефона',
+            regexp: /^\+7\([0-9]{3}\)\d{3}\-\d{2}\-\d{2}$/,
+        },
+        email: {
+            signature: 'e-mail',
+            regexp: /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/,
+        },
+    };
+
+    let button = [...document.querySelectorAll('input')];
+    button.forEach(el => el.addEventListener('change', (e) => {
+        const check = new Check(e.target.dataset.name);
+        check.checkInput();
+    })
+    )
+
+    class Check {
+        constructor(name = null) {
+            this.name = name
+        }
+        checkInput() {
+            const $input = document.querySelector(`input[data-name=${this.name}]`);
+            if (obj[this.name].regexp.test($input.value)) {
+                $input.style.border = '2px solid green';
+                $input.parentElement.querySelector('p') ? $input.parentElement.querySelector('p').remove() : null
+            } else {
+                $input.style.border = '2px solid red';
+                $input.parentElement.querySelector('p') ? $input.parentElement.querySelector('p').remove() : null
+                $input.insertAdjacentHTML('afterend', `<p>Не правильный ввод ${obj[this.name].signature}</p>`)
+            }
+        }
+    }
+
+    //Хрень , которую я скачал для красивого инпута телефона
+    //Можно всю ту вакханалию, которая ниже сделать проще?
+    function setCursorPosition(pos, e) {
+        // e.focus();
+        if (e.setSelectionRange) e.setSelectionRange(pos, pos);
+        else if (e.createTextRange) {
+            var range = e.createTextRange();
+            range.collapse(true);
+            range.moveEnd("character", pos);
+            range.moveStart("character", pos);
+            range.select()
+        }
+    }
+    function mask(e) {
+        //console.log('mask',e);
+        var matrix = this.placeholder,// .defaultValue
+            i = 0,
+            def = matrix.replace(/\D/g, ""),
+            val = this.value.replace(/\D/g, "");
+        def.length >= val.length && (val = def);
+        matrix = matrix.replace(/[_\d]/g, function (a) {
+            return val.charAt(i++) || "_"
+        });
+        this.value = matrix;
+        i = matrix.lastIndexOf(val.substr(-1));
+        i < matrix.length && matrix != this.placeholder ? i++ : i = matrix.indexOf("_");
+        setCursorPosition(i, this)
+    }
+    window.addEventListener("DOMContentLoaded", function () {
+        var input = document.querySelector("#online_phone");
+        input.addEventListener("input", mask, false);
+        // input.focus();
+        setCursorPosition(3, input);
+    });
+</script>
+
 </html>

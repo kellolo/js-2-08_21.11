@@ -1,0 +1,12 @@
+form {
+    width: 400px;
+    margin-bottom: 10px;
+}
+
+fieldset {
+    border: none;
+    border-top: 1px solid black;
+}
+label {
+    display: block;
+}

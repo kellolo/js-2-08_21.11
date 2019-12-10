@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        h2 {
+            width: 500px;
+            text-align: center;
+            margin: 30px auto;
+            color: #fff;
+            font-size: 30px;
+            border-bottom: 2px solid #fff;
+        }
+
+        form {
+            width: 500px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        fieldset {
+            border-style: none;
+        }
+
+        span {
+            color: #fff;
+        }
+
+        h3 {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        button {
+            margin-top: 15px;
+            text-transform: uppercase;
+            background-color: #fff;
+            color: black;
+            border-style: none;
+            width: 200px;
+            height: 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            border: 2px solid #fff;
+        }
+        button:hover {
+            background-color: cadetblue;
+        }
+
+        #total {
+            text-align: center;
+        }
+        #total p{
+            color: #fff;
+            font-size: 20px;
+        }
+    .main{
+        display: flex;
+    justify-content: center;
+    }
+          .order{
+            font-size: 20px;
+            color: #ccc;
+        }
+        .order span{
+            border-bottom: 2px solid #ccc;
+            color: #fff;
+        }
+    </style>
+     <script>
+   
+     </script>
+</head>
+
+<body>
+    <h2>Создай свой гамбургер</h2>
+    <form action="#" id = "orderForm" onchange="updateForm()">
+        <fieldset>
+            <h3>Выберите размер гамбургера</h3>
+            <label>
+                <input type="radio" name="Gamburger" data-price = "50" data-cal = "20" value = "Маленький"checked> <span>Маленький гамбургер</span>
+            </label>
+            <label>
+                <input type="radio" name="Gamburger" data-price = "100" data-cal = "40" value = "Большой"><span>Большой гамбургер</span>
+            </label>
+        </fieldset>
+        <fieldset>
+            <h3>Выберите начинку</h3>
+            <label>
+                <input type="radio" name="Filling" data-price = "10" data-cal = "20" value = "С сыром" checked><span>С сыром</span>
+            </label>
+            <label>
+                <input type="radio" name="Filling" data-price = "20" data-cal = "5" value = "С салатом"><span>С салатом</span>
+            </label>
+            <label>
+                <input type="radio" name="Filling" data-price = "15" data-cal = "10" value = "С картофелем"><span>С картофелем</span>
+            </label>
+        </fieldset>
+        <fieldset>
+            <h3>Дополнительная начинка</h3>
+            <label>
+                <input type="checkbox" name="extraFilling" data-price = "15" data-cal = "0" value = "Приправа" checked><span>Посыпать приправой</span>
+            </label>
+            <label>
+                <input type="checkbox" name="extraFilling" data-price = "20" data-cal = "5" value = "Майонез" checked><span>Полить майонезом</span>
+            </label>
+
+        </fieldset>
+        <button id = "orderBtn" onclick="clickToOrder()">Создать гамбургер</button>
+    </form>
+    <div id="total">
+        <p class="totalCal"></p>
+        <p class = "totalPrice">Итого общая стоимость</p>
+    </div>
+    <div class="main">
+        <div class="order"></div>
+    </div>
+    
+   <script> 
+        let orderForm = document.querySelector('#orderForm');
+        let orderBtn = document.querySelector('#orderBtn');
+        let order;
+        function updateForm (Gamburger, Filling, extraFilling) {
+            order = new Order ('Gamburger','Filling', 'extraFilling');
+        }
+        function clickToOrder() {
+            order.orderOutput();
+        }
+        //Class order Description
+        class Order {
+            constructor (Gamburger,Filling,extraFilling) {
+                this.Gamburger = this.comp(Gamburger);
+                this.Filling = this.comp(Filling);
+                this.extraFilling = this.getArray(extraFilling);
+                this.total_prod();
+            }
+            comp (attrName) {
+                let obj = document.querySelector(`input[name=${attrName}]:checked`);
+                let comp = new Comp(obj.value, +obj.dataset['price'], +obj.dataset['cal']);
+                return comp;
+            }
+            getArray (attrName) {
+                let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                let arr = []
+                let comp;
+                objArr.forEach (el => {
+                    comp = new Comp(el.value, +el.dataset['price'], +el.dataset['cal']);
+                    arr.push (comp);
+                })
+                return arr
+            }
+            total_prod () {
+                let price = 0;
+                let cal = 0;
+                let totalPrice = document.querySelector('.totalPrice');
+                let totalCal = document.querySelector('.totalCal');
+                price += this.Gamburger.getPrice();
+                price += this.Filling.getPrice();
+                cal += this.Gamburger.getCal();
+                cal += this.Filling.getCal();
+                this.extraFilling.forEach (el => {
+                    price += el.getPrice();
+                    cal += el.getCal();
+                });
+                totalCal.innerHTML = `Каллорийность - ${cal} каллорий`;
+                totalPrice.innerHTML = `Стоимость заказа - ${price} рублей`;
+            }
+            orderOutput () {
+                let out = document.querySelector('.order');
+                let str='';
+                let arr =[];
+                str = `<span>Ваш заказ:</span></br>
+                <span>Размер гамбургера:</span> ${this.Gamburger.getName()};</br>
+                    <span>Начинка:</span> ${this.Filling.getName()};</br>
+                        <span>Дополнительная начинка:</span> `;
+                            this.extraFilling.forEach (el => {
+                                arr.push(el.getName());
+                        });
+                str = str + arr.join(", ");
+                out.innerHTML = str;
+            }
+        }
+        class Comp {
+            constructor (name, price, cal) {
+                this.name = name;
+                this.price = price;
+                this.cal = cal;
+            }
+            getName() {
+                return this.name;
+            }
+            getPrice () {
+                return this.price;
+            }
+            getCal () {
+                return this.cal;
+            }
+        }
+        updateForm('Gamburger','Filling', 'extraFilling');
+</script>
+</body>
+
+</html>
