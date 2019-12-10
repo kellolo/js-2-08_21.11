@@ -19,25 +19,29 @@
           </form>
           <button class="btn-cart" type="button" @click="toggleCartVisibility">Корзина</button>
           <div class="cart-block" v-show="cart.isVisible">
-            <div class="cart-item" :data-id="item.id" v-for="item in cart.vItems">
-              <div class="product-bio">
-                <img :src="imageCart" alt="Some image" />
-                <div class="product-desc">
-                  <p class="product-title">{{item.title}}</p>
-                  <p class="product-quantity">Quantity: {{item.quantity}}</p>
-                  <p class="product-single-price">{{item.price}} руб. each</p>
+            <template v-if="cart.vItems.length > 0">
+              <div class="cart-item" :data-id="item.id" v-for="item in cart.vItems">
+                <div class="product-bio">
+                  <img :src="imageCart" alt="Some image" />
+                  <div class="product-desc">
+                    <p class="product-title">{{item.title}}</p>
+                    <p class="product-quantity">Quantity: {{item.quantity}}</p>
+                    <p class="product-single-price">{{item.price}} руб. each</p>
+                  </div>
+                </div>
+                <div class="right-block">
+                  <p class="product-price">{{item.quantity * item.price}}</p>
+                  <button class="del-btn" :data-id="item.id" @click="delItemFromCart">&times;</button>
                 </div>
               </div>
-              <div class="right-block">
-                <p class="product-price">{{item.quantity * item.price}}</p>
-                <button class="del-btn" :data-id="item.id">&times;</button>
-              </div>
-            </div>
+            </template>
+            <div class="cart-empty" v-else>Cart is empty</div>
           </div>
         </div>
       </header>
       <main>
         <div class="products">
+          <template v-if="catalog.vFilteredItems.length > 0">
           <div class="product-item" :data-id="prod.id" v-for="prod in catalog.vFilteredItems">
             <img :src="image" alt="Some img" />
             <div class="desc">
@@ -49,11 +53,14 @@
                 :data-name="prod.title"
                 :data-image="image"
                 :data-price="prod.price"
+                @click="addItemToCart"
               >
                 Купить
               </button>
             </div>
           </div>
+        </template>
+        <div class="catalog-empty" v-else>No products</div>
         </div>
       </main>
     </div>

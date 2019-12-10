@@ -81,6 +81,9 @@ img {
     color: black;
     width: 300px;
 }
+.cart-empty {
+  text-align: center;
+}
 
 .invisible{
     display: none;

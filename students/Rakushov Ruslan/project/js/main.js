@@ -1,17 +1,8 @@
 //TODO Заменить заглушки изображений
-//DONE Дописать makeGetRequestLong() как async (done), promise (done), fetch (done)
-//DONE Catalog.render() - обработка пустого каталога
-//TODO Обработка ошибок получения данных в функциях makeGetRequest...
+//DONE Catalog.render() - обработка пустого каталога через v-if
+//DONE id в виде числа!
 
-//заглушки (имитация базы данных)
-// const image = "https://placehold.it/200x150";
-// const imageCart = "https://placehold.it/100x80";
-
-//Адрес api сервера (заглушки)
-// urlAPI =
-//   "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
-//   "master/students/Rakushov%20Ruslan/Others/responses/";
-
+/*
 class List {
   constructor(url, container) {
     this.url = urlAPI + url;
@@ -155,7 +146,9 @@ class Cart extends List {
     return find;
   }
 }
+*/
 
+//Выпилить в компоненты vue
 class Item {
   constructor(item) {
     this.id = item.id;
@@ -208,193 +201,6 @@ class CartItem extends Item {
   }
 }
 
-// class Catalog {
-//   constructor() {
-//     this.products = [];
-//     this.container = ".products";
-//     this.init();
-//   }
-//   init() {
-//     //this.getCatalogData();
-//     // makeGetRequest("catalogData.json").forEach(prod => {
-//     //   this.products.push(new Product(prod));
-//     // });
-
-//     // makeGetRequestLong("catalogData1.json", data => {
-//     //   if (data) {
-//     //     data.forEach(prod => this.products.push(new Product(prod)));
-//     //     this.render();
-//     //   }
-//     // });
-
-//     makeGetRequestPromiseLong("catalogData.json")
-//       .then(data => {
-//         if (data) {
-//           data.forEach(prod => this.products.push(new Product(prod)));
-//           // this.render(); //TODO Где лучше вызывать рендер: тут или в новом .then?
-//         }
-//       })
-//       .then(() => this.render());
-
-//     // makeGetRequestFetch("catalogData.json")
-//     //   .then(response => response.json())
-//     //   .then(data => {
-//     //     data.forEach(prod => this.products.push(new Product(prod)));
-//     //     this.render()
-//     //   })
-//   }
-//   //Try sync
-//   // getCatalogData() {
-//   //   let xhr = new XMLHttpRequest();
-//   //   xhr.open("GET", urlCatalogData, false);
-//   //   xhr.send();
-//   //   if (xhr.readyState == 4 && xhr.status == 200) {
-//   //     JSON.parse(xhr.responseText).forEach(prod => {
-//   //       this.products.push(new Product(prod));
-//   //     });
-//   //   }
-//   // }
-//   render() {
-//     let trg = document.querySelector(this.container);
-//     if (this.products.length > 0) {
-//       // let str = "";
-//       // this.products.forEach(prod => {
-//       //   str += prod.render();
-//       // });
-//       let str = this.products.map(prod => prod.render()).join("");
-//       trg.innerHTML = str;
-//       this._listenToBuyBtnClick();
-//     } else {
-//       trg.innerHTML = '<div class="error-msg">There is no data on server</div>';
-//     }
-//   }
-//   _listenToBuyBtnClick() {
-//     document.querySelector(".products").addEventListener("click", evt => {
-//       if (evt.target.classList.contains("buy-btn")) {
-//         cart.addCartItem(evt.target); //TODO Вызывать через cart видимо не правильно!
-//       }
-//     });
-//   }
-// }
-
-// class Cart {
-//   constructor() {
-//     this.products = [];
-//     this._listenToCartBtnClick();
-//     this._listenToCartDelBtnClick();
-//     this.render();
-//   }
-//   addCartItem(item) {
-//     let id = +item.dataset["id"];
-//     let curProd = this.getIteminCartById(id);
-//     if (!curProd) {
-//       let cartItem = new CartItem(item);
-//       this.products.push(cartItem);
-//       cartItem.quantity = 1;
-//       this.render();
-//     } else {
-//       curProd.quantity++;
-//     }
-//     this.render();
-//   }
-//   delCartItem(item) {
-//     let id = +item.dataset["id"];
-//     let curProd = this.getIteminCartById(id);
-//     if (curProd) {
-//       //   curProd.quantity--;
-//       // }
-//       if (--curProd.quantity < 1) {
-//         let curNode = document.querySelector(`.cart-item[data-id="${curProd.id}"]`);
-//         curNode.parentNode.removeChild(curNode);
-//         this.products.splice(this.products.indexOf(curProd), 1);
-//       }
-//       this.render();
-//     }
-//   }
-//   render() {
-//     // let strProducts = "";
-//     // this.products.forEach(prod => {
-//     //   strProducts += prod.render();
-//     // });
-//     let strProducts = this.products.map(prod => prod.render()).join("");
-//     if (strProducts === "") {
-//       strProducts = "Cart is empty. Add some goods first!";
-//     }
-//     document.querySelector(".cart-block").innerHTML = strProducts;
-//   }
-//   getIteminCartById(id) {
-//     let find = this.products.find(prod => parseInt(prod.id) === id);
-//     return find;
-//   }
-//   _listenToCartBtnClick() {
-//     document.querySelector(".btn-cart").addEventListener("click", () => {
-//       document.querySelector(".cart-block").classList.toggle("invisible");
-//     });
-//   }
-//   _listenToCartDelBtnClick() {
-//     document.querySelector(".cart-block").addEventListener("click", evt => {
-//       if (evt.target.classList.contains("del-btn")) {
-//         cart.delCartItem(evt.target); //TODO Вызывать через cart видимо не правильно! В контроллер?
-//       }
-//     });
-//   }
-// }
-
-// //Try sync method
-// function makeGetRequest(urlPostFix) {
-//   let xhr = new XMLHttpRequest();
-//   xhr.open("GET", url + urlPostFix, false);
-//   xhr.send();
-//   if (xhr.readyState == 4 && xhr.status == 200) {
-//     return JSON.parse(xhr.responseText);
-//   }
-// }
-
-// //Try async. setTimeout emulates long data downloading
-// function makeGetRequestLong(urlPostFix, cb) {
-//   setTimeout(function() {
-//     let xhr = new XMLHttpRequest();
-//     xhr.onreadystatechange = function() {
-//       if (xhr.readyState == 4 && xhr.status == 200) {
-//         cb(JSON.parse(xhr.responseText));
-//       }
-//     };
-//     xhr.open("GET", url + urlPostFix, true);
-//     xhr.send();
-//   }, 1500);
-// }
-
-// // //Try promise. setTimeout emulates long data downloading
-// function makeGetRequestPromiseLong(urlPostFix) {
-//   return new Promise((resolve, reject) => {
-//     setTimeout(function() {
-//       let xhr = new XMLHttpRequest();
-//       xhr.onreadystatechange = function() {
-//         if (xhr.readyState == 4 && xhr.status == 200) {
-//           resolve(JSON.parse(xhr.responseText));
-//         }
-//       };
-//       xhr.open("GET", url + urlPostFix, true);
-//       xhr.send();
-//     }, 3500);
-//   });
-// }
-
-// //Try fetch. //TODO Is it sync again (without await)?
-// function makeGetRequestFetch(urlPostFix) {
-//   return fetch(url + urlPostFix);
-// }
-// function makeGetRequestFetch(urlPostFix) {
-//   setTimeout(function() {
-//     return fetch(url + urlPostFix);
-//   },3000);
-// }
-
-//-----Start-----
-// let catalog = new Catalog("catalogData.json", ".products");
-// let cart = new Cart("getBasket.json", ".cart-block");
-//TODO Add Controller class with Start and listeners adding functions (???)
-
 //------------------------------------------------------------
 //|--                          Vue                         --|
 //------------------------------------------------------------
@@ -444,22 +250,58 @@ const app = new Vue({
         this.catalog.vFilteredItems = this.catalog.vItems;
       } else {
         let searchRegexp = new RegExp(`${searchString}+`, "gi");
-        this.catalog.vFilteredItems = this.catalog.vItems.filter(item => searchRegexp.test(item.title));
+        this.catalog.vFilteredItems = this.catalog.vItems.filter(item =>
+          searchRegexp.test(item.title)
+        );
       }
-
     },
     toggleCartVisibility() {
       this.cart.isVisible = !this.cart.isVisible;
+    },
+    fetchDataToCatalog() {
+      this.getJson(this.urlAPI + this.urlCatalogData)
+        .then(data => {
+          data.forEach(item => this.catalog.vItems.push(new Product(item)));
+          this.catalog.vFilteredItems = this.catalog.vItems;
+        });
+    },
+    fetchDataToCart() {
+      this.getJson(this.urlAPI + this.urlBasketData)
+        .then(data => {
+          data.contents.forEach(item => this.cart.vItems.push(new CartItem(item)));
+        });
+    },
+    addItemToCart(event) {
+      let id = +event.target.dataset["id"];
+      let find = this.getItemInCartById(id);
+      if (find) {
+        find.quantity++;
+      } else {
+        this.cart.vItems.push(new CartItem(
+          {
+            id: +event.target.dataset["id"],
+            title: `${event.target.dataset["name"]}`,
+            price: `${event.target.dataset["price"]}`,
+            quantity: 1
+          }
+        ));
+      }
+    },
+    delItemFromCart(event) {
+      let id = +event.target.dataset["id"];
+      let find = this.getItemInCartById(id);
+      if (--find.quantity < 1) {
+        this.cart.vItems.splice(this.cart.vItems.indexOf(find), 1)
+      }
+    },
+    getItemInCartById(id) {
+      let find = this.cart.vItems.find(item => +item.id === id);
+      return find;
     }
   },
   computed: {},
   mounted() {
-    this.getJson(this.urlAPI + this.urlCatalogData).then(data => {
-      data.forEach(item => this.catalog.vItems.push(new Product(item)));
-      this.catalog.vFilteredItems = this.catalog.vItems;
-    });
-    this.getJson(this.urlAPI + this.urlBasketData).then(data => {
-      data.contents.forEach(item => this.cart.vItems.push(new CartItem(item)));
-    });
+    this.fetchDataToCatalog();
+    this.fetchDataToCart();
   },
 });
