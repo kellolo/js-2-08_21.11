@@ -1,9 +1,7 @@
-//заглушки (имитация базы данных)
+заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const catalogURL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
@@ -46,7 +44,7 @@ class Product {
                     <div class="desc">
                         <h3>${this.title}</h3>
                         <p>${this.price} $</p>
-                        <button class="buy-btn" 
+                        <button class="buy-btn"
                         data-id="${this.id}"
                         data-name="${this.title}"
                         data-image="${this.img}"
@@ -57,14 +55,38 @@ class Product {
 }
 
 class Cart {
-    constructor() {
+    constructor (){
+        this.products = [];
+        this.container = '.cart-block';
     }
-
-    addProduct() {
-
+    render () {
+        let trg = document.querySelector(this.container);
+        let str = '';
+        this.products.forEach (prod => {
+            str += prod.render()
+        });
+        trg.innerHTML = str;
     }
-    removeProduct() {
-        
+    addProduct (product) {
+        let productId = +product.dataset['id'];
+        let find = this.products.find (element => element.id === productId);
+        if (!find) {
+            this.products.push (new CartItem (product))
+        }  else {
+            find.quantity++
+        }
+        this.render();
+    }
+    removeProduct (product) {
+        let productId = +product.dataset['id'];
+        let find = this.products.find (element => element.id === productId);
+        if (find.quantity > 1) {
+            find.quantity--;
+        } else {
+            this.products.splice(this.products.indexOf(find), 1);
+            document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+        }
+        this.render();
     }
 }
 
@@ -95,25 +117,26 @@ class CartItem {
 }
 
 let catalog = new Catalog ()
+
 //кнопка скрытия и показа корзины
-// document.querySelector('.btn-cart').addEventListener('click', () => {
-//     document.querySelector('.cart-block').classList.toggle('invisible');
-// });
+ document.querySelector('.btn-cart').addEventListener('click', () => {
+     document.querySelector('.cart-block').classList.toggle('invisible');
+});
 // //кнопки удаления товара (добавляется один раз)
-// document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-//     if (evt.target.classList.contains ('del-btn')) {
-//         removeProduct (evt.target);
-//     }
-// })
+ document.querySelector('.cart-block').addEventListener ('click', (evt) => {
+     if (evt.target.classList.contains ('del-btn')) {
+         removeProduct (evt.target);
+     }
+ })
 // //кнопки покупки товара (добавляется один раз)
-// document.querySelector('.products').addEventListener ('click', (evt) => {
-//     if (evt.target.classList.contains ('buy-btn')) {
-//         addProduct (evt.target);
-//     }
-// })
+ document.querySelector('.products').addEventListener ('click', (evt) => {
+     if (evt.target.classList.contains ('buy-btn')) {
+         addProduct (evt.target);
+     }
+ })
 
 //создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
+function fetchData (url) {
     let arr = [];
     for (let i = 0; i < items.length; i++) {
         arr.push (createProduct (i));
@@ -123,14 +146,21 @@ function fetchData () {
 
 //создание товара
 function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    }
-};
-
+    return new Promise ((resolve, reject) => {
+        let xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status == 200) {
+                    resolve (xhr.responseText)
+                } else {
+                    reject (xhr.status)
+                }
+            }
+        }
+        xhr.open('GET', url, true)
+        xhr.send()
+    })
+}
 //CART
 
 // Добавление продуктов в корзину
