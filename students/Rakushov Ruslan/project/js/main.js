@@ -218,7 +218,6 @@ const app = new Vue({
     imageCart: "https://placehold.it/100x80",
     catalog: {
       vItems: [],
-      vFilteredItems: [],
       vSearchString: "",
     },
     cart: {
@@ -244,17 +243,6 @@ const app = new Vue({
         }, 1500);
       });
     },
-    filterItems() {
-      let searchString = this.catalog.vSearchString;
-      if (!searchString) {
-        this.catalog.vFilteredItems = this.catalog.vItems;
-      } else {
-        let searchRegexp = new RegExp(`${searchString}+`, "gi");
-        this.catalog.vFilteredItems = this.catalog.vItems.filter(item =>
-          searchRegexp.test(item.title)
-        );
-      }
-    },
     toggleCartVisibility() {
       this.cart.isVisible = !this.cart.isVisible;
     },
@@ -262,7 +250,6 @@ const app = new Vue({
       this.getJson(this.urlAPI + this.urlCatalogData)
         .then(data => {
           data.forEach(item => this.catalog.vItems.push(new Product(item)));
-          this.catalog.vFilteredItems = this.catalog.vItems;
         });
     },
     fetchDataToCart() {
@@ -299,7 +286,19 @@ const app = new Vue({
       return find;
     }
   },
-  computed: {},
+  computed: {
+    filteredItems: function () {
+    let searchString = this.catalog.vSearchString;
+      if (!searchString) {
+        return this.catalog.vItems;
+      } else {
+        let searchRegexp = new RegExp(`${searchString}+`, "gi");
+        return this.catalog.vItems.filter(item =>
+          searchRegexp.test(item.title)
+        );
+      }
+    }
+  },
   mounted() {
     this.fetchDataToCatalog();
     this.fetchDataToCart();

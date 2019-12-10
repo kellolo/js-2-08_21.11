@@ -13,7 +13,8 @@
         <div class="cart">
           <form action="#" class="search-form">
             <input type="text" class="search-field" v-model="catalog.vSearchString" />
-            <button class="btn-search" type="submit" @click="filterItems">
+            <!-- <button class="btn-search" type="submit" @click="filterItems"> -->
+              <button class="btn-search" type="submit"></button>
               <i class="fas fa-search"></i>
             </button>
           </form>
@@ -41,8 +42,8 @@
       </header>
       <main>
         <div class="products">
-          <template v-if="catalog.vFilteredItems.length > 0">
-          <div class="product-item" :data-id="prod.id" v-for="prod in catalog.vFilteredItems">
+          <template v-if="filteredItems.length > 0">
+          <div class="product-item" :data-id="prod.id" v-for="prod in filteredItems">
             <img :src="image" alt="Some img" />
             <div class="desc">
               <h3>{{ prod.title }}</h3>
