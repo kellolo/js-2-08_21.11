@@ -2,15 +2,17 @@ let app = new Vue ({
     el: '#app',
     data: {
         url: 'https://raw.githubusercontent.com/Yudaev/js-2-08_21.11/master/students/%D0%AE%D0%B4%D0%B0%D0%B5%D0%B2%20%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/project/JSON/catalog.json',
-        catalog: []
+        catalog: [],
+        isActiveBasket: false,
     },
     methods: {
         getJSON (url) {
             return fetch (url)
                 .then (d => d.json ());
         },
-        showBasket() {
-            document.querySelector('.cart-block').classList.toggle('invisible');
+        toggleBasket () {
+            this.isActiveBasket = !this.isActiveBasket;
+            //console.log(this.isActiveBasket);
         }
     },
     computed: {
