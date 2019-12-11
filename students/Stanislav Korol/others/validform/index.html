@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Валидация формы</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        body{
+            text-align: center;
+        }
+        label, input, textarea{
+            display: block;
+            width: 100%;
+            outline: none;
+        }
+        input, textarea{
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+        form{
+            text-align: left;
+            width: 500px;
+            margin: 0 auto;
+        }
+        button{
+            margin-top: 10px;
+        }
+
+        .valid input, .valid textarea{
+            border: 2px solid lightgreen;
+        }
+        .invalid input, .invalid textarea{
+            border: 2px solid orangered;
+        }
+
+        :not(.invalid) .errorBox{
+            color: orangered;
+            font-size: 12px;
+            display: none;
+        }
+        .invalid .errorBox{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Валидация формы</h1>
+    <form action="javascript:validateForm()">
+        <label for="name">
+            Имя:
+            <input type="text" id="name" name="name">
+        </label>
+        <label for="phone">
+            Телефон:
+            <input type="text" id="phone" name="phone" placeholder="+7(000)000-00-00">
+        </label>
+        <label for="email">
+            Почтовый адрес:
+            <input type="text" id="email" name="email" placeholder="my-cool.mail@mail.ru">
+        </label>
+        <label for="review">
+            Отзыв:
+            <textarea name="review" id="review" rows="10"></textarea>
+        </label>
+    </form>
+    <button type="button" class="btn btn-primary">Отправить</button>
+
+    <script>
+        class Field{
+            constructor(selector, eventType, mask, errorMsg){
+                this.element = document.querySelector(selector)
+                this.eventType = eventType
+                this.mask = mask
+                this.errorMsg = errorMsg
+
+                this._init()
+            }
+            _init(){
+                this.element.addEventListener(this.eventType, () => {
+                    this.validate()
+                })
+                this._createErrorMsgBox()
+            }
+            _createErrorMsgBox(){
+                const errorMsgBox = document.createElement("div")
+                errorMsgBox.classList.add("errorBox")
+                errorMsgBox.innerText = this.errorMsg
+                this.element.parentNode.appendChild(errorMsgBox)
+            }
+            _setState(state){
+                this.element.parentNode.classList.remove((state ? "invalid" : "valid"))
+                this.element.parentNode.classList.add((state ? "valid" : "invalid"))
+            }
+            validate(){
+                const matchArray = this.element.value.match(this.mask)
+                this._setState(matchArray !== null)
+                return matchArray !== null
+            }
+        }
+
+        const validationFields = [
+            new Field("#name", "keyup", /^[a-zа-я]+$/gi, "В имени допустимы только буквы"),
+            new Field("#phone", "keyup", /^(\+7\(\d{3}\)\d{3}\-\d{2}\-\d{2})$/gi, "Телефон должен быть в формате +7(000)000-00-00"),
+            new Field("#email", "keyup", /^[a-z\.\-]+\@mail\.ru$/gi, "В почтовом адресе допустимы только буквы латинского алфавита, дефис и точка. Разрешенный почтовый домен - @mail.ru"),
+            new Field("#review", "keyup", /^.+$/gi, "Отзыв не может быть пустым")
+        ]
+
+        document.querySelector("button").addEventListener("click", () => {
+            validationFields.forEach(el => {
+                el.validate()
+            })
+        })
+    </script>
+</body>
+</html>
