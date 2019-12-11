@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded',function()
+        {
+
+
+
+            let str = document.querySelector('.text').textContent;
+            let k = /^'|(\s)'|'(\s)/gi    
+            let strFixed = str.replace(k, '"');
+
+            console.log(str);
+            console.log(strFixed)
+
+            let text = document.querySelector('.fixed');
+            text.textContent = strFixed;
+
+        })
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Задание 1</h1>
+
+        <div class="text">
+            'Lorem ipsum dolor sit aren't amet consectetur adipis'cing elit. Consectetur 'quisquam possimus' sunt repellat ipsam? 
+            Quidem, corrupti! Quos 'minima' qu'am numquam adipisci aren't totam in dolore debit'is ipsam dolor? Moles'tias, inventore nam.'
+
+        </div>
+
+        <h2>Отредактированый текст</h2>
+        <div class="fixed">
+
+        </div>
+
+    </div>
+
+    
+</body>
+</html>

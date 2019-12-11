@@ -10,22 +10,118 @@ const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 var userCart = [];
 var list = fetchData ();
 
+
+class Catalog {
+    constructor () {
+        this.products = []
+        this.container = '.products'
+        this._init ()
+    }
+    _init () {
+        list.forEach (el => {
+            this.products.push (new Product (el))
+        })
+        this.render ()
+    }
+    render () {
+        let trg = document.querySelector (this.container)
+        let str = ''
+        this.products.forEach (prod => {
+            str += prod.render ()
+        })
+        trg.innerHTML = str
+    }
+}
+
+class Product {
+    constructor (prod) {
+        this.id = prod.id
+        this.title = prod.title
+        this.price = prod.price
+        this.img = prod.img
+    }
+    render () {
+        return `<div class="product-item" data-id="${this.id}">
+                    <img src="${this.img}" alt="Some img">
+                    <div class="desc">
+                        <h3>${this.title}</h3>
+                        <p>${this.price} $</p>
+                        <button class="buy-btn" 
+                        data-id="${this.id}"
+                        data-name="${this.title}"
+                        data-image="${this.img}"
+                        data-price="${this.price}">Купить</button>
+                    </div>
+                </div>`
+    }
+}
+//Для корзины
+class Cart {
+    constructor(){
+        this.CartItem = []
+        this.container = '.cart-block'
+    }
+    render(){
+        let trg = document.querySelector (this.container)
+        let str = ''
+        this.cartItem.forEach (cartItem => {
+            str += cartItem.render ()
+        })
+        trg.innerHTML = str
+    }
+    addProduct(){
+
+    }
+    removeProduct(){
+
+    }
+}
+
+class CartItem {
+    constructor (cart) {
+        this.id = prod.id
+        this.title = prod.title
+        this.price = prod.price
+        this.img = prod.img
+        this.quantity = 0
+    }
+    render () {
+        return `<div class="cart-item" data-id="${this.id}">
+                    <div class="product-bio">
+                        <img src="${this.img}" alt="Some image">
+                        <div class="product-desc">
+                            <p class="product-title">${this.title}</p>
+                            <p class="product-quantity">Quantity: ${this.quantity}</p>
+                            <p class="product-single-price">$${this.price} each</p>
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <p class="product-price">${this.quantity * this.price}</p>
+                        <button class="del-btn" data-id="${this.id}">&times;</button>
+                    </div>
+                </div>`
+    }  
+}
+
+let catalog = new Catalog ()
+let cart = new Cart()
+
 //кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('del-btn')) {
-        removeProduct (evt.target);
-    }
-})
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('buy-btn')) {
-        addProduct (evt.target);
-    }
-})
+// document.querySelector('.btn-cart').addEventListener('click', () => {
+//     document.querySelector('.cart-block').classList.toggle('invisible');
+// });
+// //кнопки удаления товара (добавляется один раз)
+// document.querySelector('.cart-block').addEventListener ('click', (evt) => {
+//     if (evt.target.classList.contains ('del-btn')) {
+//         removeProduct (evt.target);
+//     }
+// })
+// //кнопки покупки товара (добавляется один раз)
+// document.querySelector('.products').addEventListener ('click', (evt) => {
+//     if (evt.target.classList.contains ('buy-btn')) {
+//         addProduct (evt.target);
+//     }
+// })
 
 //создание массива объектов - имитация загрузки данных с сервера
 function fetchData () {
@@ -40,42 +136,14 @@ function fetchData () {
 function createProduct (i) {
     return {
         id: ids[i],
-        name: items[i],
+        title: items[i],
         price: prices[i],
         img: image,
-        quantity: 0,
-        createTemplate: function () {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-        },
-
-        add: function() {
-            this.quantity++
-        }
     }
 };
 
-//рендер списка товаров (каталога)
-function renderProducts () {
-    //let arr = [];
-    let str = ''
-    for (item of list) {
-        str += item.createTemplate()
-    }
-    document.querySelector('.products').innerHTML = str;
-}
+//рендер списка товаров (каталога) - выпилено
 
-renderProducts ();
 
 //CART
 
