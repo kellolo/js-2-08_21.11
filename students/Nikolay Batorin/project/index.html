@@ -20,13 +20,21 @@
         <div id="cart" class="cart" />
     </header>
     <main>
-        <div id="products" class="products"></div>
+        <div id="app">
+            <div id="products" class="products">
+                <product id="product" class="product-item" v-for="product in products" v-bind:product='product'>
+                </product>
+            </div>
+        </div>
+
     </main>
 
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
-        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
     </script>
     <script src="js/main.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/product.js"></script>
 </body>
 
 </html>
