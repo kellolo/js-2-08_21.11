@@ -44,7 +44,7 @@ class Menu {
   };
   
   _extendTitle(component) {
-    // can't <span> using in <select> <opion> :( 
+    // can't using a <span> in the <select> <opion> :( 
     component.forEach(c => 
       c.title += ` <span class="extend-title">:: ${c.cost} руб. / ${c.calories} ккал</span>`);
   };
@@ -56,23 +56,23 @@ class Menu {
     
     let s = '';
     this.size.forEach((el, i) => {
-      s += `<option value="${i}">${el.title}</option>`;
+      s += `<option value="${i}" data-cost="${el.cost}" data-calories="${el.calories}">${el.title}</option>`;
     });
     this.sizeNode.innerHTML = s;
     this.sizeNode.childNodes[this.choice.size].selected = true;
 
     s = '';
     this.stuffing.forEach((el, i) => {
-      s += `<option value="${i}">${el.title}</option>`;
+      s += `<option value="${i}" data-cost="${el.cost}" data-calories="${el.calories}">${el.title}</option>`;
     });
     this.stuffingNode.innerHTML = s;
     this.stuffingNode.childNodes[this.choice.stuffing].selected = true;
     
     s = '<div class="form-check">';
     this.topping.forEach((el, i) => {
-      s += `<input class="form-check-input" type="checkbox" id="${el.title}">`;
+      s += `<div><input class="form-check-input" type="checkbox" id="${el.title}" data-cost="${el.cost}" data-calories="${el.calories}">`;
       s += `<label class="form-check-label" for="${el.title}">`;
-      s += `${el.title} <span class="extend-title">:: ${el.cost} руб. / ${el.calories} ккал</span></label><br>`;
+      s += `${el.title} <span class="extend-title">:: ${el.cost} руб. / ${el.calories} ккал</span></label></div>`;
     });
     s += '</div>';
     this.toppingNode.innerHTML = s;
@@ -93,24 +93,31 @@ class Hamburger {
     this.costNode = document.getElementById('total-cost');
     this.calNode = document.getElementById('total-cal');
     
-    this.cost = 0;
-    this.calories = 0;
     this._recalc();
   };
 
   _recalc() {
-    this.cost = this.menu.size[this.menu.choice.size].cost + 
-      this.menu.stuffing[this.menu.choice.stuffing].cost;
-      
-    this.calories = this.menu.size[this.menu.choice.size].calories + 
-      this.menu.stuffing[this.menu.choice.stuffing].calories;
+    //this.cost = this.menu.size[this.menu.choice.size].cost + 
+    //  this.menu.stuffing[this.menu.choice.stuffing].cost;
+    //  
+    //this.calories = this.menu.size[this.menu.choice.size].calories + 
+    //  this.menu.stuffing[this.menu.choice.stuffing].calories;
+    //
+    //this.menu.choice.topping.forEach((node, index) => {
+    //  if(node.checked) {
+    //    this.cost += this.menu.topping[index].cost;
+    //    this.calories += this.menu.topping[index].calories;
+    //  };
+    //});
     
-    this.menu.choice.topping.forEach((node, index) => {
-      if(node.checked) {
-        this.cost += this.menu.topping[index].cost;
-        this.calories += this.menu.topping[index].calories;
-      };
+    this.cost = 0;
+    this.calories = 0;
+    
+    [...document.querySelectorAll(':checked')].forEach(item => {
+      this.cost += +item.dataset.cost;
+      this.calories += +item.dataset.calories;
     });
+      
   };
 
   render() {
@@ -119,20 +126,20 @@ class Hamburger {
   };
 
   refresh() {
-    let child = this.menu.sizeNode.childNodes;
-    // childNodes is a collection, not array!
-    for(let n = 0; n < child.length; n++)
-      if(child[n].selected) {
-        this.menu.choice.size = n;
-        break;
-      };
-    
-    child = this.menu.stuffingNode.childNodes;
-    for(let n = 0; n < child.length; n++)
-      if(child[n].selected) {
-        this.menu.choice.stuffing = n;
-        break;
-      };
+    //let child = this.menu.sizeNode.childNodes;
+    //// childNodes is a collection, not array!
+    //for(let n = 0; n < child.length; n++)
+    //  if(child[n].selected) {
+    //    this.menu.choice.size = n;
+    //    break;
+    //  };
+    //
+    //child = this.menu.stuffingNode.childNodes;
+    //for(let n = 0; n < child.length; n++)
+    //  if(child[n].selected) {
+    //    this.menu.choice.stuffing = n;
+    //    break;
+    //  };
     
     this._recalc();
     this.render();

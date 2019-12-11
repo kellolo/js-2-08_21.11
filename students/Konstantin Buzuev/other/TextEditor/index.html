@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Text Editor</title>
+</head>
+
+<body>
+    <main>
+        <form class="replaceForm replaceForm_margin" action="#" onsubmit="return false;"> <!-- onsubmit="return false;" - для запретаперерисовки формы и как следствие - возврату к исходному HTML! -->
+            <fieldset class="replaceForm__fields">
+                <legend class="replaceForm__legend">Исправление текста с помощью регулярных выражений</legend>
+                <textarea class="replaceForm__initText" name="initialText" id="init" cols="30" rows="10">Lorem ipsum dolor sit - 'amet consectetur adipisicing elit'. Commodi, don't dolorum atque tempore quis asperiores - 'amet debitis natus eos placeat minima', sint aren't molestias. It's a similique consectetur quidem iusto reprehenderit, officia quam dolores?
+                </textarea>
+                <button class="replaceForm__btnCheck">Исправить кавычки</button>
+                <button class="replaceForm__btnAdvCheck">Исправить кавычки с учетом особенностей английского языка</button>
+                <textarea class="replaceForm__finalText" name="finalText" id="final" cols="30" rows="10" disabled = "true"></textarea>
+            </fieldset>
+        </form>
+        <form class = "validatorForm" action="#" onsubmit="return false;">
+            <fieldset class = "validatorForm__fields">
+                <legend class="validatorForm__legend"></legend>
+                <div class="validatorForm__block validatorForm__block_margin">
+                    <label for="userName">Ваше имя</label>
+                    <input type="text" id="userName" placeholder="Иван">
+                </div>
+                <div class="validatorForm__block validatorForm__block_margin">
+                    <label for="userSurname">Ваша фамилия</label>
+                    <input type="text" id="userSurname" placeholder="Иванов">
+                </div>
+                <div class="validatorForm__block validatorForm__block_margin">
+                    <label for="userPhone">Ваш телефон</label>
+                    <input type="tel" id="userPhone" placeholder="+7(123)456-7890">
+                </div>
+                <div class="validatorForm__block validatorForm__block_margin">
+                    <label for="userMail">Ваша почта</label>
+                    <input type="email" id="userMail" placeholder="example@mail.ru, my-mail@mail.ru, my.mail@mail.ru">
+                </div>
+                <div class="validatorForm__block validatorForm__block_margin">
+                    <label for="userMessage"></label>
+                    <textarea class="validatorForm__userMessage" id="userMessage" cols="30" rows="10"></textarea>
+                </div>
+            </fieldset>
+        </form>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
