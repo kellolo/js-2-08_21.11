@@ -14,49 +14,7 @@ p {
     display: none;
 }
 
-.header {
-    display: flex;
-    background-color: #2f2a2d;
-    justify-content: space-between;
-    color: #fafafa;
-    padding: 30px 80px;
 
-    &__logo {
-        text-transform: uppercase;
-        font-weight: bold;
-        align-self: center;
-    }
-
-    &__searchForm {
-        position: relative;
-        margin-right: 50px;
-        display: inline-block;
-    }
-
-    &__searchField {
-        box-sizing: border-box;
-        width: 200px;
-        color: #fafafa;
-        padding: 10px;
-        background-color: transparent;
-        border: none;
-        border-bottom: 2px solid #fafafa;
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    &__btnSearch {
-        background-color: transparent;
-        border: none;
-        color: #fafafa;
-        font-size: 1.2em;
-        position: absolute;
-        bottom: 5px;
-        right: 0;
-    }
-}
 
 .cart {
     position: relative;
