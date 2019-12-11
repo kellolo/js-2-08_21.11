@@ -1,11 +1,41 @@
 let app = new Vue ({
     el: '#products',
     data: {
-        url: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+        url: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses',
+        test: []
     },
     methods: {
         showSome(){
             console.log(this);
+        },
+        getJSON (url) {
+            return fetch (url)
+                .then (d => d.json ());
+        },
+        handleData (arr) {
+            arr.forEach(el => {
+                this.items.push (new lists [this.constructor.name] (el));
+            });
+        },
+        _render2 () {
+            let bl = document.querySelector (this.container);
+            this.items.forEach (product => {
+                bl.insertAdjacentHTML ('beforeend', product.render ());
+            });
+        },
+        render2 () {
+            return `<div class="product-item" data-id="${this.id_product}">
+                        <img src="${this.img}" alt="Some img">
+                        <div class="desc">
+                            <h3>${this.product_name}</h3>
+                            <p>${this.price} $</p>
+                            <button class="buy-btn"
+                            data-id="${this.id_product}"
+                            data-name="${this.product_name}"
+                            data-image="${this.img}"
+                            data-price="${this.price}">Купить</button>
+                        </div>
+                    </div>`;
         }
     },
     computed: {
@@ -15,7 +45,7 @@ let app = new Vue ({
 
     },
     created(){
-        this.showSome();
+        console.log(this.getJSON(this.url));
     }
 });
 
