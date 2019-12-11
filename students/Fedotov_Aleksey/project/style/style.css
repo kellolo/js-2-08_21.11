@@ -40,12 +40,15 @@ button:focus{
 /*padding: 40px 80px;*/
 /*}*/
 .products{
-    column-gap: 30px;
+    /* column-gap: 30px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 200px);
     grid-template-rows: 1fr;
     padding: 40px 80px;
-    justify-content: space-between;
+    justify-content: space-between; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 p {
     margin: 0 0 5px 0;
@@ -56,7 +59,7 @@ p {
     width: 200px;
     border-radius: 5px;
     overflow: hidden;
-    margin: 20px 0;
+    margin: 20px 50px;
 }
 img {
     max-width: 100%;

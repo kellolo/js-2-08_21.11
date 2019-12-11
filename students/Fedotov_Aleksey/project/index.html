@@ -21,7 +21,7 @@
                 </form>
                 <button class="btn-cart" @click = "toShowCart" type="button">Корзина</button>
                 <div class="cart-block" v-if = "showCart" >
-                    <p v-if = notInCart>Товаров нет</p>
+                    <p v-if = 'this.cart.length===0'>Товаров нет</p>
                     <div class="cart-item" v-for = "cartItem of cart" v-bind:data-id = "cartItem.id_product">
                         <div class="product-bio">
                             <img src="https://placehold.it/100x80" alt="Some image">
@@ -71,11 +71,11 @@
                 urlDeletFromBasket: 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/deleteFromUserBasket.json',
                 products: [],
                 cart: [],
+                indexInCart: undefined,
                 amount: 0,
                 countGoods: 0,
                 name: 'alex',
-                showCart: false,
-                notInCart: true
+                showCart: false
             },
             methods: {
                 getJSON (url) {
@@ -84,9 +84,10 @@
                 },
                 addToCart(event) {
                     console.log(event.target.dataset['name']);
-                    let added = this.inCart(event.target.dataset['id']);
-                    if (added != -1) {
-                        this.cart[added].quantity++;
+                    this.indexInCart = event.target.dataset['id'];
+                    if (this.inCart != -1) {
+                        console.log(this.cart)
+                        this.cart[this.inCart].quantity++;
                     }
                     else {
                         let item = {
@@ -101,20 +102,14 @@
                     this.countGoods++;
                     this.amount = this.amount + (+event.target.dataset['price']);
                 },
-                inCart(id) {
-                    return this.cart.findIndex(elem => elem.id_product == id);
-                },
                 deleteFromCart(event) {
                     this.getJSON(this.urlDeletFromBasket)
                     .then(data => {if (data.result == 1) {
-                        let removeItem = this.inCart(event.target.dataset['id']);
-                        if (this.cart[removeItem].quantity > 1){
-                            this.cart[removeItem].quantity--;
+                        this.indexInCart = event.target.dataset['id'];
+                        if (this.cart[this.inCart].quantity > 1){
+                            this.cart[this.inCart].quantity--;
                         } else {
-                            this.cart.splice(removeItem,1);
-                        }
-                        if (this.cart.length === 0) {
-                            this.notInCart = true;
+                            this.cart.splice(this.inCart,1);
                         }
                         this.countGoods--;
                         this.amount = this.amount - event.target.dataset['price'];
@@ -128,25 +123,31 @@
                 },
                 toSearch() {
                     let inputSearch = document.getElementById("searchInput").value;
-                    let reg = new RegExp(inputSearch, "i"); 
-                    let searchProduct = [];
-                    this.products = [];
-                    this.getJSON(this.url)
-                        .then(data => {searchProduct = data})
-                        .then(() => {
-                            searchProduct.forEach(element => {
-                            console.log('reg', inputSearch);
-                            console.log(element.product_name);
-                            if (reg.test(element.product_name)) {
-                                this.products.push(element);
-                            }
+                    if (inputSearch !=="") {
+                        let reg = new RegExp(inputSearch, "i");
+                        let searchProduct = [];
+                        this.products = [];
+                        this.getJSON(this.url)
+                            .then(data => {searchProduct = data})
+                            .then(() => {
+                                searchProduct.forEach(element => {
+                                console.log('reg', inputSearch);
+                                console.log(element.product_name);
+                                if (reg.test(element.product_name)) {
+                                    this.products.push(element);
+                                }
+                            });
                         });
-                    });
+                    } else {
+                        this.getJSON(this.url)
+                            .then(data => {this.products = data})
+                            .then(() => {console.log(this.products)});
+                    }
                 }
             },
             computed: {
-                inCart(id) {
-                    return this.cart.findIndex(elem => elem.id_product == id);
+                inCart: function() {
+                    return this.cart.findIndex(elem => elem.id_product == this.indexInCart);
                 }
             },
             mounted() {
