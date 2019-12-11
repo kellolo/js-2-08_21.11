@@ -114,14 +114,15 @@ let market = new Vue({
         },
         removeCartItem(product) {
             this.cart.removeCartItem(product)
+        },
+        amountPrice(cartItem) {
+            return cartItem.quantity * cartItem.price
         }
     },
     computed: {
         filteredItems() {
             return this.catalog.filter(this.searchText)
         }
-    },
-    mounted() {
     },
     created() {
         this.cart = new Cart(this.API_URL)
