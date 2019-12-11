@@ -7,6 +7,7 @@ const app = new Vue({
         /*Прикрутить к проекту загрузку картинок с сервака!*/
         /*'https: //github.com/Konstantin-Buzuev/online-store-api/tree/master/OnlineShop/img/',*/
         products: [],
+        searchString: ""
     },
     methods: {
         /*Получение данных с API*/
@@ -18,7 +19,7 @@ const app = new Vue({
             this.products.forEach(product => {
                 this._parseDescription(product);
                 this._parseImage(product);
-                Vue.set(product, "visible", true)
+                Vue.set(product, "hidden", false)
             });
         },
         _parseDescription(product) {
@@ -40,6 +41,10 @@ const app = new Vue({
                 this.imgURL + "product-" + product.id + "-full" + ".jpg"
             );
         },
+        /*Вынести в отдельный компонент!*/
+        filterCatalog() {
+            eventBus.$emit("search", this.searchString)
+        }
     },
     mounted() {
         this.getJSON(this.catalogURL)

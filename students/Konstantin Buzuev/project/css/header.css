@@ -48,18 +48,4 @@
   color: #fafafa;
   font-size: 1.2em;
 }
-
-.header__btnCart {
-  background-color: transparent;
-  border: none;
-  font-size: 1.2em;
-}
-
-.header_fill {
-  color: green;
-}
-
-.header_empty {
-  color: #fafafa;
-}
 /*# sourceMappingURL=header.css.map */

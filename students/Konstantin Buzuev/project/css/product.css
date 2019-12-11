@@ -88,4 +88,8 @@ body {
       align-self: center;
   margin: 0 auto;
 }
+
+.product_hidden {
+  display: none !important;
+}
 /*# sourceMappingURL=product.css.map */

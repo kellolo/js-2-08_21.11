@@ -11,27 +11,27 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/products.css">
+    <link rel="stylesheet" href="css/cart.css">
     <link rel="stylesheet" href="css/cartItem.css">
 </head>
 
 <body>
-    <header class="header">
-        <div class="header__logo">E-shop</div>
-        <form action="#" class="header__searchForm">
-            <input type="text" class="header__search-field">
-            <button class="header__btnSearch" type="submit">
-                <i class="fas fa-search"></i>
-            </button>
-            <button class="header__btnCart">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            </button>
-
-        </form>
-    </header>
-    <main id="app">
-        <catalog v-bind:items="products"></catalog>
-        <cart></cart>
-    </main>
+    <div id="app">
+        <header class="header">
+            <div class="header__logo">E-shop</div>
+            <form action="#" class="header__searchForm">
+                <input type="text" class="header__search-field" v-model="searchString">
+                <button class="header__btnSearch" type="submit" @click="filterCatalog">
+                    <i class="fas fa-search"></i>
+                </button>
+                <cart></cart>
+            </form>
+        </header>
+        <main>
+            <catalog v-bind:items="products"></catalog>
+        </main>
+    </div>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
     </script>
