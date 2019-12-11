@@ -28,7 +28,7 @@
                     <div class="desc">
                         <h3>{{ item.product_name }}</h3>
                         <p>{{ item.price }} </p>
-                        <button class="btn-cart" type="button">Купить</button>
+                        <button class="btn-cart" type="button" @click="content(item.id_product, item.product_name, item.price)">Купить</button>
                     </div>
                 </div>
             </div>

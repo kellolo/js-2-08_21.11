@@ -4,6 +4,7 @@ let app = new Vue ({
         url: 'https://raw.githubusercontent.com/Yudaev/js-2-08_21.11/master/students/%D0%AE%D0%B4%D0%B0%D0%B5%D0%B2%20%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/project/JSON/catalog.json',
         catalog: [],
         isActiveBasket: false,
+        basket: []
     },
     methods: {
         getJSON (url) {
@@ -13,6 +14,17 @@ let app = new Vue ({
         toggleBasket () {
             this.isActiveBasket = !this.isActiveBasket;
             //console.log(this.isActiveBasket);
+        },
+        content(id_product, product_name, price){
+
+
+            this.basket.push({
+                id_product: id_product,
+                product_name: product_name,
+                price: price,
+                quantity: 1
+            });
+            console.log(this.basket);
         }
     },
     computed: {
