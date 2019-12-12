@@ -16,15 +16,17 @@ let app = new Vue ({
             //console.log(this.isActiveBasket);
         },
         content(id_product, product_name, price){
-
-
-            this.basket.push({
+            for (let item of this.basket) {
+                if (item.id_product === id_product){
+                    return item.quantity++;
+                }
+            }
+            return this.basket.push({
                 id_product: id_product,
                 product_name: product_name,
                 price: price,
                 quantity: 1
             });
-            console.log(this.basket);
         }
     },
     computed: {
