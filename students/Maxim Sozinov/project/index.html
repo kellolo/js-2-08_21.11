@@ -10,22 +10,39 @@
 <body>
     <header>
         <div class="logo">E-shop</div>
-        <div class="cart">
+        <div id="cart" class="cart">
             <form action="#" class="search-form">
                 <input type="text" class="search-field">
                 <button class="btn-search" type="submit">
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+            <button class="btn-cart" type="button" v-on:click="toggleShow">Корзина</button>
+            <div class="cart-block" v-show="show"></div>
         </div>
     </header>
     <main>
-        <div class="products"></div>
+        <div class="products" id="catalog">
+            <div v-for="(product in catalog.products" class="product-item" v-bind:data-id="product.id_product">
+                    <img v-bind:src="product.img" alt="Some img">
+                    <div class="desc">
+                        <h3>{{ product.product_name}}</h3>
+                        <p>{{ product.price}}  $</p>
+                        <button class="buy-btn" 
+                        v-bind:data-id="product.id_product"
+                        v-bind:data-name="product.product_name"
+                        v-bind:data-image="product.img"
+                        v-bind:data-price="product.price"
+                        v-on:click="addInCart">
+                        Купить</button>
+                    </div>
+                </div>
+        </div>
     </main>
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="js/main.js"></script>
+
 </body>
 </html>

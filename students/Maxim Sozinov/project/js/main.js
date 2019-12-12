@@ -1,27 +1,27 @@
 
 //кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
+// document.querySelector('.btn-cart').addEventListener('click', () => {
+//     document.querySelector('.cart-block').classList.toggle('invisible');
+// });
 
 //кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('del-btn')) {
-        userCart.removeItem(evt.target);
-    }
-});
+// document.querySelector('.cart-block').addEventListener('click', (evt) => {
+//     if (evt.target.classList.contains('del-btn')) {
+//         userCart.removeItem(evt.target);
+//     }
+// });
 
 //кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('buy-btn')) {
-        userCart.addItem(evt.target);
-    }
-});
+// document.querySelector('.products').addEventListener('click', (evt) => {
+//     if (evt.target.classList.contains('buy-btn')) {
+//         userCart.addItem(evt.target);
+//     }
+// });
 
-const FAKE_API_CATALOG = 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json'
+const FAKE_API_CATALOG = 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json';
 const FAKE_API_CART = 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/getBasket.json';
 
-const catalogContainer = '.products';
+// const catalogContainer = '.products';
 const cartContainer = '.cart-block';
 
 class List {
@@ -59,8 +59,8 @@ class Catalog extends List {
     }
     _init () {
         this.getJSON (this.url)
-            .then (data => this.handleData (data))
-            .then (() => this._render ());
+            .then (data => this.handleData (data));
+            // .then (() => this._render ());
     }
 }
 
@@ -89,7 +89,7 @@ class Cart extends List {
                             price : +item.dataset.price,
                             img : "https://placehold.it/100x80",  
                             quantity : 1
-                        }
+                        };
                         //                        
                         this.products.push(new CartItem(prod));
                     } else {
@@ -187,11 +187,51 @@ class CartItem extends Item {
 let lists = {
     //Название класса списка: Класс соотв эл-та списка
     Catalog: Product,
-    Cart: CartItem
+    Cart: CartItem,
+
 };
+
+let catalog = new Vue ({
+    el: '#catalog',
+    data: {
+        catalog: {},
+        catalogContainer: '.products'
+    },
+    methods: {
+        addInCart (evt) {
+            userCart.addItem(evt.target);
+        }
+    },
+    mounted () {
+        this.catalog = new Catalog (FAKE_API_CATALOG, this.catalogContainer);
+        console.log(this.catalog);
+    }
+});
+
+let cart = new Vue ({
+    el: '#cart',
+    data: {
+        show: false
+    },
+    methods: {
+        toggleShow () {
+            this.show = !this.show;
+        }
+    },
+    computed: {
+
+    }
+});
 
 // main
 // ------------------------------------------------
 
-let catalog = new Catalog(FAKE_API_CATALOG, catalogContainer);
+// let catalog = new Catalog(FAKE_API_CATALOG, catalogContainer);
 let userCart = new Cart(FAKE_API_CART, cartContainer);
+
+//кнопки удаления товара (добавляется один раз)
+document.querySelector('.cart-block').addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('del-btn')) {
+        userCart.removeItem(evt.target);
+    }
+});
