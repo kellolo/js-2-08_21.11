@@ -6,11 +6,7 @@ Vue.component ('catalog', {
             items: []
         }
     },
-    methods: {
-        addProduct (product) {
-            console.log (`Куплен ${product.product_name}`)
-        }
-    },
+    
     mounted () {
         this.$parent.getJson (this.catalogUrl)
             .then (data => this.items = data)
