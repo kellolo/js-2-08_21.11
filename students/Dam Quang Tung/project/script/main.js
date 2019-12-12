@@ -61,12 +61,12 @@ class Catalog extends List {
     }
 
     filter(searchText) {
-        let filterArr = this.items.filter(prod => prod.product_name.search(new RegExp(searchText, 'i')) != -1)
+        let filterArr = this.items.filter(prod => prod.title.search(new RegExp(searchText, 'i')) != -1)
         this._render(filterArr)
     }
 
     _getProduct(productId) {
-        return this.items.find(prod => prod.id_product === productId)
+        return this.items.find(prod => prod.id === productId)
     }
 
     _buyProduct(product) {
@@ -98,14 +98,14 @@ class Cart extends List {
     }
 
     _getCartItem(cartId) {
-        return this.items.find(cart => cart.id_product === cartId)
+        return this.items.find(cart => cart.id === cartId)
     }
 
     addCartItem(product) {
         this.getJSON(`${API_URL}addToBasket.json`)
             .then(data => {
                 if (data.result == 1) {
-                    let find = this._getCartItem(product.id_product)
+                    let find = this._getCartItem(product.id)
                     if (!find) {
                         this.items.push(new CartItem(product))
                     } else {
@@ -133,20 +133,20 @@ class Cart extends List {
 
 class Item {
     constructor(prod, img = image) {
-        this.id_product = prod.id_product
-        this.product_name = prod.product_name
+        this.id = prod.id
+        this.title = prod.title
         this.price = prod.price
         this.img = img
     }
     render() {
-        return `<div class="product-item" data-id="${this.id_product}">
+        return `<div class="product-item" data-id="${this.id}">
                     <img src="${this.img}" alt="Some img">
                     <div class="desc">
-                        <h3>${this.product_name}</h3>
+                        <h3>${this.title}</h3>
                         <p>${this.price} $</p>
                         <button class="buy-btn" 
-                        data-id="${this.id_product}"
-                        data-name="${this.product_name}"
+                        data-id="${this.id}"
+                        data-name="${this.title}"
                         data-image="${this.img}"
                         data-price="${this.price}">Купить</button>
                     </div>
@@ -162,18 +162,18 @@ class CartItem extends Item {
         this.quantity = prod.quantity ? prod.quantity : 1
     }
     render() {
-        return `<div class="cart-item" data-id="${this.id_product}">
+        return `<div class="cart-item" data-id="${this.id}">
                     <div class="product-bio">
                         <img src="${this.img}" alt="Some image">
                         <div class="product-desc">
-                            <p class="product-title">${this.product_name}</p>
+                            <p class="product-title">${this.title}</p>
                             <p class="product-quantity">Quantity: ${this.quantity}</p>
                             <p class="product-single-price">$${this.price} each</p>
                         </div>
                     </div>
                     <div class="right-block">
                         <p class="product-price">${this.quantity * this.price}</p>
-                        <button class="del-btn" data-id="${this.id_product}">&times;</button>
+                        <button class="del-btn" data-id="${this.id}">&times;</button>
                     </div>
                 </div>`
     }
