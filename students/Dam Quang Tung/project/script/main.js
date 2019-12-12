@@ -47,6 +47,30 @@ class Catalog extends List {
         this.getJSON(this.url)
             .then(data => this.handleData(data))
             .then(() => this._render())
+            .then(() => this._addEventListeners())
+    }
+    _addEventListeners() {
+        document.querySelector(this.container).addEventListener('click', (evt) => {
+            if (evt.target.classList.contains('buy-btn')) {
+                this._buyProduct(this._getProduct(+evt.target.dataset['id']));
+            }
+        })
+        document.querySelector('.search-field').addEventListener('input', (evt) => {
+            this.filter(evt.target.value)
+        })
+    }
+
+    filter(searchText) {
+        let filterArr = this.items.filter(prod => prod.product_name.search(new RegExp(searchText, 'i')) != -1)
+        this._render(filterArr)
+    }
+
+    _getProduct(productId) {
+        return this.items.find(prod => prod.id_product === productId)
+    }
+
+    _buyProduct(product) {
+        this.cart.addCartItem(product)
     }
 }
 
