@@ -56,7 +56,7 @@ let shop = new Vue ({
             })
         },
         searchProducts(items) {
-            if (this.searchLine.length < 1) {
+            if (this.searchLine.length == 0) {
                 return this.items
             } else {
                 let searchRequest = new RegExp (this.searchLine, 'gi')
@@ -75,7 +75,6 @@ let shop = new Vue ({
         this.fetchData(`${this.APIs}/catalogData.json`)
             .then (dataArr => {
                 this.items = dataArr
-                this.filteredItems = dataArr
             })
 
         this.fetchData(`${this.APIs}/getBasket.json`)
