@@ -1,6 +1,6 @@
 const image = 'https://placehold.it/200x200'
 const cartImage = 'https://placehold.it/100x80'
-const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+const API_URL = 'https://raw.githubusercontent.com/Archtung/js-2-08_21.11/master/students/Dam%20Quang%20Tung/project/json'
 
 class List {
     constructor(url, container) {
@@ -31,7 +31,7 @@ class List {
 }
 
 class Catalog extends List {
-    constructor(cart, url = `${API_URL}catalogData.json`, container = '.products') {
+    constructor(cart, url = `${API_URL}/catalogData.json`, container = '.products') {
         super(url, container)
         this.cart = cart
     }
@@ -67,7 +67,7 @@ class Catalog extends List {
 }
 
 class Cart extends List {
-    constructor(url = `${API_URL}getBasket.json`, container = '.cart-block', btnContainer = '.btn-cart') {
+    constructor(url = `${API_URL}/getBasket.json`, container = '.cart-block', btnContainer = '.btn-cart') {
         super(url, container)
         this.btnContainer = btnContainer
     }
@@ -94,7 +94,7 @@ class Cart extends List {
     }
 
     addCartItem(product) {
-        this.getJSON(`${API_URL}addToBasket.json`)
+        this.getJSON(`${API_URL}/addToBasket.json`)
             .then(data => {
                 if (data.result == 1) {
                     let find = this._getCartItem(product.id_product)
@@ -109,7 +109,7 @@ class Cart extends List {
     }
 
     removeCartItem(product) {
-        this.getJSON(`${API_URL}deleteFromBasket.json`)
+        this.getJSON(`${API_URL}/deleteFromBasket.json`)
             .then(data => {
                 if (data.result == 1) {
                     if (product.quantity === 1) {
