@@ -15,6 +15,7 @@ class List {
         this.container = container
         this.url = url
         this.items = []
+        //this.renderedItems = []
         this._init()
     }
     _init() {
@@ -29,11 +30,10 @@ class List {
             this.items.push(new lists[this.constructor.name](el))
         })
     }
-    _render(arr = this.items) {
-        let el = document.querySelector(this.container)
-        el.innerHTML = ''
-        arr.forEach(product => {
-            el.insertAdjacentHTML('beforeend', product.render())
+    _render() {
+        let bl = document.querySelector(this.container)
+        this.items.forEach(product => {
+            bl.insertAdjacentHTML('beforeend', product.render())
         })
     }
 }
@@ -47,45 +47,18 @@ class Catalog extends List {
         this.getJSON(this.url)
             .then(data => this.handleData(data))
             .then(() => this._render())
-            .then(() => this._addEventListeners())
-    }
-    _addEventListeners() {
-        document.querySelector(this.container).addEventListener('click', (evt) => {
-            if (evt.target.classList.contains('buy-btn')) {
-                this._buyProduct(this._getProduct(+evt.target.dataset['id']));
-            }
-        })
-        document.querySelector('.search-field').addEventListener('input', (evt) => {
-            this.filter(evt.target.value)
-        })
-    }
-
-    filter(searchText) {
-        let filterArr = this.items.filter(prod => prod.title.search(new RegExp(searchText, 'i')) != -1)
-        this._render(filterArr)
-    }
-
-    _getProduct(productId) {
-        return this.items.find(prod => prod.id === productId)
-    }
-
-    _buyProduct(product) {
-        this.cart.addCartItem(product)
     }
 }
 
 class Cart extends List {
-    constructor(url = API_URL + '/getBasket.json', container = '.cart-block', btnContainer = '.btn-cart') {
+    constructor(url = API_URL + '/getBasket.json', container = '.cart-block') {
         super(url, container)
-        this.btnContainer = btnContainer
     }
     _init() {
         this.getJSON(this.url)
             .then(data => this.handleData(data.contents))
             .then(() => this._render())
-            .then(() => this._addEventListeners())
     }
-
     _addEventListeners() {
         document.querySelector(this.btnContainer).addEventListener('click', () => {
             document.querySelector(this.container).classList.toggle('invisible')
@@ -102,7 +75,7 @@ class Cart extends List {
     }
 
     addCartItem(product) {
-        this.getJSON(API_URL +`addToBasket.json`)
+        this.getJSON(`${API_URL}addToBasket.json`)
             .then(data => {
                 if (data.result == 1) {
                     let find = this._getCartItem(product.id)
@@ -159,7 +132,7 @@ class Product extends Item {}
 class CartItem extends Item {
     constructor(prod, img = cartImage) {
         super(prod, img)
-        this.quantity = prod.quantity ? prod.quantity : 1
+        this.quantity = prod.quantity
     }
     render() {
         return `<div class="cart-item" data-id="${this.id}">
@@ -182,10 +155,11 @@ class CartItem extends Item {
 let lists = {
     Catalog: Product,
     Cart: CartItem
+    //Название класса списка: Класс соотв эл-та списка
 }
 
+let catalog = new Catalog()
 let cart = new Cart()
-let catalog = new Catalog(cart)
 
 
 
