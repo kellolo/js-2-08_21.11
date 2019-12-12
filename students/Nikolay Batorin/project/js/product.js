@@ -12,8 +12,7 @@ Vue.component('product', {
                     <div class="desc">\
                         <h3>{{ product.title }}</h3>\
                         <p>{{ product.price}} $</p>\
-                        <button class="buy-btn" data-id="{{ product.id }}">Купить</button>\
+                        <button class="buy-btn" :data-id="product.id">Купить</button>\
                     </div>\
                 </div>',
-
 })

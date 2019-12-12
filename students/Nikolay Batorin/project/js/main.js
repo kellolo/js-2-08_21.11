@@ -197,6 +197,6 @@ class CartService {
 }
 const appController = new AppController();
 document.addEventListener('DOMContentLoaded', () => {
-    // appController.showCatalog();
+    appController.showCatalog();
     appController.showCart();
 });
