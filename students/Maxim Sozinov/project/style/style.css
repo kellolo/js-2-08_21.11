@@ -164,3 +164,9 @@ img {
     border: none;
     border-bottom: 2px solid #fafafa;
 }
+
+/* my additions */
+
+.search-and-cart {
+    display: flex;
+}
