@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "AMD Ryzen 3",
+    "price": 6000,
+  },
+  {
+    "id": 2,
+    "title": "Intel Core i3",
+    "price": 11600,
+  }
+]
