@@ -1,0 +1,47 @@
+[
+  {
+    "id_product": 1,
+    "product_name": "AMD Ryzen 3",
+    "price": 6000,
+  },
+  {
+    "id_product": 2,
+    "product_name": "Intel Core i3",
+    "price": 11600,
+  },
+  {
+    "id_product": 3,
+    "product_name": "AMD Ryzen 5",
+    "price": 13500,
+  },
+  {
+    "id_product": 4,
+    "product_name": "Intel Core i5",
+    "price": 17500,
+  },
+  {
+    "id_product": 5,
+    "product_name": "AMD Ryzen 7",
+    "price": 25000,
+  },
+  {
+    "id_product": 6,
+    "product_name": "Intel Core i7",
+    "price": 27000,
+  },
+  {
+    "id_product": 7,
+    "product_name": "AMD Ryzen 9",
+    "price": 46800,
+  },
+  {
+    "id_product": 8,
+    "product_name": "Intel Core i9 Coffee Lake R",
+    "price": 36000,
+  },
+  {
+    "id_product": 9,
+    "product_name": "Intel Core i9 Skylake-X Refresh",
+    "price": 145000,
+  }
+]
