@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+main{
+    width: 500px;
+    margin: 0 auto;
+}
+.replaceForm, .validatorForm{
+    width: 100%;
+    &_margin{
+        margin-bottom: 25px;
+    }
+    &__fields{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__legend{
+        margin: 0 auto;
+    }
+}
+.replaceForm{
+    &__initText, &__finalText{
+        resize: none;
+    }
+}
+.validatorForm{
+    &__block{
+        padding: 20px 10px;
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 20px);
+        &_margin{
+            margin-bottom: 5px;
+        }
+    }
+    &__userMessage{
+        resize: none;
+    }
+    &_invalid{
+        outline: 2px solid red;
+    }
+    &_valid{
+        outline: 2px solid green;
+    }
+}

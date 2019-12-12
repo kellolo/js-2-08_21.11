@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Шаурменная</title>
+    <style>
+        form {
+            width: 500px;
+            margin: 10px 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        button, div {
+            margin: 5px 20px;
+        }
+    </style>
+</head>
+<body>
+    <form action="#" id="uForm">
+        <fieldset>
+            <label>
+                <input type="radio" name="size" data-price = "50" data-calorific = "20" checked> Маленькая шаурма (50 рублей, 20 калорий)
+            </label>
+            <label>
+                <input type="radio" name="size" data-price = "100" data-calorific = "40"> Большая шаурма (100 рублей, 40 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="radio" name="ingredient" data-price = "10" data-calorific = "20" checked> С сыром (+10 рублей, +20 калорий)
+            </label>
+            <label>
+                <input type="radio" name="ingredient" data-price = "20" data-calorific = "5"> С салатом (+20 рублей, +5 калорий)
+            </label>
+            <label>
+                <input type="radio" name="ingredient" data-price = "15" data-calorific = "10"> С картофелем (+15 рублей, +10 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+            <label>
+                <input type="checkbox" name="addition" data-price = "15" data-calorific = "0"> Дополнительно: посыпать приправой (+15 рублей, +0 калорий)
+            </label>
+            <label>
+                <input type="checkbox" name="addition" data-price = "20" data-calorific = "5"> Дополнительно: полить майонезом (+20 рублей, +5 калорий)
+            </label>
+        </fieldset>
+    </form>
+
+    <button id="okBtn">Оформить заказ!</button>
+
+    <div id="order">Ваш заказ: </div>
+
+    <script>
+ //       let form = document.querySelector ('#uForm')
+        let btn = document.querySelector ('#okBtn')
+        let order = document.querySelector ('#order')
+
+        btn.addEventListener ('click', makeProduct)
+
+        function makeProduct() {
+            let product = new Product()
+            product.cooking(order)
+        }
+
+        class Product {
+            constructor(){
+                this.price = 0
+                this.calorific = 0
+                this._calc()
+            }
+            _calc(){
+                let ob = [...document.querySelectorAll(`input:checked`)]
+                ob.forEach( el => {
+                    this.price += +el.dataset['price']
+                    this.calorific += +el.dataset['calorific']
+                })
+            }
+            cooking (htmlElement){
+                htmlElement.innerHTML = `Ваш заказ на сумму: ${this.price} рублей, калорийность: ${this.calorific} ккал.`
+            }
+
+        }
+
+        // class User {
+        //     constructor (name, age, gender, hobbies) {
+        //         this.Name = this._text (name)
+        //         this.Age = this._text (age)
+        //         this.Gender = this._check (gender)
+        //         this.Hobbies = this._getArray (hobbies)
+        //         this.canBeMother = this._checkMom (gender)
+        //     }
+        //     _text (attrName) {
+        //         let obj = document.querySelector (`input[name=${attrName}]`)
+        //         return obj.value
+        //     }
+        //     _check (attrName) {
+        //         let obj = document.querySelector (`input[name=${attrName}]:checked`)
+        //         return obj.value
+        //     }
+        //     _getArray (attrName) {
+        //         let objArr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+        //         let arr = []
+        //         objArr.forEach (el => {
+        //             arr.push (el.value)
+        //         })
+        //         return arr
+        //     }
+        //     _checkMom (attrName) {
+        //         let obj = document.querySelector (`input[name=${attrName}]:checked`)
+        //         console.dir (obj)
+        //         return +obj.dataset['mother'] ? true : false
+        //     }
+        // }
+
+        // class Human {
+        //     constructor (nam, ag, gen) {
+        //         this.name = nam
+        //         this.age = ag
+        //         this.gender = gen ? 'male' : 'female'
+        //         this.married = false
+        //         this.partner = null
+        //     }
+        //     goWork () {
+        //         console.log (`${this.name} goes work.`)
+        //     }
+        //     getMarried (pers) {
+        //         if (!this.married && !pers.married) {
+        //             this.married = true
+        //             this.partner = pers
+        //             pers.getMarried (this)
+        //         } else {
+        //             console.log (`${this.name} is already married with ${this.partner.name}`)
+        //         }
+        //     }
+        // }
+
+        // let oleg = new Human ('Oleg', 23, 1)
+        // let sopha = new Human ('Sophia', 22, 0)
+
+        // class NewClass {
+        //     constructor () {
+        //         this.prop = 100
+        //         this.prop2 = 200
+        //         this.method ()
+        //     }
+        //     method () {
+        //         console.log (123)
+        //     }
+
+        // }
+        // function some (par1, par2) {
+        //     return {
+        //         p1: par1,
+        //         p2: par2
+        //     }
+        // }
+
+    </script>
+</body>
+</html>
