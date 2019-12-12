@@ -4,7 +4,13 @@ let app = new Vue ({
         url: 'https://raw.githubusercontent.com/Yudaev/js-2-08_21.11/master/students/%D0%AE%D0%B4%D0%B0%D0%B5%D0%B2%20%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/project/JSON/catalog.json',
         catalog: [],
         isActiveBasket: false,
-        basket: []
+        basket: [{
+            id_product: 1,
+            product_name: 'Notebook',
+            price: '1000',
+            img: 'https://placehold.it/100x80',
+            quantity: 1
+        }]
     },
     methods: {
         getJSON (url) {
@@ -15,7 +21,7 @@ let app = new Vue ({
             this.isActiveBasket = !this.isActiveBasket;
             //console.log(this.isActiveBasket);
         },
-        content(id_product, product_name, price){
+        content (id_product, product_name, price) {
             for (let item of this.basket) {
                 if (item.id_product === id_product){
                     return item.quantity++;
@@ -25,6 +31,7 @@ let app = new Vue ({
                 id_product: id_product,
                 product_name: product_name,
                 price: price,
+                img: 'https://placehold.it/100x80',
                 quantity: 1
             });
         }
