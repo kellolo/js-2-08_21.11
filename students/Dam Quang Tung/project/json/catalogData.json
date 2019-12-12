@@ -39,9 +39,4 @@
     "product_name": "Intel Core i9 Coffee Lake R",
     "price": 36000
   },
-  {
-    "id_product": 9,
-    "product_name": "Intel Core i9 Skylake-X Refresh",
-    "price": 145000
-  }
 ]
