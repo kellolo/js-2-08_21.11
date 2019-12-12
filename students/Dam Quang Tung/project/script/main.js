@@ -102,7 +102,7 @@ class Cart extends List {
     }
 
     addCartItem(product) {
-        this.getJSON(`${API_URL}addToBasket.json`)
+        this.getJSON(API_URL +`addToBasket.json`)
             .then(data => {
                 if (data.result == 1) {
                     let find = this._getCartItem(product.id)
