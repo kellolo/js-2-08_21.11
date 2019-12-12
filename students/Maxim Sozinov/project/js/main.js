@@ -72,8 +72,8 @@ class Cart extends List {
     }
     _init () {
         this.getJSON (this.url)
-            .then (data => this.handleData (data.contents))
-            .then (() => this._render ());
+            .then (data => this.handleData (data.contents));
+            // .then (() => this._render ());
     }
     addItem(item) {
         this._fetchData(this.addItem_url)
@@ -95,7 +95,7 @@ class Cart extends List {
                     } else {
                         findItem.increaseQnt();
                     }
-                    this._render();
+                    // this._render();
                 } else {
                     console.log(`Ошибка ${data.result}`);
                 }
@@ -114,9 +114,9 @@ class Cart extends List {
                         findItem.reduceQnt();
                     } else {
                         this.products.splice(this.products.indexOf(findItem), 1);
-                        document.querySelector(`.cart-item[data-id="${itemId}"]`).remove();
+                        // document.querySelector(`.cart-item[data-id="${itemId}"]`).remove();
                     }
-                    this._render();
+                    // this._render();
                 } else {
                     console.log(`Ошибка ${data.result}`);
                 }
@@ -199,7 +199,7 @@ let catalog = new Vue ({
     },
     methods: {
         addInCart (evt) {
-            userCart.addItem(evt.target);
+            cart.cart.addItem(evt.target);
         }
     },
     mounted () {
@@ -211,27 +211,36 @@ let catalog = new Vue ({
 let cart = new Vue ({
     el: '#cart',
     data: {
-        show: false
+        show: true,
+        cart: {}
     },
     methods: {
         toggleShow () {
             this.show = !this.show;
+        },
+        removeItem (evt) {
+            this.cart.removeItem(evt.target);
         }
     },
     computed: {
 
+    },
+    mounted () {
+        this.cart = new Cart (FAKE_API_CART, cartContainer);
+        console.log(this.cart);
     }
+
 });
 
 // main
 // ------------------------------------------------
 
 // let catalog = new Catalog(FAKE_API_CATALOG, catalogContainer);
-let userCart = new Cart(FAKE_API_CART, cartContainer);
+// let userCart = new Cart(FAKE_API_CART, cartContainer);
 
 //кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('del-btn')) {
-        userCart.removeItem(evt.target);
-    }
-});
+// document.querySelector('.cart-block').addEventListener('click', (evt) => {
+//     if (evt.target.classList.contains('del-btn')) {
+//         userCart.removeItem(evt.target);
+//     }
+// });
