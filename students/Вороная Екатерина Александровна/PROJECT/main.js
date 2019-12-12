@@ -1,37 +1,105 @@
-//заглушки (имитация базы данных)
-// const image = 'https://placehold.it/200x150';
-// const cartImage = 'https://placehold.it/100x80';
-// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+
+let app = new Vue ({
+    el: '#app',
+    data: {
+        catalogUrl: '/catalogData.json',
+        basketURL : '/getBasket.json',
+        catalogImg: 'https://placehold.it/200x150',
+        counter: 0,
+        products: []
+    },
+    methods: {
+        created(url) {
+            fetch (API)
+                .then (response => response.json())
+                .then(json => {
+                this.getJson (this.catalogUrl)
+                    .then (data => this.products = data)
+                }
+        )
+            }
+        },
+        computed : {
+            totalProducts() {
+                return this.products.reduce((sum,product)=> {
+                   return sum+product.quantity
+                }, 0)
+            }
+        }
+})
 
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-// var userCart = [];
-// var list = fetchData ();
 
 
-class Catalog {
-    constructor () {
-        this.products = []
-        this.container = '.products'
-        this._init ()
-    }
-    _init () {
-        list.forEach (el => {
-            this.products.push (new Product (el))
-        })
-        this.render ()
-    }
-    render () {
-        let trg = document.querySelector (this.container)
-        let str = ''
-        this.products.forEach (prod => {
-            str += prod.render ()
-        })
-        trg.innerHTML = str
-    }
-}
+
+
+
+
+
+
+
+
+//
+// class GoodsList {
+//
+//     fetchGoods() {
+//
+//         fetch(API + '/catalogData.json')
+//             .then(response => response.json())
+//     .then(products => {
+//
+//             this.goods = products
+//         this.render()
+//     });
+//     }
+//     render() {
+//
+//         let elem = document.querySelector('.products')
+//         let htmlStr = '';
+//
+//         this.goods.forEach(elem => {
+//
+//             htmlStr += `<div class="product-item">
+//             <img src="https://placehold.it/200x150" class="product-img">
+//             <div class="product-desc">
+//                 <h2 class="product-name">${elem.product_name}</h2>
+//                 <p class="product-price">${elem.price} &#36;</p>
+//                 <button id=${elem.id_product} class="product-btn" onclick="addItemToCart(this)" >Купить</button>
+//             </div>
+//         </div>`
+//
+//     })
+//
+//         elem.innerHTML = htmlStr
+//     }
+//
+// }
+// const list = new GoodsList();
+// list.fetchGoods();
+
+//
+// class Catalog {
+//     constructor () {
+//         this.products = []
+//         this.container = '.products'
+//         this._init ()
+//     }
+//     _init () {
+//         list.forEach (el => {
+//             this.products.push (new Product (el))
+//     })
+//         this.render ()
+//     }
+//     render () {
+//         let trg = document.querySelector (this.container)
+//         let str = ''
+//         this.products.forEach (prod => {
+//             str += prod.render ()
+//     })
+//         trg.innerHTML = str
+//     }
+// }
 
 class Product {
     constructor (prod) {
@@ -46,7 +114,7 @@ class Product {
                     <div class="desc">
                         <h3>${this.title}</h3>
                         <p>${this.price} $</p>
-                        <button class="buy-btn" 
+                        <button class="buy-btn"
                         data-id="${this.id}"
                         data-name="${this.title}"
                         data-image="${this.img}"
@@ -55,41 +123,17 @@ class Product {
                 </div>`
     }
 }
+//
+// class Cart {
+//     //HW
+// }
+//
+// class CartItem {
+//     //HW
+// }
 
-class Cart {
-    // constructor () {
-    //     this.products = []
-    // }
-
-}
-
-class CartItem {
-    constructor (prod) {
-        this.id = prod.id
-        this.title = prod.title
-        this.price = prod.price
-        this.img = prod.img
-    }
-    addProduct (product) {
-        let productId = +product.dataset['id']; //data-id="1"
-        let find = userCart.find (element => element.id === productId); //товар или false
-        if (!find) {
-            userCart.push ({
-                name: product.dataset ['name'],
-                id: productId,
-                img: cartImage,
-                price: +product.dataset['price'],
-                quantity: 1
-            })
-        }  else {
-            find.quantity++
-        }
-        renderCart ()
-    }
-}
-
-let catalog = new Catalog ()
-//кнопка скрытия и показа корзины
+// let catalog = new Catalog ()
+// кнопка скрытия и показа корзины
 // document.querySelector('.btn-cart').addEventListener('click', () => {
 //     document.querySelector('.cart-block').classList.toggle('invisible');
 // });
@@ -105,8 +149,8 @@ let catalog = new Catalog ()
 //         addProduct (evt.target);
 //     }
 // })
-
-//создание массива объектов - имитация загрузки данных с сервера
+//
+// создание массива объектов - имитация загрузки данных с сервера
 // function fetchData () {
 //     let arr = [];
 //     for (let i = 0; i < items.length; i++) {
@@ -114,8 +158,8 @@ let catalog = new Catalog ()
 //     }
 //     return arr
 // };
-
-//создание товара
+//
+// создание товара
 // function createProduct (i) {
 //     return {
 //         id: ids[i],
@@ -124,11 +168,11 @@ let catalog = new Catalog ()
 //         img: image,
 //     }
 // };
-
-//рендер списка товаров (каталога) - выпилено
-
-
-//CART
+//
+// рендер списка товаров (каталога) - выпилено
+//
+//
+// CART
 
 // Добавление продуктов в корзину
 function addProduct (product) {
@@ -183,43 +227,3 @@ function renderCart () {
 
     document.querySelector(`.cart-block`).innerHTML = allProducts;
 }
-
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
-
-class GoodsList {
-
-    fetchGoods() {
-
-        fetch(API + '/catalogData.json')
-            .then(response => response.json())
-    .then(products => {
-
-            this.goods = products
-        this.render()
-    });
-    }
-    render() {
-
-        let elem = document.querySelector('.products')
-        let htmlStr = '';
-
-        this.goods.forEach(elem => {
-
-            htmlStr += `<div class="product-item">
-            <img src="https://placehold.it/200x150" class="product-img">
-            <div class="product-desc">
-                <h2 class="product-name">${elem.product_name}</h2>
-                <p class="product-price">${elem.price} &#36;</p>
-                <button id=${elem.id_product} class="product-btn" onclick="addItemToCart(this)" >Купить</button>
-            </div>
-        </div>`
-
-    })
-
-        elem.innerHTML = htmlStr
-    }
-
-}
-
-const list = new GoodsList();
-list.fetchGoods();

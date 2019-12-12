@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="style/normalize.css">
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
+<div id="app">
     <header>
         <div class="logo">E-shop</div>
         <div class="cart">
@@ -17,16 +17,25 @@
                 </button>
             </form>
             <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+            <div class="cart-block"></div>
         </div>
     </header>
     <main>
-        <div class="products"></div>
+        <div class="products">
+            <div class="product-item" v-for="product of products">
+                <img src="" alt="item">
+                <div class="product-content">
+                    <h3> {{product.product_name}} {{product.quantity}}</h3>
+                    <p>{{product.price}} $</p>
+                    <button class="buy-btn" @click="addProduct(product)"v-on:click="counter += 1">Купить</button>
+                </div>
+            </div>
+        </div>
     </main>
+</div>
 
 
-
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
