@@ -1,0 +1,112 @@
+body {
+  font-family: Georgia, Times, serif;
+  font-size: 16px;
+}
+
+h1 {
+  margin: 8px auto;
+}
+
+.container {
+  display: flex;
+}
+
+.task-description {
+  width: 600px;
+  margin: 8px;
+  padding: 8px;
+  border: 2px solid #A1887F;
+  border-radius: 8px;
+  background-color: #FFF8E1;
+  color: #6D4C41;
+}
+
+.task-description ol li ol {
+  list-style-type: lower-alpha;
+}
+
+
+.solution {
+  width:320px;
+  margin: 8px;
+  padding: 8px;
+  border: 1px solid blue;
+  border-radius: 8px;
+  background-color: skyblue;
+  color: blue;
+}
+
+.solution input,
+.solution textarea {
+  width: 300px;
+}
+
+.solution input {
+  margin-bottom: 8px;
+}
+
+#txt-test,
+#u_name,
+#u_email,
+#u_tel,
+#u_msg {
+    margin-bottom: 8px;
+    width: 300px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: white;
+    color: #445162;
+    font-size: 16px;
+}
+
+#txt-test,
+#u_msg {
+    height: 160px;
+    resize: none;
+    font-family: Georgia, Times, serif;
+}
+
+.mail-attr::-webkit-input-placeholder,
+#u_msg::-webkit-input-placeholder {
+    font-family: Georgia, Times, serif;
+    font-size: 16px;
+}
+.mail-attr::-moz-placeholder,
+#u_msg::-moz-placeholder {
+    font-family: Georgia, Times, serif;
+    font-size: 16px;
+}
+.mail-attr:-moz-placeholder,
+#u_msg:-moz-placeholder {
+    font-family: Georgia, Times, serif;
+    font-size: 16px;
+}
+.mail-attr:-ms-input-placeholder,
+#u_msg:-ms-input-placeholder {
+    font-family: Georgia, Times, serif;
+    font-size: 16px;
+}
+
+.btn {
+    height: 40px;
+    border-radius: 8px;
+    font-family: Georgia, Times, serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: blue;
+    letter-spacing: 2px;
+    background-color: white;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background-color: #E3F2FD;
+    color: #039BE5;
+    box-shadow: 0 0 0 4px #039BE5;
+}
+
+#btn-send {
+  width: 140px;
+}
+
+
