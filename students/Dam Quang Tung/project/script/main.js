@@ -1,6 +1,6 @@
 const image = 'https://placehold.it/200x200'
 const cartImage = 'https://placehold.it/100x80'
-const API_URL = 'https://raw.githubusercontent.com/Archtung/js-2-08_21.11/master/students/Dam%20Quang%20Tung/project/json/'
+const API_URL = 'https://raw.githubusercontent.com/Archtung/online-store-api/master/json/'
 
 class List {
     constructor(url, container) {
