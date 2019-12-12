@@ -30,7 +30,7 @@
                         </div>
                         <div class="right-block">
                             <p class="product-price">{{ prod.quantity * prod.price }}</p>
-                            <button class="del-btn">&times;</button>
+                            <button class="del-btn" @click="deleteItemFromBasket(prod.id_product)">&times;</button>
                         </div>
                     </div>
                 </div>
