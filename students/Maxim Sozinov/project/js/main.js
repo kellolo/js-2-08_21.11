@@ -18,23 +18,17 @@ document.querySelector('.products').addEventListener('click', (evt) => {
     }
 });
 
-const FAKE_API_CATALOG = 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json';
+const FAKE_API_CATALOG = 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json'
 const FAKE_API_CART = 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/getBasket.json';
 
 const catalogContainer = '.products';
 const cartContainer = '.cart-block';
 
-// let lists = {
-//     //Название класса списка: Класс соотв эл-та списка
-//     Catalog: Product,
-//     Cart: CartItem
-// };
-
 class List {
     constructor (url, container) {
         this.container = container;
         this.url = url;
-        this.items = [];
+        this.products = [];
         this._init ();
     }
     _init () {
@@ -46,7 +40,7 @@ class List {
     }
     handleData (arr) {
         arr.forEach(el => {
-            this.items.push (new lists[this.constructor.name] (el));
+            this.products.push (new lists[this.constructor.name] (el));
         });
     }
     _render () {
@@ -95,7 +89,7 @@ class Cart extends List {
                             price : +item.dataset.price,
                             img : "https://placehold.it/100x80",  
                             quantity : 1
-                        };
+                        }
                         //                        
                         this.products.push(new CartItem(prod));
                     } else {
