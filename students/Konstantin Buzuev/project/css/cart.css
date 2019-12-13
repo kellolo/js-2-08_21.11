@@ -1,0 +1,35 @@
+.cart {
+  min-width: 400px;
+  background-color: #2f2a2d;
+}
+
+.cart__button {
+  display: block;
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  color: #fafafa;
+}
+
+.cart__wrap {
+  position: absolute;
+  display: inherit;
+  top: 90px;
+  right: 8px;
+  border: 1px solid black;
+  background-color: #2f2a2d;
+  -webkit-transition-property: height;
+  transition-property: height;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+}
+
+.cart_filled {
+  color: green;
+}
+
+.cart_hidden {
+  height: 0px;
+  display: none;
+}
+/*# sourceMappingURL=cart.css.map */

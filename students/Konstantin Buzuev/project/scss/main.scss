@@ -1,0 +1,14 @@
+main {
+    display: grid;
+    grid-template-columns: 9fr 3fr;
+    grid-template-areas:
+        "catalog cart";
+}
+
+.prodWrap {
+    grid-area: catalog;
+}
+
+.cartWrap {
+    grid-area: cart;
+}
