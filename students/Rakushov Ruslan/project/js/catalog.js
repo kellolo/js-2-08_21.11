@@ -1,5 +1,5 @@
 Vue.component("catalog", {
-  data() {
+  data: function() {
     return {
       urlCatalogData: "catalogData.json",
       image: "https://placehold.it/200x150",
@@ -14,6 +14,9 @@ Vue.component("catalog", {
           this.vItems = data;
         });
     },
+    setSearchString(str) {
+      this.vSearchString = str;
+    }
   },
   computed: {
     filteredItems: function () {
@@ -34,7 +37,7 @@ Vue.component("catalog", {
   template: `
   <div class="products">
     <template v-if="filteredItems.length > 0">
-      <catalog-item class="product-item" v-for="prod in filteredItems" :item="prod" :img="image">
+      <catalog-item class="product-item" v-for="prod in filteredItems" :item="prod" :img="image" :key="prod.id">
       </catalog-item>
     </template>
     <div class="catalog-empty" v-else>No products</div>

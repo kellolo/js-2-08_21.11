@@ -1,5 +1,5 @@
 Vue.component("cart", {
-  data() {
+  data: function() {
     return {
       urlBasketData: "getBasket.json",
       imageCart: "https://placehold.it/100x80",
@@ -50,29 +50,12 @@ Vue.component("cart", {
   },
   template: `
   <div class="cart">
+    <search></search>
     <button class="btn-cart" type="button" @click="toggleCartVisibility">Корзина</button>
     <div class="cart-block" v-show="this.isVisible">
-        <cart-item class="cart-item" v-for="item in vItems" :item="item" :img="imageCart">
+        <cart-item class="cart-item" v-for="item in vItems" :item="item" :img="imageCart" :key="item.id">
         </cart-item>
     </div>
   </div>
   `
 });
-
-// template: `
-//   <div class="cart">
-//     <form action="#" class="search-form">
-//       <button class="btn-search" type="submit">
-//         <i class="fas fa-search"></i>
-//       </button>
-//     </form>
-//     <button class="btn-cart" type="button" @click="toggleCartVisibility">Корзина</button>
-//     <div class="cart-block" v-show="$root.$refs.cart.isVisible">
-//       <template v-if="cart.vItems.length > 0">
-//         <div class="cart-item" v-for="item in $root.$refs.cart.vItems" :item:"item" :img="imageCart">
-//         </div>
-//       </template>
-//       <div class="cart-empty" v-else>Cart is empty</div>
-//     </div>
-//   </div>
-//   `
