@@ -23,13 +23,13 @@ Vue.component("cart", {
       if (find) {
         find.quantity++;
       } else {
-        this.cart.vItems.push(
-          new CartItem({
+        this.vItems.push(
+          {
             id: +event.target.dataset["id"],
             title: `${event.target.dataset["name"]}`,
             price: `${event.target.dataset["price"]}`,
             quantity: 1,
-          })
+          }
         );
       }
     },
@@ -37,11 +37,11 @@ Vue.component("cart", {
       let id = +event.target.dataset["id"];
       let find = this.getItemInCartById(id);
       if (--find.quantity < 1) {
-        this.cart.vItems.splice(this.cart.vItems.indexOf(find), 1);
+        this.vItems.splice(this.vItems.indexOf(find), 1);
       }
     },
     getItemInCartById(id) {
-      let find = this.cart.vItems.find(item => +item.id === id);
+      let find = this.vItems.find(item => +item.id === id);
       return find;
     },
   },

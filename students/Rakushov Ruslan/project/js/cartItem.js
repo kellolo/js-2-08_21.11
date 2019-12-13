@@ -12,7 +12,7 @@ Vue.component("cart-item", {
     </div>
     <div class="right-block">
       <p class="product-price">{{item.quantity * item.price}}</p>
-      <button class="del-btn" :data-id="item.id">&times;</button>
+      <button class="del-btn" :data-id="item.id" @click="$parent.delItemFromCart">&times;</button>
     </div>
   </div>
   `

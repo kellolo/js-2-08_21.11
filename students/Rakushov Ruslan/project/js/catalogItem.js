@@ -11,6 +11,7 @@ Vue.component("catalog-item", {
           :data-name="item.title"
           :data-image="img"
           :data-price="item.price"
+          @click="$root.$refs.cart.addItemToCart"
         >
           Купить
         </button>
