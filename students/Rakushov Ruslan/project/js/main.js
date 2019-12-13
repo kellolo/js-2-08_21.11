@@ -148,58 +148,58 @@ class Cart extends List {
 }
 */
 
-//Выпилить в компоненты vue
-class Item {
-  constructor(item) {
-    this.id = item.id;
-    this.title = item.title;
-    this.price = item.price;
-  }
-  render() {
-    return false;
-  }
-}
+// Выпилить в компоненты vue
+// class Item {
+//   constructor(item) {
+//     this.id = item.id;
+//     this.title = item.title;
+//     this.price = item.price;
+//   }
+//   render() {
+//     return false;
+//   }
+// }
 
-class Product extends Item {
-  render() {
-    return `<div class="product-item" data-id="${this.id}">
-                    <img src="${image}" alt="Some img">
-                    <div class="desc">
-                        <h3>${this.title}</h3>
-                        <p>${this.price} руб.</p>
-                        <button class="buy-btn" 
-                        data-id="${this.id}"
-                        data-name="${this.title}"
-                        data-image="${image}"
-                        data-price="${this.price}">Купить</button>
-                    </div>
-                </div>`;
-  }
-}
+// class Product extends Item {
+//   render() {
+//     return `<div class="product-item" data-id="${this.id}">
+//                     <img src="${image}" alt="Some img">
+//                     <div class="desc">
+//                         <h3>${this.title}</h3>
+//                         <p>${this.price} руб.</p>
+//                         <button class="buy-btn"
+//                         data-id="${this.id}"
+//                         data-name="${this.title}"
+//                         data-image="${image}"
+//                         data-price="${this.price}">Купить</button>
+//                     </div>
+//                 </div>`;
+//   }
+// }
 
-class CartItem extends Item {
-  constructor(item) {
-    super(item);
-    this.quantity = item.quantity;
-  }
-  render() {
-    return `
-      <div class="cart-item" data-id="${this.id}">
-        <div class="product-bio">
-          <img src="${imageCart}" alt="Some image">
-          <div class="product-desc">
-            <p class="product-title">${this.title}</p>
-            <p class="product-quantity">Quantity: ${this.quantity}</p>
-            <p class="product-single-price">${this.price} руб. each</p>
-          </div>
-        </div>
-        <div class="right-block">
-          <p class="product-price">${this.quantity * this.price}</p>
-          <button class="del-btn" data-id="${this.id}">&times;</button>
-        </div>
-      </div>`;
-  }
-}
+// class CartItem extends Item {
+//   constructor(item) {
+//     super(item);
+//     this.quantity = item.quantity;
+//   }
+//   render() {
+//     return `
+//       <div class="cart-item" data-id="${this.id}">
+//         <div class="product-bio">
+//           <img src="${imageCart}" alt="Some image">
+//           <div class="product-desc">
+//             <p class="product-title">${this.title}</p>
+//             <p class="product-quantity">Quantity: ${this.quantity}</p>
+//             <p class="product-single-price">${this.price} руб. each</p>
+//           </div>
+//         </div>
+//         <div class="right-block">
+//           <p class="product-price">${this.quantity * this.price}</p>
+//           <button class="del-btn" data-id="${this.id}">&times;</button>
+//         </div>
+//       </div>`;
+//   }
+// }
 
 //------------------------------------------------------------
 //|--                          Vue                         --|
@@ -212,19 +212,6 @@ const app = new Vue({
     urlAPI:
       "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
       "master/students/Rakushov%20Ruslan/Others/responses/",
-    urlCatalogData: "catalogData.json",
-    urlBasketData: "getBasket.json",
-    image: "https://placehold.it/200x150",
-    imageCart: "https://placehold.it/100x80",
-    catalog: {
-      vItems: [],
-      vSearchString: "",
-    },
-    cart: {
-      isVisible: false,
-      vItems: [],
-      totalSum: 0,
-    },
   },
   methods: {
     getJson(url) {
@@ -238,69 +225,14 @@ const app = new Vue({
               resolve(JSON.parse(xhr.responseText));
             }
           };
-          xhr.open("GET", url, true);
+          xhr.open("GET", this.urlAPI + url, true);
           xhr.send();
         }, 1500);
       });
     },
-    toggleCartVisibility() {
-      this.cart.isVisible = !this.cart.isVisible;
+    mounted() {
+      // this.$refs.catalog.fetchDataToCatalog();
+      // this.fetchDataToCart();
     },
-    fetchDataToCatalog() {
-      this.getJson(this.urlAPI + this.urlCatalogData)
-        .then(data => {
-          data.forEach(item => this.catalog.vItems.push(new Product(item)));
-        });
-    },
-    fetchDataToCart() {
-      this.getJson(this.urlAPI + this.urlBasketData)
-        .then(data => {
-          data.contents.forEach(item => this.cart.vItems.push(new CartItem(item)));
-        });
-    },
-    addItemToCart(event) {
-      let id = +event.target.dataset["id"];
-      let find = this.getItemInCartById(id);
-      if (find) {
-        find.quantity++;
-      } else {
-        this.cart.vItems.push(new CartItem(
-          {
-            id: +event.target.dataset["id"],
-            title: `${event.target.dataset["name"]}`,
-            price: `${event.target.dataset["price"]}`,
-            quantity: 1
-          }
-        ));
-      }
-    },
-    delItemFromCart(event) {
-      let id = +event.target.dataset["id"];
-      let find = this.getItemInCartById(id);
-      if (--find.quantity < 1) {
-        this.cart.vItems.splice(this.cart.vItems.indexOf(find), 1)
-      }
-    },
-    getItemInCartById(id) {
-      let find = this.cart.vItems.find(item => +item.id === id);
-      return find;
-    }
-  },
-  computed: {
-    filteredItems: function () {
-    let searchString = this.catalog.vSearchString;
-      if (!searchString) {
-        return this.catalog.vItems;
-      } else {
-        let searchRegexp = new RegExp(`${searchString}+`, "gi");
-        return this.catalog.vItems.filter(item =>
-          searchRegexp.test(item.title)
-        );
-      }
-    }
-  },
-  mounted() {
-    this.fetchDataToCatalog();
-    this.fetchDataToCart();
   },
 });

@@ -10,15 +10,16 @@
     <div id="app">
       <header>
         <div class="logo">{{ shopName }}</div>
-        <div class="cart">
+        <cart ref="cart"></cart>
+        <!-- <div class="cart">
           <form action="#" class="search-form">
-            <input type="text" class="search-field" v-model="catalog.vSearchString" />
-            <!-- <button class="btn-search" type="submit" @click="filterItems"> -->
-              <button class="btn-search" type="submit"></button>
+            <input type="text" class="search-field" v-model="this.$root.$refs.catalog.vSearchString"/>  
+              <button class="btn-search" type="submit">
               <i class="fas fa-search"></i>
             </button>
           </form>
           <button class="btn-cart" type="button" @click="toggleCartVisibility">Корзина</button>
+          
           <div class="cart-block" v-show="cart.isVisible">
             <template v-if="cart.vItems.length > 0">
               <div class="cart-item" :data-id="item.id" v-for="item in cart.vItems">
@@ -38,10 +39,13 @@
             </template>
             <div class="cart-empty" v-else>Cart is empty</div>
           </div>
-        </div>
+        </div> -->
       </header>
       <main>
-        <div class="products">
+        <catalog ref="catalog">
+
+        </catalog>
+        <!-- <div class="products">
           <template v-if="filteredItems.length > 0">
           <div class="product-item" :data-id="prod.id" v-for="prod in filteredItems">
             <img :src="image" alt="Some img" />
@@ -62,7 +66,7 @@
           </div>
         </template>
         <div class="catalog-empty" v-else>No products</div>
-        </div>
+        </div> -->
       </main>
     </div>
 
@@ -73,6 +77,10 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="js/catalog.js"></script>
+    <script src="js/catalogItem.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/cartItem.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
