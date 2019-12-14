@@ -149,27 +149,27 @@ let lists = {
 //     }
 // });
 
-let vm_cart = new Vue({
-    el: '#cart',
-    data: {
-        show: false,
-        cart: {},
-        cartContainer: '.cart-block',
-        FAKE_API_CART: 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/getBasket.json'
-    },
-    methods: {
-        toggleShow() {
-            this.show = !this.show;
-        },
-        removeItem(evt) {
-            this.cart.removeItem(evt.target);
-        }
-    },
-    mounted() {
-        this.cart = new Cart(this.FAKE_API_CART, this.cartContainer);
-    }
+// let vm_cart = new Vue({
+//     el: '#cart',
+//     data: {
+//         show: false,
+//         cart: {},
+//         cartContainer: '.cart-block',
+//         FAKE_API_CART: 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/getBasket.json'
+//     },
+//     methods: {
+//         toggleShow() {
+//             this.show = !this.show;
+//         },
+//         removeItem(evt) {
+//             this.cart.removeItem(evt.target);
+//         }
+//     },
+//     mounted() {
+//         this.cart = new Cart(this.FAKE_API_CART, this.cartContainer);
+//     }
 
-});
+// });
 
 let vm_search = new Vue({
     el: '#search',
@@ -184,8 +184,8 @@ let vm_search = new Vue({
     }
 });
 
-new Vue ({
-    el: v_catalog,
+let app = new Vue ({
+    el: '#app',
     data: {
         // url: 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json' 
     },
