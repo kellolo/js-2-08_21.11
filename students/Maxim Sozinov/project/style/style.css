@@ -170,3 +170,12 @@ img {
 .search-and-cart {
     display: flex;
 }
+
+.server-error {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    color: red;
+    font-size: 40px;
+    margin-top: 50px;
+}

@@ -18,30 +18,30 @@ Vue.component ('cart', {
             this.show_up = !this.show_up;
         },
         removeItem(item) {
-            this._fetchData(this.removeItem_url)
+            this.$parent.getJson (this.removeItem_url)
                 .then((data) => {
                     if (data.result === 1) {
-                        let itemId = +item.id;
-                        let findItem = this.items.find(el => el.id === itemId);
+                        let findItem = this.items.find(el => el.id === +item.id);
                         if (findItem.quantity > 1) {
                             findItem.quantity--;
                         } else {
                             this.items.splice(this.items.indexOf(findItem), 1);
                         }
                     } else {
+                        this.$root.smthWrong = true;
                         console.log(`Ошибка ${data.result}`);
                     }
                 })
                 .catch((errStatus) => {
+                    this.$root.smthWrong = true;
                     console.log(`Ошибка ${errStatus}`);
                 });
         },
         addItem(item) {
-            this._fetchData(this.addItem_url)
+            this.$parent.getJson(this.addItem_url)
                 .then((data) => {
                     if (data.result === 1) {
-                        let itemId = +item.id;
-                        let findItem = this.items.find(el => el.id === itemId);
+                        let findItem = this.items.find(el => el.id === +item.id);
                         if (!findItem) {
                             //заглушка для БД
                             let addedItem = {
@@ -57,16 +57,15 @@ Vue.component ('cart', {
                             findItem.quantity++;
                         }
                     } else {
+                        this.$root.smthWrong = true;
                         console.log(`Ошибка ${data.result}`);
                     }
                 })
                 .catch((errStatus) => {
+                    this.$root.smthWrong = true;
                     console.log(`Ошибка ${errStatus}`);
                 });
         },
-        _fetchData(url) {
-            return fetch(url).then(dataJSON => dataJSON.json());
-        }
     },
     template: `
         <div class="cart-block" v-show="show_up">
