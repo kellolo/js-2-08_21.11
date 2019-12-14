@@ -42,7 +42,7 @@ button:focus{
 .products{
     column-gap: 30px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, 200px);
+    grid-template-columns: repeat(auto-fill, 200px);
     grid-template-rows: 1fr;
     padding: 40px 80px;
     justify-content: space-between;
@@ -82,9 +82,6 @@ img {
     width: 300px;
 }
 
-.invisible{
-    display: none;
-}
 .cart-block:before{
     content: '';
     width: 0;
