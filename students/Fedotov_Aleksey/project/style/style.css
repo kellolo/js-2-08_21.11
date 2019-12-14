@@ -40,14 +40,10 @@ button:focus{
 /*padding: 40px 80px;*/
 /*}*/
 .products{
-    /* column-gap: 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 200px);
-    grid-template-rows: 1fr;
-    padding: 40px 80px;
-    justify-content: space-between; */
+    column-gap: 30px;
     display: flex;
     flex-wrap: wrap;
+    padding: 40px 80px;
     justify-content: flex-start;
 }
 p {
@@ -59,7 +55,8 @@ p {
     width: 200px;
     border-radius: 5px;
     overflow: hidden;
-    margin: 20px 50px;
+    margin: 20px 30px;
+    /* margin-left: 50px; */
 }
 img {
     max-width: 100%;
@@ -124,6 +121,8 @@ img {
 }
 .product-bio{
     display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
 }
 .cart-item img{
     align-self: flex-start;

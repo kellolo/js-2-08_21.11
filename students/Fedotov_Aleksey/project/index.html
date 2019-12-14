@@ -7,165 +7,28 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-
-    <div id="app">
-            
-        <header>
-            <div class="logo">E-shop</div>
-            <div class="cart">
-                <form action="#" class="search-form">
-                    <input id = "searchInput" type="text" class="search-field">
-                    <button @click = "toSearch" class="btn-search" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <button class="btn-cart" @click = "toShowCart" type="button">Корзина</button>
-                <div class="cart-block" v-if = "showCart" >
-                    <p v-if = 'this.cart.length===0'>Товаров нет</p>
-                    <div class="cart-item" v-for = "cartItem of cart" v-bind:data-id = "cartItem.id_product">
-                        <div class="product-bio">
-                            <img src="https://placehold.it/100x80" alt="Some image">
-                            <div class="product-desc">
-                                <p class="product-title">{{cartItem.product_name}}</p>
-                                <p class="product-quantity">Quantity: {{cartItem.quantity}}</p>
-                                <p class="product-single-price">{{cartItem.price}} each</p>
-                            </div>
-                        </div>
-                        <div class="right-block">
-                            <p class="product-price">{{cartItem.quantity*cartItem.price}}</p>
-                            <button @click = "deleteFromCart" class="del-btn" v-bind:data-id = "cartItem.id_product" v-bind:data-price = "cartItem.price">&times;</button>
-                        </div>
-                    </div>
+        <div id="app">
+            <header>
+                <div class="logo">E-shop</div>
+                <div class="cart">
+                    <product-search ref = "filter"></product-search>
+                    <button @click = "this.toShowCart" class="btn-cart" type="button">Корзина</button>
+                    <cart v-show = "this.showCart" ref="cart"></cart>
                 </div>
-            </div>
-        </header>
-
-        <div class="products">
-            <div class="product-item" v-for="product of products">
-                <img src="https://placehold.it/200x150" alt="Some img">
-                <div class="desc">
-                    <h3>{{product.product_name}}</h3>
-                    <p>{{product.price}}</p>
-                    <button @click = "addToCart" class="buy-btn"
-                        data-image = "https://placehold.it/200x150"
-                        v-bind:data-id = "product.id_product"
-                        v-bind:data-name = "product.product_name"
-                        v-bind:data-price = "product.price"
-                        >Купить</button>
-                </div>
-            </div>
+            </header>
+            <main>
+                <catalog ref="cat"></catalog>
+            </main>
         </div>
-    </div>
 
 
-
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- <script src="js/main.js"></script> -->
-    <script>
-        let app = new Vue({
-            el:'#app',
-            data: {
-                url: 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/catalog',
-                urlBasket: 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/getUserBasket.json',
-                urlDeletFromBasket: 'https://raw.githubusercontent.com/WebAlex-coder/json_files/master/deleteFromUserBasket.json',
-                products: [],
-                cart: [],
-                indexInCart: undefined,
-                amount: 0,
-                countGoods: 0,
-                name: 'alex',
-                showCart: false
-            },
-            methods: {
-                getJSON (url) {
-                    return fetch(url)
-                        .then(data => data.json());
-                },
-                addToCart(event) {
-                    console.log(event.target.dataset['name']);
-                    this.indexInCart = event.target.dataset['id'];
-                    if (this.inCart != -1) {
-                        console.log(this.cart)
-                        this.cart[this.inCart].quantity++;
-                    }
-                    else {
-                        let item = {
-                            id_product:+event.target.dataset['id'],
-                            product_name: event.target.dataset['name'],
-                            price: +event.target.dataset['price'],
-                            quantity: 1
-                        };
-                        this.cart.push(item);
-                        this.notInCart = false;
-                    }
-                    this.countGoods++;
-                    this.amount = this.amount + (+event.target.dataset['price']);
-                },
-                deleteFromCart(event) {
-                    this.getJSON(this.urlDeletFromBasket)
-                    .then(data => {if (data.result == 1) {
-                        this.indexInCart = event.target.dataset['id'];
-                        if (this.cart[this.inCart].quantity > 1){
-                            this.cart[this.inCart].quantity--;
-                        } else {
-                            this.cart.splice(this.inCart,1);
-                        }
-                        this.countGoods--;
-                        this.amount = this.amount - event.target.dataset['price'];
-                        } else {
-                            alert("Вы не можете удалить товар из корзины");
-                        }
-                    })
-                },
-                toShowCart() {
-                    this.showCart = !this.showCart;
-                },
-                toSearch() {
-                    let inputSearch = document.getElementById("searchInput").value;
-                    if (inputSearch !=="") {
-                        let reg = new RegExp(inputSearch, "i");
-                        let searchProduct = [];
-                        this.products = [];
-                        this.getJSON(this.url)
-                            .then(data => {searchProduct = data})
-                            .then(() => {
-                                searchProduct.forEach(element => {
-                                console.log('reg', inputSearch);
-                                console.log(element.product_name);
-                                if (reg.test(element.product_name)) {
-                                    this.products.push(element);
-                                }
-                            });
-                        });
-                    } else {
-                        this.getJSON(this.url)
-                            .then(data => {this.products = data})
-                            .then(() => {console.log(this.products)});
-                    }
-                }
-            },
-            computed: {
-                inCart: function() {
-                    return this.cart.findIndex(elem => elem.id_product == this.indexInCart);
-                }
-            },
-            mounted() {
-                this.getJSON(this.url)
-                    .then(data => {this.products = data})
-                    .then(() => {console.log(this.products)});
-                    console.log("Загрузка файлов");
-                this.getJSON(this.urlBasket)
-                    .then(data => {this.cart = data.contents;
-                        this.amount = +data.amount;
-                        this.countGoods = +data.countGoods})
-                    .then(() => {console.log(this.cart)});
-                    console.log("Загрузка файлов");
-            },
-            created() {
-
-            }
-        })
-    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="js/FilterComp.js"></script>
+    <script src="js/Catalog.js"></script>
+    <script src="js/CatalogItem.js"></script>
+    <script src="js/Cart.js"></script>
+    <script src="js/CartItem.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
