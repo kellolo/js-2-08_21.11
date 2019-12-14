@@ -174,16 +174,22 @@ img {
 }
 .catalog-empty {
   transform: scale(1.3);
-  transition: 1s;
-  animation: dataLoading 1s;
+  transition: 0.3s;
+  animation: dataLoading 1s ease-in-out infinite;
+}
+.catalog-error {
+  width: 400px;
+  font-size: 1.2em;
 }
 
 @keyframes dataLoading {
   from {
     color: white;
-  },
-  to {
-    /* transform: scale(1.3); */
+  }
+  50% {
     color: black;
+  }
+  to {
+    color: white;
   }
 }

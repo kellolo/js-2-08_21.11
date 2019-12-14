@@ -10,14 +10,24 @@ const app = new Vue({
     getJson(url) {
       // return fetch(this.url).then(data => data.json());
       return new Promise((resolve, reject) => {
+        //Simulate long data downloading
         setTimeout(() => {
-          //Simulate long data downloading
-          let xhr = new XMLHttpRequest();
+          let xhr;
+          if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+          } else if (window.ActiveXObject) {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+          }
           xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
               resolve(JSON.parse(xhr.responseText));
             }
+            if (xhr.readyState == 4 && xhr.status != 200)
+            {
+              reject(xhr.status);
+            }
           };
+          xhr.timeout = 10000;
           xhr.open("GET", this.urlAPI + url, true);
           xhr.send();
         }, 1500);

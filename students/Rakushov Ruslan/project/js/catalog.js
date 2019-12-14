@@ -6,6 +6,8 @@ Vue.component("catalog", {
       vItems: [],
       vSearchString: "",
       isDataLoading: false,
+      isDataEmpty: false,
+      isDataEmptyError: undefined,
     }
   },
   methods: {
@@ -15,7 +17,14 @@ Vue.component("catalog", {
         .then(data => {
           this.vItems = data;
           this.isDataLoading = false;
-        });
+        },
+          (error) => {
+            console.log(`Request status: ${error}`);
+            this.isDataLoading = false;
+            this.isDataEmpty = true;
+            this.isDataEmptyError = error;
+          }
+        )
     },
     setSearchString(str) {
       this.vSearchString = str;
@@ -43,7 +52,8 @@ Vue.component("catalog", {
       <catalog-item class="product-item" v-for="prod in filteredItems" :item="prod" :img="image" :key="prod.id">
       </catalog-item>
     </template>
-    <data-loading class="catalog-empty" v-if="isDataLoading">No products</data-loading>
+    <data-loading v-if="isDataLoading"></data-loading>
+    <data-empty v-if="isDataEmpty" :error="isDataEmptyError"></data-empty>
   </div>
-  `,
+  `
 });
