@@ -172,3 +172,18 @@ img {
     border: none;
     border-bottom: 2px solid #fafafa;
 }
+.catalog-empty {
+  transform: scale(1.3);
+  transition: 1s;
+  animation: dataLoading 1s;
+}
+
+@keyframes dataLoading {
+  from {
+    color: white;
+  },
+  to {
+    /* transform: scale(1.3); */
+    color: black;
+  }
+}

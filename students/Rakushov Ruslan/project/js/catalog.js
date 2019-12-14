@@ -5,13 +5,16 @@ Vue.component("catalog", {
       image: "https://placehold.it/200x150",
       vItems: [],
       vSearchString: "",
+      isDataLoading: false,
     }
   },
   methods: {
     fetchDataToCatalog() {
+      this.isDataLoading = true;
       this.$root.getJson(this.urlCatalogData)
         .then(data => {
           this.vItems = data;
+          this.isDataLoading = false;
         });
     },
     setSearchString(str) {
@@ -40,7 +43,7 @@ Vue.component("catalog", {
       <catalog-item class="product-item" v-for="prod in filteredItems" :item="prod" :img="image" :key="prod.id">
       </catalog-item>
     </template>
-    <div class="catalog-empty" v-else>No products</div>
+    <data-loading class="catalog-empty" v-if="isDataLoading">No products</data-loading>
   </div>
   `,
 });
