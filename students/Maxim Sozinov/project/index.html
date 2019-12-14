@@ -39,27 +39,18 @@
        </div>
     </header>
     <main>
-        <div class="products" id="catalog">
-            <div v-for="product in catalog.filtered" class="product-item" v-bind:data-id="product.id_product">
-                    <img v-bind:src="product.img" alt="Some img">
-                    <div class="desc">
-                        <h3>{{ product.product_name}}</h3>
-                        <p>{{ product.price}}  $</p>
-                        <button class="buy-btn" 
-                        v-bind:data-id="product.id_product"
-                        v-bind:data-name="product.product_name"
-                        v-bind:data-image="product.img"
-                        v-bind:data-price="product.price"
-                        v-on:click="addInCart">
-                        Купить</button>
-                    </div>
-                </div>
+        <div id="v_catalog">
+            <catalog></catalog>
         </div>
+        
     </main>
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/comp_catalogItem.js"></script>
+    <script src="js/comp_catalog.js"></script>
     <script src="js/main.js"></script>
+
 
 </body>
 </html>

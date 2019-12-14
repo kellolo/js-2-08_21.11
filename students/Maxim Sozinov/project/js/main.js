@@ -1,7 +1,3 @@
-// const FAKE_API_CATALOG = 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json';
-// const FAKE_API_CART = 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/getBasket.json';
-
-
 class List {
     constructor(url, container) {
         this.container = container;
@@ -23,13 +19,7 @@ class List {
             this.filtered.push(new lists[this.constructor.name](el));
         });
     }
-    // _render() {
-    //     let block = document.querySelector(this.container);
-    //     block.innerHTML = "";
-    //     this.products.forEach(item => {
-    //         block.insertAdjacentHTML('beforeend', item.render());
-    //     });
-    // }
+
     filterList(value) {
         const regexp = new RegExp(value, 'i');
         this.filtered = this.products.filter(good =>
@@ -38,14 +28,12 @@ class List {
 }
 
 class Catalog extends List {
-    constructor(url, container) { // убрал cart из параметров
+    constructor(url, container) { 
         super(url, container);
-        // this.cart = cart   //-  вот это зачем?
     }
     _init() {
         this.getJSON(this.url)
             .then(data => this.handleData(data));
-        // .then (() => this._render ());
     }
 
 }
@@ -59,7 +47,6 @@ class Cart extends List {
     _init() {
         this.getJSON(this.url)
             .then(data => this.handleData(data.contents));
-        // .then (() => this._render ());
     }
     addItem(item) {
         this._fetchData(this.addItem_url)
@@ -81,7 +68,6 @@ class Cart extends List {
                     } else {
                         findItem.increaseQnt();
                     }
-                    // this._render();
                 } else {
                     console.log(`Ошибка ${data.result}`);
                 }
@@ -100,9 +86,7 @@ class Cart extends List {
                         findItem.reduceQnt();
                     } else {
                         this.products.splice(this.products.indexOf(findItem), 1);
-                        // document.querySelector(`.cart-item[data-id="${itemId}"]`).remove();
                     }
-                    // this._render();
                 } else {
                     console.log(`Ошибка ${data.result}`);
                 }
@@ -123,20 +107,6 @@ class Item {
         this.price = prod.price;
         this.img = prod.img;
     }
-    // render () {
-    //     return `<div class="product-item" data-id="${this.id_product}">
-    //                 <img src="${this.img}" alt="Some img">
-    //                 <div class="desc">
-    //                     <h3>${this.product_name}</h3>
-    //                     <p>${this.price} $</p>
-    //                     <button class="buy-btn" 
-    //                     data-id="${this.id_product}"
-    //                     data-name="${this.product_name}"
-    //                     data-image="${this.img}"
-    //                     data-price="${this.price}">Купить</button>
-    //                 </div>
-    //             </div>`;
-    // }
 }
 
 class Product extends Item {}
@@ -146,22 +116,7 @@ class CartItem extends Item {
         super(product);
         this.quantity = product.quantity;
     }
-    // render () {
-    //     return `<div class="cart-item" data-id="${this.id_product}">
-    //                 <div class="product-bio">
-    //                     <img src="${this.img}" alt="Some image">
-    //                     <div class="product-desc">
-    //                         <p class="product-title">${this.product_name}</p>
-    //                         <p class="product-quantity">Quantity: ${this.quantity}</p>
-    //                         <p class="product-single-price">$${this.price} each</p>
-    //                     </div>
-    //                 </div>
-    //                 <div class="right-block">
-    //                     <p class="product-price">${this.quantity * this.price}</p>
-    //                     <button class="del-btn" data-id="${this.id_product}">&times;</button>
-    //                 </div>
-    //             </div>`;
-    // }
+
     increaseQnt() {
         this.quantity++;
     }
@@ -177,23 +132,22 @@ let lists = {
 
 };
 
-let vm_catalog = new Vue({
-    el: '#catalog',
-    data: {
-        catalog: {},
-        catalogContainer: '.products',
-        FAKE_API_CATALOG: 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json'
-    },
-    methods: {
-        addInCart(evt) {
-            vm_cart.cart.addItem(evt.target);
-        }
-    },
-    mounted() {
-        this.catalog = new Catalog(this.FAKE_API_CATALOG, this.catalogContainer);
-        console.log(this.catalog);
-    }
-});
+// let vm_catalog = new Vue({
+//     el: '#catalog',
+//     data: {
+//         catalog: {},
+//         catalogContainer: '.products',
+//         FAKE_API_CATALOG: 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json'
+//     },
+//     methods: {
+//         addInCart(evt) {
+//             vm_cart.cart.addItem(evt.target);
+//         }
+//     },
+//     mounted() {
+//         this.catalog = new Catalog(this.FAKE_API_CATALOG, this.catalogContainer);
+//     }
+// });
 
 let vm_cart = new Vue({
     el: '#cart',
@@ -213,7 +167,6 @@ let vm_cart = new Vue({
     },
     mounted() {
         this.cart = new Cart(this.FAKE_API_CART, this.cartContainer);
-        console.log(this.cart);
     }
 
 });
@@ -228,5 +181,21 @@ let vm_search = new Vue({
         filterGoods() {
             vm_catalog.catalog.filterList(this.value);
         }
+    }
+});
+
+new Vue ({
+    el: v_catalog,
+    data: {
+        // url: 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json' 
+    },
+    methods: {
+        getJson (url) {
+            return fetch (url)
+            .then (result => result.json())
+            .catch (err => {
+                console.log (err);
+            });
+        },
     }
 });
