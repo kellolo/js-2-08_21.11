@@ -55,19 +55,67 @@ class Cart extends List {
     }
     _init () {
         this.getJSON (this.url)
-            .then (data => this.handleData (data.contents))
+            .then (data => {
+
+                this.handleData (data)
+            })
             .then (() => this._render ())
     }
     // всякие там картовские штуки
+    removeProduct (product) {
+        let productId = +product.dataset['id'];
+        let find = this.items.find (element => element.id_product === productId);
+        if (find.quantity > 1) {
+            find.quantity--;
+        } else {
+            this.items.splice(this.items.indexOf(find), 1);
+            document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+        }
+        this.render()
+    }
+
+    addProduct (product) {
+        let productId = +product.dataset['id']; //data-id="1"
+        let find = this.items.find (element => element.id_product === productId); //товар или false
+        if (!find) {
+            
+            let cartItem = new CartItem({
+                id_product: `${product.dataset["id"]}`,
+                product_name: `${product.dataset["name"]}`,
+                price: `${product.dataset["price"]}`,
+              });
+              cartItem.quantity = 1;
+            this.items.push (new CartItem (cartItem))
+          
+        }  else {
+            find.quantity++
+        }
+        this.render()
+        }
+
+    render()
+    {
+        let trg = document.querySelector ('.cart-block')
+        let str = ''
+        this.items.forEach ( cartprod => {
+            str += cartprod.render ()
+        })
+        trg.innerHTML = str
+    }
+    
 }
 
 class Item {
     constructor (prod, img = image) {
-        this.id_product = prod.id_product
+        this.id_product = +prod.id_product
         this.product_name = prod.product_name
         this.price = prod.price
         this.img = img
     }
+   
+}
+
+class Product extends Item {
     render () {
         return `<div class="product-item" data-id="${this.id_product}">
                     <img src="${this.img}" alt="Some img">
@@ -82,10 +130,6 @@ class Item {
                     </div>
                 </div>`
     }
-}
-
-class Product extends Item {
-    
 }
 
 class CartItem extends Item {

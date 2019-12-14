@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        input {
+            width: 200px;
+            padding: 5px 10px;
+            margin: 10px 0;
+        }
+        
+        input:focus {
+            outline: none;
+        }
+        
+        button {
+            border: none;
+            background: rebeccapurple;
+            color: white;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        
+        .error-msg {
+            color: red;
+            margin: 10px 0;
+        }
+        
+        .invalid {
+            border: 2px solid red;
+        }
+        
+        .valid {
+            border: 2px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="#" method="post" class="some" id="myform">
+        <div>
+            <label>
+            Your name <br>
+            <input type="text" name="name" id="name">
+        </label>
+        </div>
+        <div>
+            <label>
+            Your phone <br>
+            <input type="tel" name="phone" id="phone">
+        </label>
+        </div>
+        <div>
+            <label>
+            Your email <br>
+            <input type="email" name="email" id="email">
+        </label>
+        </div>
+        <button id="val-btn">Submit</button>
+    </form>
+    <script src="main.js"></script>
+    <script>
+        window.onload = () => {
+            document.getElementById('myform').addEventListener('submit', e => {
+                debugger
+                let valid = new Validator('myform');
+                if (!valid.valid) {
+                    e.preventDefault();
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
