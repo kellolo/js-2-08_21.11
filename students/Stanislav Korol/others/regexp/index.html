@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Regexp</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        body{
+            text-align: center;
+        }
+        textarea{
+            width: 500px;
+            display: block;
+            margin: 0 auto;
+        }
+        button{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Regexp</h1>
+    <textarea rows="10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eum: 'Eveniet eaque esse magni exercitationem dignissimos odit sapiente don't aspernatur ad doloremque veniam!'. Corporis fugiat: 'Corrupti quos odio architecto qui's id!'</textarea>
+    <button type="button" class="btn btn-primary">Replace</button>
+
+    <script>
+        document.querySelector("button").addEventListener("click", () => {
+            let inText = document.querySelector("textarea").value;
+            const matchArray = inText.match(/([^a-zа-я0-9]\'|\'[^a-zа-я0-9]|^\'|\'$)/ig);
+            if (matchArray !== null){
+                matchArray.forEach(entry => {
+                    inText = inText.replace(entry, entry.replace('\'', '\"'));
+                });
+            }
+            document.querySelector("textarea").value = inText;
+        });
+    </script>
+</body>
+</html>
