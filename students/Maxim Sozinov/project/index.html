@@ -14,12 +14,7 @@
         <header>
             <div class="logo">E-shop</div>
             <div class="search-and-cart">
-                <form action="#" class="search-form" id="search">
-                    <input type="text" class="search-field" v-model.trim="value">
-                    <button class="btn-search" type="submit" v-on:click="filterGoods">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
+                <search-filter></search-filter>
                 <div id="cart" class="cart">
                     <button class="btn-cart" type="button" v-on:click="$refs.cart.showUp()">Корзина</button>
                     <cart ref="cart"></cart>
@@ -27,7 +22,7 @@
             </div>
         </header>
         <main>
-            <catalog></catalog> 
+            <catalog ref="catalog"></catalog> 
         </main>
     </div>
 
@@ -39,6 +34,7 @@
     <script src="js/comp_catalog.js"></script>
     <script src="js/comp_cart.js"></script>
     <script src="js/comp_cartItem.js"></script>
+    <script src="js/comp_filter.js"></script>
     <script src="js/main.js"></script>
 
 

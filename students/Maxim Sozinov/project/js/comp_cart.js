@@ -5,7 +5,8 @@ Vue.component ('cart', {
             items: [],
             show_up: false,
             removeItem_url: "https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/removeFromCart.json",
-        }
+            addItem_url: "https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/addToCart.json"
+        };
     },
     mounted () {
         this.$parent.getJson (this.FAKE_API_CART)
@@ -26,6 +27,34 @@ Vue.component ('cart', {
                             findItem.quantity--;
                         } else {
                             this.items.splice(this.items.indexOf(findItem), 1);
+                        }
+                    } else {
+                        console.log(`Ошибка ${data.result}`);
+                    }
+                })
+                .catch((errStatus) => {
+                    console.log(`Ошибка ${errStatus}`);
+                });
+        },
+        addItem(item) {
+            this._fetchData(this.addItem_url)
+                .then((data) => {
+                    if (data.result === 1) {
+                        let itemId = +item.id;
+                        let findItem = this.items.find(el => el.id === itemId);
+                        if (!findItem) {
+                            //заглушка для БД
+                            let addedItem = {
+                                id: +item.id,
+                                title: item.title,
+                                price: +item.price,
+                                img: "https://placehold.it/100x80",
+                                quantity: 1
+                            };
+                            //                        
+                            this.items.push(addedItem);
+                        } else {
+                            findItem.quantity++;
                         }
                     } else {
                         console.log(`Ошибка ${data.result}`);
