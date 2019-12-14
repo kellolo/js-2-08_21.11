@@ -4,7 +4,7 @@ class Validator {
     constructor(element, rules) {
         this.element = element
         this.regexp = {
-            "brackets": /\s+(\')|(\')\s+/gm,
+            "brackets": /(\B')|('\B)/gm,
             "name": /[A-ZА-Я]{1,1}[a-zа-я]{2,12}/gm,
             "email": /([\w - ] + \.) + \w +/gm
         }
@@ -41,7 +41,7 @@ class Validator {
     _validate_name() {
         console.log(this.regexp.name.test(this.text))
         if (!this.regexp.name.test(this.text)) {
-            document.querySelector(this.element).classList.toggle('redBorder')
+            document.querySelector(this.element).classList.add('redBorder')
         } else {
             document.querySelector(this.element).classList.remove('redBorder')
         }
