@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Burger King</title>
+    <script src="js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="container">
+            <h1 class="b-orderCaption">Заказ бургеров</h1>
+            <form action="#" id="size" class="b-form b-form_externalMargin">
+                <fieldset class="b-form__fieldset b-fieldset_themeOrange">
+                    <legend class="b-form__legend">Размер</legend>
+                    <label class="b-form__label">
+                        <input type="radio" class="b-form__size b-form_elementsMargin" name="size" value="big" data-cost="100"
+                            data-energy="40">Большой
+                    </label>
+                    <label class="b-form__label">
+                        <input type="radio" class="b-form__size b-form_elementsMargin" name="size" value="small" data-cost="50"
+                            data-energy="20" checked>Маленький
+                    </label>
+                </fieldset>
+            </form>
+            <form action="#" id="filling" class="b-form b-form_externalMargin">
+                <fieldset class="b-form__fieldset b-fieldset_themeLightBlue">
+                        <legend class="b-form__legend">Начинка</legend>
+                    <label class="b-form__label">
+                        <input type="checkbox" class="b-form__filling b-form_elementsMargin" name="filling" value="salad" data-cost="20"
+                            data-energy="5">Салат
+                    </label>
+                    <label class="b-form__label">
+                        <input type="checkbox" class="b-form__filling b-form_elementsMargin" name="filling" value="potato" data-cost="15"
+                            data-energy="10">Картофель
+                    </label>
+                    <label class="b-form__label">
+                        <input type="checkbox" class="b-form__filling b-form_elementsMargin" name="filling" value="cheese" data-cost="10"
+                            data-energy="20">Сыр
+                    </label>
+                </fieldset>
+            </form>
+            <form action="#" id="topping" class="b-form b-form_externalMargin">
+                <fieldset class="b-form__fieldset b-fieldset_themeDarkBlue">
+                    <legend class="b-form__legend">Добавки</legend>
+                    <label class="b-form__label">
+                        <input type="checkbox" class="b-form__topping b-form_elementsMargin" name="topping" value="species" data-cost="15"
+                            data-energy="0">Специи
+                    </label>
+                    <label class="b-form__label">
+                        <input type="checkbox" class="b-form__topping b-form_elementsMargin" name="topping" value="mayonnaise" data-cost="20"
+                            data-energy="5">Майонез
+                    </label>
+                </fieldset>
+            </form>
+            <button id="btnOrder" class="b-btnOrder b-form_externalMargin">Заказать!</button>
+            <div id="processingForm" class="b-btnOrder__processingForm">Ожидаю Вашего заказа...</div>
+        </div>
+    </div>
+    
+    <script src="js/order.js" ></script>
+</body>
+
+</html>

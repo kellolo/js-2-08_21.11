@@ -33,19 +33,14 @@ button:focus{
 .btn-cart, .logo{
     align-self: center;
 }
-/*.products {*/
-/*display: flex;*/
-/*justify-content: space-between;*/
-/*flex-wrap: wrap;*/
-/*padding: 40px 80px;*/
-/*}*/
+
 .products{
     column-gap: 30px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 200px);
     grid-template-rows: 1fr;
     padding: 40px 80px;
-    justify-content: space-between;
+    justify-content: center;
 }
 p {
     margin: 0 0 5px 0;
@@ -168,4 +163,19 @@ img {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #fafafa;
+}
+
+/* my additions */
+
+.search-and-cart {
+    display: flex;
+}
+
+.server-error {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    color: red;
+    font-size: 40px;
+    margin-top: 50px;
 }

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Lesson 4</title>
+		<style>
+			.container {
+				width: 100%;
+				max-width: 1349px;
+				position: relative;
+				margin: auto
+			}
+			.container h1,
+			.container h2,
+			.container h3,
+			.container p {
+				padding: 0 20px;
+			}
+			.container .textarea {
+				width: 100%;
+				display: block;
+				float: left;
+				margin: 0 0 50px;
+			}
+			.container .textarea div {
+				width: 50%;
+				float: left;
+			}
+			.container form {
+				clear: both;
+				position: relative;
+			}
+			.container form fieldset {
+				border: none;
+				padding: 0 20px;
+			}
+			.container form label {
+				display: block;
+			}
+			.container form input,
+			.container form textarea {
+				max-width: 195px;
+				width: 100%;
+				margin: 0;
+				padding: 5px;
+				border: 1px solid #ccc;
+			}
+			.container form div {
+				margin: 0 0 15px;
+			}
+			.container form div div {
+				visibility: hidden;
+				display: block;
+				color: red;
+				font-size: 11px;
+			}
+			.container form button {
+				margin: 0 20px;
+			}
+			.container form .hidden {
+				visibility: hidden;
+			}
+			.container form .visible {
+				visibility: visible;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Урок 4</h1>
+			<h2>Задание 1, 2</h2>
+			<p>Дан большой текст, в котором для оформления прямой речи используются одинарные кавычки. Придумать шаблон, который заменяет одинарные кавычки на двойные.</p>
+			<p>Улучшить шаблон так, чтобы в конструкциях типа aren't одинарная кавычка не заменялась на двойную.</p>
+			<div class="textarea">
+				<div>
+					<h3>Исходный текст:</h3>
+					<p class="original">'Слава богу, – сказала девушка, – насилу вы приехали. Чуть было вы барышню не уморили' (По Пушкину). 'Далече ли до крепости?' – спросил я у своего ямщика (Пушкин). 'Тише, – говорит она мне, – отец болен, при смерти, и желает с тобою проститься' (Пушкин). Старый священник подошел ко мне с вопросом: 'Прикажете начинать?' (Пушкин). Она вскрикнула: 'Ай, не он, не он!' – и упала без памяти (Пушкин). Улучшить шаблон так, чтобы в конструкциях типа aren't одинарная кавычка не заменялась на двойную.</p>
+				</div>
+			</div>
+			<h2>Задание 3</h2>
+			<p>Создать форму обратной связи с полями: Имя, Телефон, E-mail, текст, кнопка Отправить. При нажатии на кнопку Отправить произвести валидацию полей.</p>
+			<form action="#" id="feedback">
+				<fieldset>
+					<div>
+						<label for="name">Имя</label>
+						<input type="text" id="name" />
+						<div class="name">только буквы</div>
+					</div>
+					<div>
+						<label for="phone">Телефон</label>
+						<input type="text" id="phone" />
+						<div class="phone">+7(999)000-0000</div>
+					</div>
+					<div>
+						<label for="email">E-mail</label>
+						<input type="email" id="email" />
+						<div class="email">mymail@mail.ru, my.mail@mail.ru или my-mail@mail.ru</div>
+					</div>
+					<div>
+						<label for="text">Сообщение</label>
+						<textarea type="text" id="text"></textarea>
+						<div class="text">введите текст</div>
+					</div>
+				</fieldset>
+				<button id="submit">Отправить</button>
+			</form>
+		</div>
+	</body>
+	<script>
+		//Lesson 4:1-2
+		let text = document.querySelector(".original").textContent
+		let register = /('(?![a-zа-я]))|((?<![а-яa-z])')/gmi
+		let newText = text.replace(register, '"')
+		document.querySelector('.textarea').innerHTML += `<div><h3>Исправленный текст:<\/h3><p>${newText}<\/p><\/div>`
+		
+		// Lesson 4:3
+		class Validation {
+			constructor(container, items = []) {
+				this.element = document.querySelector(container)
+				this.items = items
+				this._init()
+			}
+			_init() {
+				this.element.addEventListener('submit', (evt) => {
+					if (!this.validate()) {
+						evt.preventDefault()
+					}
+				})
+			}
+			validate() {
+				let validity = true
+				this.items.forEach(elem => {
+					if (!elem.validate()) {
+						validity = false
+					}
+				})
+				return validity
+			}
+		}
+		
+		class Input {
+			constructor(entryField, error, register) {
+				this.element = document.querySelector(entryField)
+				this.errorDiv = document.querySelector(error)
+				this.register = register
+				this._init()
+			}
+			_init() {
+				this.element.addEventListener('input', (evt) => {
+					this.validate()
+				})
+			}
+			validate() {
+				let valid = this.element.value.search(this.register) != - 1
+				this.element.classList.toggle('invalid', !valid)
+				this.element.classList.toggle('valid', valid)
+				this.errorDiv.classList.toggle('hidden', valid)
+				this.errorDiv.classList.toggle('visible', !valid)
+				return valid
+			}
+		}
+		
+		let validation = new Validation('#feedback', [
+			new Input('#name', '.name', /[a-zа-я]+/i),
+			new Input('#phone', '.phone', /\+\d\(\d{3}\)\d{3}-\d{4}/i),
+			new Input('#email', '.email', /^([a-z.-_]+)@([a-z]+).([a-z]+)$/i),
+			new Input('#text', '.text', /\w+/)
+		])
+	</script>
+</html>

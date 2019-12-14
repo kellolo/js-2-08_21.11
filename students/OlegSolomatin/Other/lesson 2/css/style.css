@@ -1,0 +1,75 @@
+body {
+  height: 100%;
+  background: #EAEBED; }
+  body img {
+    width: 16px; }
+
+form {
+  height: 100vh;
+  background: #484A56;
+  color: white;
+  border: none;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  margin: 0 0 0 -600px;
+  -webkit-transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -moz-transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -o-transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+  form fieldset {
+    width: 560px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border: none; }
+    form fieldset legend {
+      font-family: 'Montserrat', helvetica, arial, sans-serif;
+      font-weight: 700;
+      color: white; }
+    form fieldset label {
+      color: #484A56;
+      font-size: 1em;
+      font-family: 'Montserrat', helvetica, arial, sans-serif;
+      font-weight: 700;
+      margin: 5px 5px 5px 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center; }
+      form fieldset label span {
+        color: azure;
+        margin: 10px 12px 0 0; }
+      form fieldset label img {
+        margin: 0 10px 0 0;
+        filter: invert(1); }
+      form fieldset label i {
+        margin: 0 10px 0 0; }
+  form p {
+    font-family: 'Montserrat', helvetica, arial, sans-serif;
+    font-weight: 700;
+    font-size: 1em;
+    line-height: 1.5em; }
+
+.btn0 {
+  margin: 10px;
+  width: max-content;
+  border: 3px solid #28a745;
+  background: transparent;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: 'Montserrat', helvetica, arial, sans-serif;
+  font-weight: 700; }
+
+.btn0:hover {
+  transition: 1s;
+  background-color: #28a745; }
+
+/*# sourceMappingURL=style.css.map */
