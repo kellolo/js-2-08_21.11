@@ -1,21 +1,22 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+// Начинаю выпиливать заглушки
+// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
+// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
+// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
 //var userCart = []; - выпилил
-var list = fetchData();
+// var list = fetchData() - выпилил с особым удовольствием
 
 class Product {
     constructor(prod) {
-        this.id = prod.id
-        this.title = prod.title
-        this.price = prod.price
-        this.img = prod.img
+        this.id = prod.id;
+        this.title = prod.title;
+        this.price = prod.price;
+        this.img = prod.img;
     }
     render() {
         return `<div class="product-item" data-id="${this.id}">
@@ -39,10 +40,30 @@ class Catalog {
         this._init()
     }
     _init() {
-        list.forEach(el => {
-            this.products.push(new Product(el))
-        })
-        this.render()
+        let list = [];
+        let url = 'https://raw.githubusercontent.com/Konstantin-Buzuev/online-store-api/master/catalogData.json';
+        this._catalogFetch(url)
+            .then(dataJSON => dataJSON.json())
+            .then(data => {
+                data.forEach(el => {
+                    let newProd = new Object(0)
+                    newProd.id = el.id_product
+                    newProd.title = el.product_name
+                    newProd.price = el.price
+                    newProd.img = image
+                    this.products.push(new Product(newProd))
+                })
+
+            })
+            .then(() => {
+                this.render()
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+    _catalogFetch(url) {
+        return fetch(url)
     }
     render() {
         let trg = document.querySelector(this.container)
@@ -51,20 +72,16 @@ class Catalog {
             str += prod.render()
         })
         trg.innerHTML = str
-        
+        let buttons = [...document.getElementsByClassName("buy-btn")]
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                cart.addItem(button);
+            })
+        })
     }
 }
 
 let catalog = new Catalog()
-document.addEventListener("DOMContentLoaded", function(){
-    let buttons = [...document.getElementsByClassName("buy-btn")]
-    buttons.forEach(button => {
-        button.addEventListener("click", function(){
-            cart.addItem(button)
-        })
-    })
-
-})
 
 class CartItem {
     constructor(prod) {
@@ -77,7 +94,7 @@ class CartItem {
         this.quantity = 1
         this._calculateCost()
     }
-    _calculateCost(){
+    _calculateCost() {
         this.cost = this.price * this.quantity
     }
     put() {
@@ -114,21 +131,23 @@ class Cart {
     }
     _createItem(product) {
         return {
-            id: +product.dataset['id'],
-            title: product.dataset['name'],
-            img: product.dataset['image'],
-            price: product.dataset['price'],
+            id: +product.dataset.id,
+            title: product.dataset.name,
+            img: product.dataset.image,
+            price: product.dataset.price,
         }
     }
-    _calculateCost(){
+    _calculateCost() {
         this.cost = 0
-        for (let i = 0; i < this.items.length; i++) this.cost +=this.items[i].cost;
+        for (let i = 0; i < this.items.length; i++) this.cost += this.items[i].cost;
     }
-    _renderCart(){
+    _renderCart() {
         let cartHTML = '';
-        this.items.forEach(item => {cartHTML+= item.Render();});
+        this.items.forEach(item => {
+            cartHTML += item.render();
+        });
         document.querySelector(`.cart-block`).innerHTML = cartHTML;
-        }
+    }
     addItem(product) {
         let newItem = this._createItem(product)
         let find = this.items.find(element => element.id === newItem.id);
@@ -141,7 +160,7 @@ class Cart {
         let item = this._createItem(product)
         let find = this.items.find(element => element.id === newItem.id);
         find.take()
-        if (find.quantity==0) document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+        if (find.quantity == 0) document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
         this._calculateCost()
         this._renderCart()
     }
@@ -149,6 +168,7 @@ class Cart {
 }
 
 let cart = new Cart()
+
 
 
 
@@ -172,28 +192,11 @@ let cart = new Cart()
 // })
 
 //создание массива объектов - имитация загрузки данных с сервера
-function fetchData() {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push(createProduct(i));
-    }
-    return arr
-};
+// function fetchData() - Выпилено
 //создание товара
-function createProduct(i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image
-    }
-};
+// function createProduct(i) - Выпилено 
 //рендер списка товаров (каталога) - выпилено
-
-
 //CART
-
 //добавление товаров - выпилено
 //удаление товаров - выпилено
-
 //перерендер корзины - выпилено

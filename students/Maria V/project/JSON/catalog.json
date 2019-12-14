@@ -1,0 +1,50 @@
+[
+    {
+      "id_product": 1,
+      "product_name": "Ноутбук",
+      "price": 45000,
+      "img": "https://placehold.it/200x150"
+    },
+    {
+      "id_product": 2,
+      "product_name": "Монитор",
+      "price": 8000,
+      "img": "https://placehold.it/200x150"
+    },
+    {
+      "id_product": 3,
+      "product_name": "Клавиатура",
+      "price": 500,
+      "img": "https://placehold.it/200x150"
+    },
+    {
+      "id_product": 4,
+      "product_name": "Мышь",
+      "price": 1000,
+      "img": "https://placehold.it/200x150"
+    },
+    {
+      "id_product": 5,
+      "product_name": "Видеокарта",
+      "price": 10000,
+      "img": "https://placehold.it/200x150"
+    },
+    {
+      "id_product": 6,
+      "product_name": "Роутер",
+      "price": 3000,
+      "img": "https://placehold.it/200x150"
+    },
+    {
+      "id_product": 7,
+      "product_name": "USB-камера",
+      "price": 5000,
+      "img": "https://placehold.it/200x150"
+    },
+    {
+      "id_product": 8,
+      "product_name": "Жесткий диск",
+      "price": 6000,
+      "img": "https://placehold.it/200x150"
+    }
+  ]

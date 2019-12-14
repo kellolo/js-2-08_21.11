@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+        margin: 0 auto
+    }
+    .post {
+        border-radius: 5px;
+        border: 2px solid grey;
+        padding: 15px;
+        margin-bottom: 10px
+    }
+    .post-footer {
+        text-align: right
+    }
+    .font-it {
+        font-style: italic
+    }
+    .red {
+        color: red
+    }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div>
+                <label>
+                    <input type="text" v-model="limit"> <button @click="reload">Показать постов</button> 
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="text" v-model="name"> имя
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="text" v-model="body"> текст
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="text" v-model="email"> e-mail
+                </label>
+            </div>
+            <div>
+                <button @click="$refs.first.changePost(name, body, email)">Изменить</button>
+            </div>
+            <br>
+            <post ref="first"></post>
+        </div>
+
+        <div class="container vue">
+            <post v-for="(comment, index) of comments" :comm="comment"></post>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="comp.js"></script>
+    <script>
+        let app = new Vue ({
+            el: '#app',
+            data: {
+                //данные, формируемые/изменяемые внутри компонента
+                url: 'https://jsonplaceholder.typicode.com/comments',
+                comments: [],
+                name: 'Ivan Petrov',
+                body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, ipsa tenetur consequatur, dolore dolorem odio rerum labore, commodi impedit ea quo doloremque excepturi. Quia, labore corrupti iure deserunt eos sequi.',
+                email: 'example@yandex.com',
+                firstShown: true,
+                limit: 10
+            },
+            methods: {
+                // а ля "функции"
+                getJSON (url) {
+                    return fetch (url)
+                            .then (d => d.json ())
+                },
+                toggleFirstPost () {
+                    this.firstShown = !this.firstShown
+                },
+                reload () {
+                    this.getJSON (this.url + `?_limit=${this.limit}`)
+                        .then (data => {this.comments = data})
+                }
+            },
+            computed: {
+                toggleBtnText () {
+                    return this.firstShown ? 'Скрыть' : 'Показать'
+                }
+                // вычисляемые значения (а ля ф-ции, возвращающие рез-т)
+            },
+            // "хуки жизненного цикла" (а ля события, но касающиеся вью-компонента)
+            mounted () {
+                this.getJSON (this.url + `?_limit=${this.limit}`)
+                    .then (data => {this.comments = data})
+                    //.finally (() => {console.log (this.comments)})
+                    console.log (this)
+                    console.log (this.$root)
+                    //console.log (this.$children [0].togglePost())
+            },
+            created () {
+                console.log ('Я создан, но еще не появился')
+            }
+        })
+        // angular / redux      TypeScript
+        // react / redux        not framework (just lib) => много накрутить сверху, чтобы получить фреймворк
+            //create-react-app
+            //react-native
+        // vue / vuex
+            //vue-cli
+            //nuxt
+            //vue-native    v 0.017
+    </script>
+</body>
+</html>
