@@ -172,3 +172,4 @@ function promiseRequest (url) {
 }
 catalog = new Catalog();
 var userCart = new Cart();
+
