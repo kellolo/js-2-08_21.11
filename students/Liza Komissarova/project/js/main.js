@@ -1,133 +1,212 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+//Вчера косяк был в том, что дважды вызывался метод _init () - отсюда навешивалось по два event Listener на клик по каждой кнопке
+// устранено
+
+// так же был косяк здесь:
+// _updateCart (product) {
+//     console.log (product)
+//     let block = document.querySelector (`.cart-item[data-id = "${product.id_product}"]`)
+// не тот селектор был прокинут в определение блока. надо было искать по дата-атрибуту id - иначе невозможно было определить нужный блок
+// устранено
+
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
 
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
-
-//кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('del-btn')) {
-        removeProduct (evt.target);
-    }
-})
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('buy-btn')) {
-        addProduct (evt.target);
-    }
-})
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
-
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        name: items[i],
-        price: prices[i],
-        img: image,
-        quantity: 0,
-        createTemplate: function () {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
+let app = new Vue ({
+    el: '#app',
+    data: {
+        cartImage: 'https://placehold.it/100x80',
+        cartUrl: '/getBasket.json',
+        
+    },
+    methods: {
+        getJson (url) {
+            return fetch (`${API + url}`)
+            .then (result => result.json())
+            .catch (err => {
+                console.log (err)
+            })
         },
+    },
+    
+})
 
-        add: function() {
-            this.quantity++
-        }
-    }
-};
+// class List {
+//     constructor (url, container) {
+//         this.container = container
+//         this.url = url
+//         this.goods = [] //то, что мы запрашиваем с сети
+//         this.allProducts = [] //то, что мы сохраняем локально
+//         this._init ()
+//     }
+//     _init () {
+//         return false
+//     }
+//     getJson (url) {
+//         return fetch (url ? url : `${API + this.url}`)
+//             .then (result => result.json())
+//             .catch (err => {
+//                 console.log (err)
+//             })
+//     }
+//     handleData (data) {
+//         this.goods = [...data]
+//         this.render ()
+//     }
+//     render () {
+//         const block = document.querySelector (this.container)
+//         for (let product of this.goods) {
+//             const prod = new lists [this.constructor.name] (product)
+//             this.allProducts.push (prod)
+//             block.insertAdjacentHTML ('beforeend', prod.render ())
+//         }
+//     }
+// }
 
-//рендер списка товаров (каталога)
-function renderProducts () {
-    let arr = [];
-    for (item of list) {
-        arr.push(item.createTemplate())
-    }
-    document.querySelector('.products').innerHTML = arr.join();
-}
+// class Item {
+//     constructor (el, img = image) {
+//         this.product_name = el.product_name
+//         this.price = el.price
+//         this.id_product = el.id_product
+//         this.img = img
+//     }
+//     render () {
+        // return `<div class="product-item" data-id="${this.id_product}">
+        //     <img src="${this.img}" alt="Some img">
+        //     <div class="desc">
+        //         <h3>${this.product_name}</h3>
+        //         <p>${this.price} $</p>
+        //         <button class="buy-btn" 
+        //         data-id="${this.id_product}"
+        //         data-name="${this.product_name}"
+        //         data-image="${this.img}"
+        //         data-price="${this.price}">Купить</button>
+        //     </div>
+        // </div>`
+//     }
+// }
 
-renderProducts ();
+// class catalogItem extends Item { }
 
-//CART
+// class CartItem extends Item {
+//     constructor (el, img = cartImage) {
+//         super (el, img)
+//         this.quantity = el.quantity
+//     }
+//     render () {
+//         return `
+//             <div class="cart-item" data-id="${this.id_product}">
+//                 <div class="product-bio">
+//                     <img src="${this.img}" alt="Some image">
+//                     <div class="product-desc">
+//                         <p class="product-title">${this.product_name}</p>
+//                         <p class="product-quantity">Quantity: ${this.quantity}</p>
+//                         <p class="product-single-price">$${this.price} each</p>
+//                     </div>
+//                 </div>
+//                 <div class="right-block">
+//                     <p class="product-price">${this.quantity * this.price}</p>
+//                     <button class="del-btn" data-id="${this.id_product}">&times;</button>
+//                 </div>
+//             </div>
+//         `
+//     }
+// }
 
-// Добавление продуктов в корзину
-function addProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (!find) {
-        userCart.push ({
-            name: product.dataset ['name'],
-            id: productId,
-            img: cartImage,
-            price: +product.dataset['price'],
-            quantity: 1
-        })
-    }  else {
-        find.quantity++
-    }
-    renderCart ()
-}
+// class Catalog extends List {
+//     constructor (cart, url = CATALOG_URL, container = '.products') {
+//         super (url, container)
+//         this.cart = cart
+//         this.getJson ()
+//             .then (data => this.handleData(data))
+//     }
+//     _init () {
+//         document.querySelector (this.container).addEventListener ('click', event => {
+//             if (event.target.classList.contains('buy-btn')) {
+//                 this.cart.addProduct (event.target)
+//             }
+//         })
+//     }
+// //render () => const prod = new lists [Catalog] (product) // prod = new Item (product)
+// }
 
-//удаление товаров
-function removeProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (find.quantity > 1) {
-        find.quantity--;
-    } else {
-        userCart.splice(userCart.indexOf(find), 1);
-        document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
-    }
-    renderCart ();
-}
+// class Cart extends List {
+// //render () => const prod = new lists [Cart] (product) // prod = new CartItem (product)
+//     constructor (url = CART_URL, container = '.cart-block') {
+//         super (url, container)
+//         this.getJson ()
+//             .then (data => this.handleData(data.contents)) 
+//     }
 
-//перерендер корзины
-function renderCart () {
-    let allProducts = '';
-    for (el of userCart) {
-        allProducts += `<div class="cart-item" data-id="${el.id}">
-                            <div class="product-bio">
-                                <img src="${el.img}" alt="Some image">
-                                <div class="product-desc">
-                                    <p class="product-title">${el.name}</p>
-                                    <p class="product-quantity">Quantity: ${el.quantity}</p>
-                                    <p class="product-single-price">$${el.price} each</p>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <p class="product-price">${el.quantity * el.price}</p>
-                                <button class="del-btn" data-id="${el.id}">&times;</button>
-                            </div>
-                        </div>`
-    }
+//     addProduct (element) {
+//         this.getJson (API + '/addToBasket.json')
+//             .then (response => {
+//                 if (response.result) {
+//                     let prodId = +element.dataset['id']
+//                     let find = this.allProducts.find (item => item.id_product === prodId)
+//                     if (find) {
+//                         find.quantity ++
+//                         this._updateCart (find)
+//                     } else {
+//                         let product = {
+//                             id_product: prodId,
+//                             price: +element.dataset['price'],
+//                             product_name: element.dataset['name'],
+//                             img: +element.dataset['image'],
+//                             quantity: 1
+//                         }
+//                         //this.allProducts.push(product)
+//                         this.goods = [product]
+//                         this.render ()
+//                     }
+//                 }
+//             })
+//     }
 
-    document.querySelector(`.cart-block`).innerHTML = allProducts;
-}
+//     removeProduct (element) {
+//         this.getJson (API + '/deleteFromBasket.json')
+//             .then (response => {
+//                 if (response.result) {
+//                     let prodId = +element.dataset['id']
+//                     let find = this.allProducts.find (item => item.id_product === prodId)
+
+//                     if (find.quantity > 1) {
+//                         find.quantity --
+//                         this._updateCart (find)
+//                     } else {
+                        
+//                         this.allProducts.splice(this.allProducts.indexOf(find), 1)
+//                         let block = document.querySelector (`.cart-item[data-id = "${find.id_product}"]`)
+//                         block.remove ()
+
+//                     }
+//                 }
+//             })
+//     }
+//     _updateCart (product) {
+//         console.log (product)
+//         let block = document.querySelector (`.cart-item[data-id = "${product.id_product}"]`)
+//         block.querySelector('.product-quantity').textContent = `Quantity: ${product.quantity}`
+//         block.querySelector('.product-price').textContent = `${product.quantity * product.price}`
+//     }
+//     _init () {
+//         document.querySelector ('.btn-cart').addEventListener ('click', () => {
+//             //document.querySelector (this.container).classList.toggle ('invisible')
+//             document.querySelector('.cart-block').classList.toggle('invisible')
+//         })
+
+//         document.querySelector (this.container).addEventListener ('click', event => {
+//             if (event.target.classList.contains('del-btn')) {
+//                 this.removeProduct (event.target)
+//                 // console.log (`Товар ${event.target.dataset.name} удален`)
+//             }
+//         })
+//     }
+// }
+
+// let lists = {
+//     Catalog: Item,
+//     Cart: CartItem
+// }
+
+// let cart = new Cart ()
+// let catalog = new Catalog (cart)

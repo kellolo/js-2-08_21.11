@@ -120,16 +120,16 @@ class AppController {
             const productId = +element.dataset.id;
 
             this.cartService.addProductToCart(productId)
-            
-                .then(result => {
-                    if (result.result === 1) {
-                        this.productService.getProductById(productId)
-                            .then(product => {
-                                this.cart.addItem(product);
-                                this.showCart();
-                            });
-                    }
-                })
+
+            .then(result => {
+                if (result.result === 1) {
+                    this.productService.getProductById(productId)
+                        .then(product => {
+                            this.cart.addItem(product);
+                            this.showCart();
+                        });
+                }
+            })
         }
     }
     onDeleteButtonClick = (event) => {
@@ -189,12 +189,10 @@ class CartService {
             .then(response => response.json());
     }
     addProductToCart(productId) {
-        return fetch('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json', {
-        }).then(response => response.json());
+        return fetch('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json', {}).then(response => response.json());
     }
     deteteCartItem(productId) {
-        return fetch('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json', {
-        }).then(response => response.json());
+        return fetch('https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json', {}).then(response => response.json());
     }
 }
 const appController = new AppController();
