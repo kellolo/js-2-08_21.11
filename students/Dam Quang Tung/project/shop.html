@@ -59,8 +59,7 @@
                     <div class="cart-item" v-for="prod of basket">
                         <div class="product-bio" >
                             <img :src="prod.img" alt="Some image">
-                            <div class="product-desc" v-for="post in filteredList">
-                                <!-- <p class="title-name">{{ post.title }}</p> -->
+                            <div class="product-desc" >
                                 <p class="product-title">{{ prod.product_name }}</p>
                                 <p class="product-quantity">Quantity: {{ prod.quantity }}</p>
                                 <p class="product-single-price">{{ prod.price }} each</p>
@@ -76,10 +75,11 @@
         </header>
         <main>
             <div class="products">
-                <div class="product-item" v-for="item of catalog">
+                <div class="product-item" v-for="item of catalog" v-for="post in filteredList">
                     <img :src="item.img" alt="Some img">
                     <div class="desc">
                         <h3>{{ item.product_name }}</h3>
+                        <!-- <h3>{{ post.title }}</h3> -->
                         <p>{{ item.price }} </p>
                         <button class="btn-cart" type="button" @click="content(item.id_product, item.product_name, item.price)">Купить</button>
                     </div>
