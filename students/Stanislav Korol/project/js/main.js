@@ -192,8 +192,8 @@ class CartItem {
     }
 }
 
-let catalog = new Catalog ()
-let cart = new Cart ()
+//let catalog = new Catalog ()
+//let cart = new Cart ()
 
 
 //создание массива объектов - имитация загрузки данных с сервера
@@ -203,7 +203,7 @@ function fetchData (catalog) {
             JSON.parse(data).forEach (el => {
                 catalog.products.push (new Product (el))
             })
-            catalog.render ()
+            //catalog.render ()
         })
         .catch((errStatus) => {
             console.log (`Запрос списка товаров завершился ошибкой: ${errStatus}`)
@@ -226,3 +226,122 @@ function promiseRequest (url) {
         xhr.send()
     })
 }
+
+
+// VUE practice
+
+
+const cart = new Vue({
+    el: "#cart-module",
+    data: {
+        cartItems: [],
+        isVisibleCart: false
+    },
+    methods: {
+        switchCart(){
+            this.isVisibleCart = !this.isVisibleCart
+        },
+        addProduct(prod){
+            promiseRequest("https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json")
+                .then((data) => {
+                    if (JSON.parse(data).result === 1) {
+                        const targetCartItem = this._getItemById(prod.dataset["id"]);
+                
+                        if (targetCartItem) targetCartItem.increaseQuantity();
+                        else this.cartItems.push(new CartItem(prod.dataset));
+                            
+                        if (this.opened) this._render();
+                    }
+                })
+                .catch((errStatus) => {
+                    console.log (`Не удалось добавить товар в корзину по причине: ${errStatus}`)
+                })
+        },
+        deleteProduct(prod){
+            promiseRequest("https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/deleteFromBasket.json")
+                .then((data) => {
+                    if (JSON.parse(data).result === 1) {
+                        const targetCartItem = this._getItemById(prod.dataset["id"]);
+    
+                        if (targetCartItem){
+                            if (targetCartItem.quantity === 1) this.cartItems = this.cartItems.filter(item => item.id !== prod.dataset["id"]);
+                            else targetCartItem.decreaseQuantity();
+    
+                            if (this.opened) this._render();
+                        }
+                    }
+                })
+                .catch((errStatus) => {
+                    console.log (`Не удалось удалить товар из корзины по причине: ${errStatus}`)
+                })
+        },
+        _getItemById(id){
+            try{
+                return this.cartItems.filter(item => item.id === id)[0];
+            } catch {
+                return undefined;
+            }
+        }
+    },
+    mounted(){
+        promiseRequest("https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json")
+            .then((data) => {
+                JSON.parse(data).contents.forEach((el) => {
+                    const dataset = {
+                        "id": el.id_product,
+                        "name": el.product_name,
+                        "price": el.price,
+                        "quantity": el.quantity
+                    }
+                    this.cartItems.push(new CartItem(dataset));
+                });
+            })
+            .catch((errStatus) => {
+                console.log (`Запрос списка товаров в корзине завершился ошибкой: ${errStatus}`)
+            })
+            
+        this.$el.addEventListener ('click', (evt) => {
+            if (evt.target.classList.contains ('del-btn')) {
+                this.deleteProduct(evt.target);
+            }
+        })
+    }
+})
+
+const catalog = new Vue({
+    el: ".products",
+    data: {
+        products: [],
+        query: ""
+    },
+    computed: {
+        filteredList() {
+            return (this.query == "") ? this.products : this.products.filter(el => el.title.toLowerCase().indexOf(this.query.toLowerCase()) > -1)
+        }
+    },
+    methods: {
+        filterList(query){
+            this.query = query
+        }
+    },
+    mounted(){
+        fetchData(this)
+        this.$el.addEventListener ('click', (evt) => {
+            if (evt.target.classList.contains ('buy-btn')) {
+                cart.addProduct (evt.target);
+            }
+        })
+    }
+})
+
+const searchForm = new Vue({
+    el: ".search-form",
+    data: {
+        searchLine: ""
+    },
+    methods: {
+        filterGoods(){
+            catalog.filterList(this.searchLine)
+        }
+    }
+})
