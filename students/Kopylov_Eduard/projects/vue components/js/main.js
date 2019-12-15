@@ -7,7 +7,7 @@ let app = new Vue ({
     data: {
         image : 'https://placehold.it/200x150',
         cartImage : 'https://placehold.it/100x80',  
-        
+        show : false,
     },
     methods: {
         getJson (url) {
@@ -17,6 +17,14 @@ let app = new Vue ({
                 console.log (err)
             })
         },
+
+        ShowCart(show)
+        {
+            if(show)
+            {
+                
+            }
+        }
     },
     
 })
