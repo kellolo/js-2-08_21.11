@@ -5,7 +5,7 @@ import Vue from 'vue'
 import App from './components/App'
 
 Vue.config.productionTip = false
-//test
+//test2
 new Vue({
   el: "#app",
   render: h => h(App)
