@@ -7,26 +7,58 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
-        </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
-
-
-
+    <div id="shop">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field" v-model="searchLine">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" type="button" @click="showCart">Корзина</button>
+                <div class="cart-block" v-show="visibility">
+                    <div class="empty" v-if="noCartItems">В корзине пока нет товаров :(</div>
+                    <div class="cart-item" v-for="item of cartItems" :data-id="item.id_product">
+                        <div class="product-bio">
+                            <img :src="cartImage" alt="Some image">
+                            <div class="product-desc">
+                                <p class="product-title">{{ item.product_name }}</p>
+                                <p class="product-quantity">Quantity: {{ item.quantity }}</p>
+                                <p class="product-single-price">{{ item.price }} rub. each</p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price">{{ item.quantity * item.price }}</p>
+                            <button class="del-btn" @click="removeProduct" :data-id="item.id_product">&times;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="products">
+                <div class="empty" v-if="searchProducts(items).length == 0">Товары не найдены</div>
+                <div class="product-item" v-else v-for="item in searchProducts(items)" :data-id="item.id_product">
+                    <img :src="image" alt="Some img">
+                    <div class="desc">
+                        <h3>{{ item.product_name }}</h3>
+                        <p>{{ item.price }} rub.</p>
+                        <button class="buy-btn" @click="addProduct"
+                                :data-id="item.id_product"
+                                :data-name="item.product_name"
+                                :data-image="image"
+                                :data-price="item.price">
+                                Купить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/main-vue.js"></script>
 </body>
 </html>
