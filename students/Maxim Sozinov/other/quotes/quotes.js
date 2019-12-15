@@ -28,6 +28,6 @@ Brown did not look up. 'The water's a gift from God. Pappa Doc brings the beans.
 The gunslinger grunted a laugh and sat down with his back against one rude wall, folded his arms and closed his eyes. After a little, the smell of roasting corn came to his nose. There was a pebbly rattle as Brown dumped a paper of dry beans into the pot An occasional tak-tak-tak as Zoltan walked restlessly on the roof. He was tired; he had been going sixteen and sometimes eighteen hours a day between here and the horror that had occurred in Tull, the last village. And he had been afoot for the last twelve days; the mule was at the end of its endurance.
 Tak-tak-tak.`;
 
-const regex = /\B'{1}/g;
+const regex = /\B'{1}|'{1}\B/g;
 
 console.log (str.replace(regex, '"'));
