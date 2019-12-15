@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css.css">
+</head>
+<body>
+	 <form action="#" id="validForm" novalidate>
+        <fieldset>
+            <label>Имя: <input type="text" id="name"></label>
+            <div class="name error hidden">Имя должно состоять только из букв</div>
+            <label>Телефон: <input type="text" id="phone"></label>
+            <div class="phone error hidden">Телефон должен иметь вид +7(000)000-0000</div>
+            <label>E-mail: <input type="email" id="mail"></label>
+            <div class="mail error hidden">E-mail должен иметь вид mymail@mail.ru</div>
+            <label>Текст: <textarea type="text" id="text"></textarea></label>
+            <div class="text error hidden">Введите произвольный текст</div>
+        </fieldset>
+        <button id="submit">Отправить</button>
+    </form>
+	<script src="main.js"></script>
+</body>
+</html>
