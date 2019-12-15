@@ -3,7 +3,9 @@ Vue.component ('cart', {
         return {
             GetBasket: '/getBasket.json',
             cartImage : 'https://placehold.it/100x80',
-            items: []
+            items: [],
+            addBasket: 'f',
+            removeBasket: '',
         }
     },
 
@@ -20,7 +22,7 @@ Vue.component ('cart', {
         }
     },
     template: `
-    <div class="cart-block">
+    <div class="cart-block invisible">
       <cart-item v-for="product of items" :item="product" :imgProp="cartImage"></cart-item>
     </div>
     `
