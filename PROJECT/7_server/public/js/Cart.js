@@ -38,7 +38,7 @@ Vue.component ('cart', {
         },
     },
     mounted () {
-        this.$parent.getJson (this.cartUrl)
+        this.$parent.getJson ('/cart')
             .then (data => this.items = data.contents)
     },
     template: `

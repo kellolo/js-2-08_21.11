@@ -8,7 +8,7 @@
 // не тот селектор был прокинут в определение блока. надо было искать по дата-атрибуту id - иначе невозможно было определить нужный блок
 // устранено
 
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+//const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
 
 
 let app = new Vue ({
@@ -21,7 +21,7 @@ let app = new Vue ({
     },
     methods: {
         getJson (url) {
-            return fetch (`${API + url}`)
+            return fetch (url)
             .then (result => result.json())
             .catch (err => {
                 console.log (err)
