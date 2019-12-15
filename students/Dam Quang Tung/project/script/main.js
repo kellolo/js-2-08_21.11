@@ -178,7 +178,11 @@ let lists = {
 
 let cart = new Cart()
 let catalog = new Catalog(cart)*/
-
+class Post {
+    constructor(title) {
+        this.title = title;
+    }
+}
 let app = new Vue({
     el: '#app',
     data: {
@@ -187,12 +191,17 @@ let app = new Vue({
         isActiveBasket: false,
         basket: [],
         search: '',
-        postList : [
-        // new Post(
-        // 'AMD Ryzen 3',
-        // 'amd ryzen 3'
-        // )
+        postList: [
+            new Post('AMD Ryzen 3'),
+            new Post('Intel Core i3'),
+            new Post('AMD Ryzen 5'),
+            new Post('Intel Core i5'),
+            new Post('AMD Ryzen 7'),
+            new Post('Intel Core i7'),
+            new Post('AMD Ryzen 9'),
+            new Post('Intel Core i9 Coffee Lake R'),
         ]
+
     },
     methods: {
         getJSON(url) {
