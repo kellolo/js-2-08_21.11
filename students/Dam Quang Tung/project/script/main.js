@@ -1,4 +1,4 @@
-const image = 'https://placehold.it/200x200'
+/*const image = 'https://placehold.it/200x200'
 const cartImage = 'https://placehold.it/100x80'
 const API_URL = 'https://raw.githubusercontent.com/Archtung/js-2-08_21.11/master/students/Dam%20Quang%20Tung/project/json'
 
@@ -177,4 +177,66 @@ let lists = {
 }
 
 let cart = new Cart()
-let catalog = new Catalog(cart)
+let catalog = new Catalog(cart)*/
+
+let app = new Vue({
+    el: '#app',
+    data: {
+        url: 'https://raw.githubusercontent.com/Archtung/js-2-08_21.11/master/students/Dam%20Quang%20Tung/project/json/catalogData.json',
+        catalog: [],
+        isActiveBasket: false,
+        basket: [],
+        search: '',
+        postList : [
+        // new Post(
+        // 'AMD Ryzen 3',
+        // 'amd ryzen 3'
+        // )
+        ]
+    },
+    methods: {
+        getJSON(url) {
+            return fetch(url)
+                .then(d => d.json());
+        },
+        toggleBasket() {
+            this.isActiveBasket = !this.isActiveBasket;
+        },
+        content(id_product, product_name, price) {
+            for (let item of this.basket) {
+                if (item.id_product === id_product) {
+                    return item.quantity++;
+                }
+            }
+            return this.basket.push({
+                id_product: id_product,
+                product_name: product_name,
+                price: price,
+                img: 'https://placehold.it/100x80',
+                quantity: 1
+            });
+        },
+        deleteItemFromBasket(id_product) {
+            for (let i = 0; i < this.basket.length; i++) {
+                if (this.basket[i].id_product === id_product) {
+                    this.basket[i].quantity--;
+                    if (this.basket[i].quantity === 0) this.basket.splice(i, 1);
+                }
+            }
+        }
+    },
+    computed: {
+        filteredList() {
+            return this.postList.filter(post => {
+                return post.title.toLowerCase().includes(this.search.toLowerCase())
+            })
+        }
+    },
+    mounted() {
+        this.getJSON(this.url)
+            .then(data => { this.catalog = data });
+    },
+    created() {
+
+    }
+});
