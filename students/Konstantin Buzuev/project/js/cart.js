@@ -6,9 +6,9 @@ Vue.component('cart', {
         }
     },
     methods: {
-        removeItemFromCart: function (id) {
-            let index = this.cartItems.findIndex(el => el.id === id)
-            this.cartItems.splice(index, 1)
+        removeItemFromCart: function (product) {
+            let index = this.cartItems.findIndex(el => el.id === product.id)
+            if (--product.quantity === 0) this.cartItems.splice(index, 1)
         },
         toggleCartShow: function () {
             if (!this.isFilled) this.isHidden = true
@@ -24,6 +24,7 @@ Vue.component('cart', {
             return sum
         },
         isFilled: function () {
+            if (this.cartItems.length === 0) this.isHidden = true
             return (this.cartItems.length === 0) ? false : true
         }
     },
@@ -44,13 +45,15 @@ Vue.component('cart', {
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     </button>
                     <div class="cart__wrap"
-                    v-bind:class="{ cart_hidden: isHidden }">
+                    v-bind:class="{ cart_hidden: isHidden}">
                         <cart-item 
                             v-for="item in cartItems" 
                             v-bind:product="item" 
                             v-on:remove-from-cart="removeItemFromCart">
                         </cart-item>
-                        <div>ИТОГО: {{totalCost}}</div>
+                        <hr>
+                        <div class="cart__total"
+                        v-bind:class="{ cart_hidden: isHidden}">ИТОГО: {{totalCost}}</div>
                     </div>
                 </div>
                 `

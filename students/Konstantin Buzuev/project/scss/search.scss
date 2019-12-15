@@ -1,0 +1,13 @@
+.search {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+
+    &__btnSearch {
+        display: block;
+        background-color: transparent;
+        border: none;
+        font-size: 1.2em;
+        color: #fafafa;
+    }
+}
