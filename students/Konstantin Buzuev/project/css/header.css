@@ -1,11 +1,10 @@
 .header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: -ms-grid;
+  display: grid;
   background-color: #2f2a2d;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-grid-columns: auto 200px 40px;
+      grid-template-columns: auto 200px 40px;
+  grid-column-gap: 20px;
   color: #fafafa;
   padding: 30px 80px;
 }
