@@ -1,7 +1,8 @@
 Vue.component("cart", {
   data: function() {
     return {
-      urlBasketData: "getBasket.json",
+      urlBasketData: "/getBasket.json",
+      urlBasketAdd: "/addToBasket.json",
       imageCart: "https://placehold.it/100x80",
       isVisible: false,
       vItems: [],
@@ -13,24 +14,29 @@ Vue.component("cart", {
       this.isVisible = !this.isVisible;
     },
     fetchDataToCart() {
-      this.$root.getJson(this.urlBasketData).then(data => {
-        this.vItems = data.contents;
-      });
+      this.$root.getJson(this.urlBasketData)
+        .then(data => {
+          this.vItems = data.contents;
+        });
     },
     addItemToCart(event) {
+      this.$root.postReq(this.urlBasketAdd, event.target)
+        .then(
+          data => console.log(data),
+          error => console.log(error)
+        );
+
       let id = +event.target.dataset["id"];
       let find = this.getItemInCartById(id);
       if (find) {
         find.quantity++;
       } else {
-        this.vItems.push(
-          {
-            id: +event.target.dataset["id"],
-            title: `${event.target.dataset["name"]}`,
-            price: `${event.target.dataset["price"]}`,
-            quantity: 1,
-          }
-        );
+        this.vItems.push({
+          id: +event.target.dataset["id"],
+          title: `${event.target.dataset["name"]}`,
+          price: `${event.target.dataset["price"]}`,
+          quantity: 1,
+        });
       }
     },
     delItemFromCart(event) {
@@ -57,5 +63,5 @@ Vue.component("cart", {
         </cart-item>
     </div>
   </div>
-  `
+  `,
 });
