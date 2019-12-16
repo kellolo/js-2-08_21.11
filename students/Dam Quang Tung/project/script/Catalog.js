@@ -18,9 +18,15 @@ Vue.component ('catalog', {
             </div>
     `,
     methods: {
-        filterProducts (searchLine) {
-            const regexp = new RegExp(searchLine, 'i')
-            this.itemsFilter = this.items.filter(good => regexp.test(good.product_name))
-    }
+        filterProducts(searchLine) {
+            if (searchLine.length == 0) {
+                return this.itemsFilter = this.items
+            } else {
+                let searchRequest = new RegExp (searchLine, 'i')
+                return this.itemsFilter = this.items.filter(item => {
+                    return searchRequest.test(item.product_name)
+                })
+            }
+        }
     },
 })
