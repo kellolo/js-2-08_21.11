@@ -35,15 +35,15 @@
 </body>
 </html>
  -->
- <!DOCTYPE html>
-<html lang="en">
-<head>
+<!-- <!DOCTYPE html>
+ <html lang="en">
+ <head>
     <meta charset="UTF-8">
     <title>Интернет-магазин</title>
     <link rel="stylesheet" href="style/normalize.css">
     <link rel="stylesheet" href="style/style.css">
-</head>
-<body>
+ </head>
+ <body>
     <div id="app">
         <header>
             <div class="logo">E-shop</div>
@@ -79,7 +79,7 @@
                     <img :src="item.img" alt="Some img">
                     <div class="desc">
                         <h3>{{ item.product_name }}</h3>
-                        <!-- <h3>{{ post.title }}</h3> -->
+                        <h3>{{ post.title }}</h3>
                         <p>{{ item.price }} </p>
                         <button class="btn-cart" type="button" @click="content(item.id_product, item.product_name, item.price)">Купить</button>
                     </div>
@@ -89,6 +89,49 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="script/main.js"></script>
+    <script src="script/main_vue.js"></script>
+    <script src="script/Catalog.js"></script>
+    <script src="script/CatalogItem.js"></script>
+    <script src="script/Cart.js"></script>
+    <script src="script/CartItem.js"></script>
+    <script src="script/Search.js"></script>
+ </body>
+ </html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <filter-comp></filter-comp>
+                <cart ref="cart"></cart>
+            </div>
+        </header>
+        <main>
+            <catalog ref="catalog"></catalog>
+        </main>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="script/Catalog.js"></script>
+    <script src="script/CatalogItem.js"></script>
+    <script src="script/Cart.js"></script>
+    <script src="script/CartItem.js"></script>
+    <script src="script/Filter.js"></script>
+    <script src="script/main_vue.js"></script>
 </body>
+
 </html>
