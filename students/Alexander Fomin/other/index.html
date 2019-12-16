@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        'use strict'
+        const origin = 'Москва'
+        const destination = 'Лондон'
+        const depart_date = '2018-10-19'
+
+        function getIATA(origin, destination) {
+            const request = new XMLHttpRequest();
+            let iata = []
+            request.open("GET",
+                `https://www.travelpayouts.com/widgets_suggest_params?q=Из ${origin} в ${destination}`)
+            request.responseType = "json"
+            request.send();
+            request.onload = function () {
+                iata[0] = request.response.origin.iata
+                iata[1] = request.response.destination.iata
+                console.log(iata[0])
+            };
+            return iata
+        }
+
+        function getPrice(origin, destination, depart_date) {
+            const request = new XMLHttpRequest();
+
+            request.open("GET",
+                `http://min-prices.aviasales.ru/calendar_preload?origin=${origin}&&destination=${destination}&&depart_date=${depart_date}`
+            )
+            request.responseType = "json"
+            request.send();
+            request.onload = function () {
+                console.log(request)
+            };
+            return request.response.best_prices
+        }
+
+
+        console.log(getIATA(origin, destination).length)
+        //prices = getPrice(iata.origin, iata.destination, depart_date)
+    </script>
+</body>
+
+</html>

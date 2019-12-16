@@ -1,0 +1,172 @@
+@import "vars";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: $background-color;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 320px;
+  min-height: 320px;
+  margin: 0 auto;
+  font-family: $default-font;
+  font-weight: 400;
+  color: $p-text-color;
+}
+
+.wrap-container {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+
+.main {
+  position: relative;
+}
+
+.footer {
+  flex: 0 0 auto;
+}
+
+.link {
+  display: inline-block;
+  text-decoration: none;
+  outline: none;
+  color: $g-text-color;
+  font-weight: 700;
+  &:hover,
+  &:active,
+  &:focus,
+  &._active {
+    color: $p-active-color;
+  }
+  &._o {
+    color: $o-text-color;
+  }
+}
+
+._ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+h1, h2, h3, h4, h5, h6, .body0 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+h2, h3, .body0 {
+
+}
+
+.body1 {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+._small {
+  text-transform: lowercase;
+}
+
+._sub {
+  position: relative;
+  &:before {
+    display: block;
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    transform: translateY(100%);
+    background-repeat: no-repeat;
+    background-position: top center;
+  }
+}
+
+img	{
+  display: block;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.button,
+.input {
+  width: 100%;
+  max-width: 184px;
+  min-height: 36px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid transparent;
+  padding: 5px 8px;
+  border-radius: 18px;
+  text-align: center;
+  font-size: 0.875rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.button {
+  align-items: center;
+  font-weight: 700;
+  color: $s-text-color;
+  background-color: $s-background-color;
+  box-shadow: 0 4px 10px 0 rgba(255, 141, 44, 0.25);
+  text-transform: none;
+  text-decoration: none;
+  border: 1px solid $s-background-color;
+  cursor: pointer;
+  &:focus, &:active, &:hover {
+    color: $s-active-color;
+    background-color: $background-color;
+  }
+  &._s {
+    color: $s-active-color;
+    background-color: $background-color;
+    &:focus, &:active, &:hover {
+      color: $s-text-color;
+      background-color: $s-background-color;
+    }
+  }
+}
+
+.input {
+  max-width: 332px;
+  min-height: 40px;
+  padding-top: 10px;
+  background-color: #f4f8f7;
+  border-radius: 2px;
+  text-align: left;
+  &:focus, &:active, &:hover {
+    border: 1px solid $s-active-color;
+  }
+  &:invalid:not(:placeholder-shown),
+  &._error {
+    border: 1px solid #FF0000;
+  }
+  &:focus + label,
+  &:valid:not(:placeholder-shown) + label {
+    right: auto;
+    font-size: 0;
+  }
+}
+
+._p {
+  color: $p-text-color;
+}
+
+._s {
+  color: $s-text-color;
+}
+
+@import "grid";
+@import "media";
