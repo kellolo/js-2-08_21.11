@@ -1,9 +1,7 @@
 .cart-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: flex-end;
-    border: 1px solid #2f2a2d;
+    display: grid;
+    grid-template-columns: 50px auto auto 25px 50px;
+    grid-column-gap: 10px;
     padding: 10px;
 
     &:not(:last-child) {
@@ -11,8 +9,8 @@
     }
 
     &__icon {
-        height: 25px;
-        width: 25px;
+        height: 50px;
+        width: 50px;
         object-fit: fill;
         object-position: center;
         justify-self: flex-start;
@@ -21,41 +19,34 @@
 
     &__title {
         max-width: 150px;
-        margin: 0;
+        margin: auto 0;
         font-size: 12px;
-        line-height: 25px;
-        justify-self: flex-start;
+
     }
 
     &__quantity,
     &__price {
-        font-size: 14px;
-        max-height: 25px;
-        line-height: 25px;
+        font-size: 18px;
+        max-height: 50px;
+        line-height: 50px;
+
     }
 
-    &__btnGroup {
-        display: flex;
-        justify-content: space-between;
-        justify-self: flex-end;
-    }
 
-    &__add-btn,
-    &__remove-btn,
     &__delete-btn {
         background-color: #2f2a2d;
         border: 1px solid transparent;
         color: #fafafa;
         transition: all ease-in-out .4s;
         cursor: pointer;
-        height: 25px;
-        width: 25px;
-        border-radius: 50%;
-        font-size: 14px;
-        line-height: 20px;
-        padding-right: 5px;
-        padding-left: 5px;
-        padding-bottom: 5px;
+        height: 50px;
+        width: 50px;
+        border-radius: 10px;
+        font-size: 28px;
+        line-height: 50px;
+
+        padding-left: 6px;
+
 
         &:hover {
             background-color: #fafafa;
@@ -65,3 +56,15 @@
         }
     }
 }
+
+/*
+Выпиленные кнопки:
+    &__btnGroup {
+        display: flex;
+        justify-content: space-between;
+        justify-self: flex-end;
+    }
+    &__add-btn,
+    &__remove-btn,
+
+*/
