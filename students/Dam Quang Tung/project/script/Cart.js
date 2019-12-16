@@ -16,19 +16,25 @@ Vue.component ('cart', {
     },
     methods: {
         addProduct (product) {
-            this.$parent.getJson (this.addBasket)
+            this.$parent.getJson(this.addBasket)
                 .then (data => {
-                    if(data.result) {
-                        let find = this.cartFilter.find (element => element.id_product === product.id_product);
+                    if (data.result == 1) {
+                        let find = this.cartFilter.find (element => element.id_product === product.id_product)
                         if (!find) {
-                            let el = this.cart.find(good => good.id_product === product.id_product)
-                            this.cartFilter.push(el)
-                        } else {                          
+                            let selectedProduct = {
+                                'id_product': product.id_product,
+                                'product_name': product.product_name,
+                                'price': product.price,
+                                'quantity': 1
+                            }
+                            this.cartFilter.push (selectedProduct)        
+                        }  else {
                             find.quantity++
                         }
-                    }
+                    } 
                 })
-         },
+                .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+        },
         delProduct (product) {
             this.$parent.getJson (this.delBasket)
                 .then (data => {
