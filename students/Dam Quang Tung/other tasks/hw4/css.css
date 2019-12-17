@@ -1,0 +1,41 @@
+form {
+    width: 500px;
+}
+
+fieldset {
+    border: none;
+}
+
+label {
+    display: block;
+    width: 400px;
+}
+input,textarea{
+    margin-left: 10px;
+}
+.valid {
+    border-color: #3f1;
+    background-color: #fff;
+}
+
+.valid:focus {
+    outline: none;
+}
+
+.invalid {
+    border-color: #900;
+    background-color: #FDD;
+}
+
+.invalid:focus {
+    outline: none;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.error {
+    color: #900;
+    margin-bottom: 20px;
+}
