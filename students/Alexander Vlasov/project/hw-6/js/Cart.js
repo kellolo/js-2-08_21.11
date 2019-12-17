@@ -12,7 +12,7 @@ Vue.component ('cart', {
         addProduct (product) {
             this.$parent.getJson (this.addUrl)
                 .then (answer => {
-                    if (!answer.result) {
+                    if (answer.result) {
                         let find = this.items.find (item => item.id_product === product.id_product)
                         if (find) {
                             find.quantity ++
@@ -27,7 +27,7 @@ Vue.component ('cart', {
         delProduct (product) {
             this.$parent.getJson (this.delUrl)
                 .then (answer => {
-                    if (!answer.result) {
+                    if (answer.result) {
                         let find = this.items.find (item => item.id_product === product.id_product)
                         if (find.quantity > 1) {
                             find.quantity --
