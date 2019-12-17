@@ -1,18 +1,1 @@
-{
-  "amount": 8000,
-  "countGoods": 2,
-  "contents": [
-    {
-      "id": 21,
-      "title": "Монитор",
-      "price": 7000,
-      "quantity": 1
-    },
-    {
-      "id": 31,
-      "title": "Клавиатура",
-      "price": 1000,
-      "quantity": 1
-    }
-  ]
-}
+{"amount":8000,"countGoods":2,"contents":[{"id":21,"title":"Монитор","price":7000,"quantity":2},{"id":31,"title":"Клавиатура","price":1000,"quantity":1}]}

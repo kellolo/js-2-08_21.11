@@ -4,7 +4,7 @@
 const app = new Vue({
   el: "#app",
   data: {
-    shopName: "E-SHOP. developed with Vue",
+    shopName: "E-SHOP. developed with Vue"
     // urlAPI:
     // "https://raw.githubusercontent.com/rri9/js-2-08_21.11/" +
     // "master/students/Rakushov%20Ruslan/Others/responses/",
@@ -45,7 +45,7 @@ const app = new Vue({
         } else if (window.ActiveXObject) {
           xhr = new ActiveXObject("Microsoft.XMLHTTP");
         }
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
             if (xhr.status == 200) {
               resolve(JSON.parse(xhr.responseText));
@@ -58,9 +58,14 @@ const app = new Vue({
         xhr.timeout = 10000;
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        let newItemStr = `{"id": ${data.dataset["id"]}, "title": "${data.dataset["title"]}", "price": ${data.dataset["price"]}}`;
-        //debug
-        console.log(newItemStr);
+        let newItemStr;
+        if (data.dataset["name"]) {
+          newItemStr = `{"id": ${data.dataset["id"]}, "title": "${data.dataset["name"]}", "price": ${data.dataset["price"]}}`;
+        } else {
+          newItemStr = `{"id": ${data.dataset["id"]}}`;
+        }
+        // debugger;
+        // console.log(`newItemStr = ${newItemStr}`);
         xhr.send(newItemStr);
       });
     },
@@ -68,6 +73,6 @@ const app = new Vue({
       //Removed to components
       // this.$refs.catalog.fetchDataToCatalog();
       // this.fetchDataToCart();
-    },
-  },
+    }
+  }
 });
