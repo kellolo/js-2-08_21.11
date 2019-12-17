@@ -1,0 +1,92 @@
+.btn {
+  display: inline-block;
+  font: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btn:focus {
+  outline: 0.5rem auto #4d90fe;
+}
+.profile-user-settings {
+  float: left;
+  width: calc(66.666% - 2rem);
+}
+.profile-user-settings {
+  margin-top: 1.1rem;
+}
+.profile-user-name {
+  display: inline-block;
+  font-size: 3.2rem;
+  font-weight: 300;
+}
+.profile-edit-btn {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  border: 0.1rem solid #dbdbdb;
+  border-radius: 0.3rem;
+  padding: 0 2.4rem;
+  margin-left: 2rem;
+}
+.profile-edit-btn {
+  font-weight: 600;
+}
+.profile-settings-btn {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+
+@media screen and (max-width: 40rem) {
+  .profile-user-settings {
+    float: none;
+    width: auto;
+  }
+  .profile-user-settings {
+    flex-basis: calc(100% - 10.7rem);
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .profile-user-name {
+    font-size: 2.2rem;
+  }
+  .profile-edit-btn {
+    order: 1;
+    padding: 0;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .profile-edit-btn {
+    margin-left: 0;
+  }
+  .profile-edit-btn {
+    flex-basis: 100%;
+  }
+}
+@supports (display: grid) {
+  .profile-user-settings {
+    width: auto;
+    margin: 0;
+  }
+  @media (max-width: 40rem) {
+    .profile-user-settings {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-gap: 1rem;
+    }
+    .profile-user-settings {
+      margin: 0;
+    }
+    .profile-edit-btn {
+      grid-column: 1 / -1;
+    }
+    .profile-settings-btn,
+    .profile-edit-btn {
+      margin: 0;
+    }
+  }
+}
