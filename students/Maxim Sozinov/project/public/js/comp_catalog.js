@@ -7,7 +7,7 @@ Vue.component ('catalog', {
         };
     },
     mounted () {
-        this.$parent.getJson (this.FAKE_API_CATALOG)
+        this.$parent.getJson ('/catalog')
             .then (data => {
                 this.items = data;
                 this.filteredItems = this.items.slice();
@@ -26,4 +26,4 @@ Vue.component ('catalog', {
             <catalog-item v-for="product in filteredItems" :item="product" :key="product.id"></catalog-item>
         </div>
     `
-});
+}); 
