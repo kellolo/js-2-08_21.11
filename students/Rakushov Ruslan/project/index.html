@@ -10,51 +10,10 @@
     <div id="app">
       <header>
         <div class="logo">{{ shopName }}</div>
-        <div class="cart">
-          <form action="#" class="search-form">
-            <input type="text" class="search-field" v-model="catalog.vSearchString" />
-            <button class="btn-search" type="submit" @click="filterItems">
-              <i class="fas fa-search"></i>
-            </button>
-          </form>
-          <button class="btn-cart" type="button" @click="toggleCartVisibility">Корзина</button>
-          <div class="cart-block" v-show="cart.isVisible">
-            <div class="cart-item" :data-id="item.id" v-for="item in cart.vItems">
-              <div class="product-bio">
-                <img :src="imageCart" alt="Some image" />
-                <div class="product-desc">
-                  <p class="product-title">{{item.title}}</p>
-                  <p class="product-quantity">Quantity: {{item.quantity}}</p>
-                  <p class="product-single-price">{{item.price}} руб. each</p>
-                </div>
-              </div>
-              <div class="right-block">
-                <p class="product-price">{{item.quantity * item.price}}</p>
-                <button class="del-btn" :data-id="item.id">&times;</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <cart ref="cart"></cart>
       </header>
       <main>
-        <div class="products">
-          <div class="product-item" :data-id="prod.id" v-for="prod in catalog.vFilteredItems">
-            <img :src="image" alt="Some img" />
-            <div class="desc">
-              <h3>{{ prod.title }}</h3>
-              <p>{{ prod.price }} руб.</p>
-              <button
-                class="buy-btn"
-                :data-id="prod.id"
-                :data-name="prod.title"
-                :data-image="image"
-                :data-price="prod.price"
-              >
-                Купить
-              </button>
-            </div>
-          </div>
-        </div>
+        <catalog ref="catalog"></catalog>
       </main>
     </div>
 
@@ -65,6 +24,13 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/catalog.js"></script>
+    <script src="js/catalogItem.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/cartItem.js"></script>
+    <script src="js/dataLoading.js"></script>
+    <script src="js/dataEmpty.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
