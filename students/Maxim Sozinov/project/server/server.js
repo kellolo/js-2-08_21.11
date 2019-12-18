@@ -31,6 +31,20 @@ app.get('/cart', (req, res) => {
 
 });
 
+function rewriteCart (cart) {
+    let newCart = {
+        "amount": 46600,
+        "countGoods": 2,
+        "contents": cart
+    };
+    fs.writeFile('server/db/getBasket.json', JSON.stringify(newCart), (err) => {
+        if (err) {
+            throw err;
+        }
+    });
+    return (JSON.stringify(newCart));
+}
+
 app.post('/cart', (req, res) => {
     let newItem = req.body;
 
@@ -47,20 +61,7 @@ app.post('/cart', (req, res) => {
             } else {
                 findItem.quantity++;
             }
-            let newCart = {
-                "amount": 46600,
-                "countGoods": 2,
-                "contents": cart
-            };
-
-            fs.writeFile('server/db/getBasket.json', JSON.stringify(newCart), (err) => {
-                if (err) {
-                    res.sendStatus(404);
-                } else {
-                    console.log('OK');
-                    res.send(JSON.stringify(newCart));
-                }
-            });
+            res.send(rewriteCart (cart));
         }
     });
 });
@@ -79,20 +80,8 @@ app.delete('/cart', (req, res) => {
             } else {
                 cart.splice(cart.indexOf(findItem), 1);
             }
-            let newCart = {
-                "amount": 46600,
-                "countGoods": 2,
-                "contents": cart
-            };
 
-            fs.writeFile('server/db/getBasket.json', JSON.stringify(newCart), (err) => {
-                if (err) {
-                    res.sendStatus(404);
-                } else {
-                    console.log('OK');
-                    res.send(JSON.stringify(newCart));
-                }
-            });
+            res.send(rewriteCart (cart));
         }
     });
 });

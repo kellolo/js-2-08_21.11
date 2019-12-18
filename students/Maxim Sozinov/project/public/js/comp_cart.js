@@ -16,26 +16,26 @@ Vue.component ('cart', {
         showUp () {
             this.show_up = !this.show_up;
         },
-        removeItem(item) {
-            this.$parent.getJson (this.removeItem_url)
-                .then((data) => {
-                    if (data.result === 1) {
-                        let findItem = this.items.find(el => el.id === +item.id);
-                        if (findItem.quantity > 1) {
-                            findItem.quantity--;
-                        } else {
-                            this.items.splice(this.items.indexOf(findItem), 1);
-                        }
-                    } else {
-                        this.$root.smthWrong = true;
-                        console.log(`Ошибка ${data.result}`);
-                    }
-                })
-                .catch((errStatus) => {
-                    this.$root.smthWrong = true;
-                    console.log(`Ошибка ${errStatus}`);
-                });
-        },
+        // removeItem(item) {
+        //     this.$parent.getJson (this.removeItem_url)
+        //         .then((data) => {
+        //             if (data.result === 1) {
+        //                 let findItem = this.items.find(el => el.id === +item.id);
+        //                 if (findItem.quantity > 1) {
+        //                     findItem.quantity--;
+        //                 } else {
+        //                     this.items.splice(this.items.indexOf(findItem), 1);
+        //                 }
+        //             } else {
+        //                 this.$root.smthWrong = true;
+        //                 console.log(`Ошибка ${data.result}`);
+        //             }
+        //         })
+        //         .catch((errStatus) => {
+        //             this.$root.smthWrong = true;
+        //             console.log(`Ошибка ${errStatus}`);
+        //         });
+        // },
         removeItemfromDB(item) {
             this.$parent.deleteJson('/cart', item)
                 .then (data => this.items = data.contents)
