@@ -58,15 +58,7 @@ const app = new Vue({
         xhr.timeout = 10000;
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        let newItemStr;
-        if (data.dataset["name"]) {
-          newItemStr = `{"id": ${data.dataset["id"]}, "title": "${data.dataset["name"]}", "price": ${data.dataset["price"]}}`;
-        } else {
-          newItemStr = `{"id": ${data.dataset["id"]}}`;
-        }
-        // debugger;
-        // console.log(`newItemStr = ${newItemStr}`);
-        xhr.send(newItemStr);
+        xhr.send(`{"id": ${data.dataset["id"]}}`);
       });
     },
     mounted() {

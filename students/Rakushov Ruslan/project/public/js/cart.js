@@ -1,3 +1,5 @@
+//TODO Empty cart message
+
 Vue.component("cart", {
   data: function() {
     return {
@@ -24,18 +26,7 @@ Vue.component("cart", {
       this.$root.postReq(this.urlBasketAdd, event.target).then(
         data => {
           if (data.result == 1) {
-            let id = +event.target.dataset["id"];
-            let find = this.getItemInCartById(id);
-            if (find) {
-              find.quantity++;
-            } else {
-              this.vItems.push({
-                id: +event.target.dataset["id"],
-                title: `${event.target.dataset["name"]}`,
-                price: `${event.target.dataset["price"]}`,
-                quantity: 1
-              });
-            }
+            this.vItems = data.cart.contents;
           } else if (data.result == 0) {
             console.log(`Error adding good to cart: ${data.error}`);
           }
@@ -46,25 +37,14 @@ Vue.component("cart", {
     delItemFromCart(event) {
       this.$root.postReq(this.urlBasketDel, event.target).then(
         data => {
-          // debugger;
           if (data.result == 1) {
-            let id = +event.target.dataset["id"];
-            let find = this.getItemInCartById(id);
-            if (--find.quantity < 1) {
-              this.vItems.splice(this.vItems.indexOf(find), 1);
-            }
+            this.vItems = data.cart.contents;
           } else if (data.result == 0) {
             console.log(`Error deleting good from cart: ${data.error}`);
           }
         },
         error => console.log(`delItemFromCart error= ${error}`)
       );
-      //TODO Same as addItemToCart
-      // let id = +event.target.dataset["id"];
-      // let find = this.getItemInCartById(id);
-      // if (--find.quantity < 1) {
-      //   this.vItems.splice(this.vItems.indexOf(find), 1);
-      // }
     },
     getItemInCartById(id) {
       let find = this.vItems.find(item => +item.id === id);
