@@ -1,0 +1,46 @@
+.profile-bio {
+  float: left;
+  width: calc(66.666% - 2rem);
+}
+
+.profile-bio {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 2.3rem;
+}
+
+.profile-real-name {
+  font-weight: 600;
+}
+@media screen and (max-width: 40rem) {
+  .profile-bio {
+    float: none;
+    width: auto;
+  }
+
+  .profile-bio {
+    font-size: 1.4rem;
+    margin-top: 1.5rem;
+  }
+
+  .profile-bio {
+    flex-basis: 100%;
+  }
+}
+
+@supports (display: grid) {
+  .profile-bio {
+    width: auto;
+    margin: 0;
+  }
+  @media (max-width: 40rem) {
+    .profile-bio {
+      grid-column: 1 / -1;
+    }
+
+    .profile-bio {
+      margin: 0;
+    }
+  }
+}

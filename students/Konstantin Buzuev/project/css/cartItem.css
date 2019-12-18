@@ -1,17 +1,10 @@
+@charset "UTF-8";
 .cart-item {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -ms-flex-line-pack: end;
-      align-content: flex-end;
-  border: 1px solid #2f2a2d;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 50px auto auto 25px 50px;
+      grid-template-columns: 50px auto auto 25px 50px;
+  grid-column-gap: 10px;
   padding: 10px;
 }
 
@@ -20,8 +13,8 @@
 }
 
 .cart-item__icon {
-  height: 25px;
-  width: 25px;
+  height: 50px;
+  width: 50px;
   -o-object-fit: fill;
      object-fit: fill;
   -o-object-position: center;
@@ -32,48 +25,46 @@
 
 .cart-item__title {
   max-width: 150px;
-  margin: 0;
+  margin: auto 0;
   font-size: 12px;
-  line-height: 25px;
-  justify-self: flex-start;
 }
 
 .cart-item__quantity, .cart-item__price {
-  font-size: 14px;
-  max-height: 25px;
-  line-height: 25px;
+  font-size: 18px;
+  max-height: 50px;
+  line-height: 50px;
 }
 
-.cart-item__btnGroup {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  justify-self: flex-end;
-}
-
-.cart-item__add-btn, .cart-item__remove-btn, .cart-item__delete-btn {
+.cart-item__delete-btn {
   background-color: #2f2a2d;
   border: 1px solid transparent;
   color: #fafafa;
   -webkit-transition: all ease-in-out .4s;
   transition: all ease-in-out .4s;
   cursor: pointer;
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-  font-size: 14px;
-  line-height: 20px;
-  padding-right: 5px;
-  padding-left: 5px;
-  padding-bottom: 5px;
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
+  font-size: 28px;
+  line-height: 50px;
+  padding-left: 6px;
 }
 
-.cart-item__add-btn:hover, .cart-item__remove-btn:hover, .cart-item__delete-btn:hover {
+.cart-item__delete-btn:hover {
   background-color: #fafafa;
   color: #2f2a2d;
   border: 1px solid #2f2a2d;
 }
+
+/*
+Выпиленные кнопки:
+    &__btnGroup {
+        display: flex;
+        justify-content: space-between;
+        justify-self: flex-end;
+    }
+    &__add-btn,
+    &__remove-btn,
+
+*/
 /*# sourceMappingURL=cartItem.css.map */

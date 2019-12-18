@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>lesson-3 async</title>
+</head>
+<body>
+  
+    <script>
+// //Try sync method
+// function makeGetRequest(urlPostFix) {
+//   let xhr = new XMLHttpRequest();
+//   xhr.open("GET", url + urlPostFix, false);
+//   xhr.send();
+//   if (xhr.readyState == 4 && xhr.status == 200) {
+//     return JSON.parse(xhr.responseText);
+//   }
+// }
+
+// //Try async. setTimeout emulates long data downloading
+// function makeGetRequestLong(urlPostFix, cb) {
+//   setTimeout(function() {
+//     let xhr = new XMLHttpRequest();
+//     xhr.onreadystatechange = function() {
+//       if (xhr.readyState == 4 && xhr.status == 200) {
+//         cb(JSON.parse(xhr.responseText));
+//       }
+//     };
+//     xhr.open("GET", url + urlPostFix, true);
+//     xhr.send();
+//   }, 1500);
+// }
+
+// // //Try promise. setTimeout emulates long data downloading
+// function makeGetRequestPromiseLong(urlPostFix) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(function() {
+//       let xhr = new XMLHttpRequest();
+//       xhr.onreadystatechange = function() {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//           resolve(JSON.parse(xhr.responseText));
+//         }
+//       };
+//       xhr.open("GET", url + urlPostFix, true);
+//       xhr.send();
+//     }, 3500);
+//   });
+// }
+
+// //Try fetch. //TODO Is it sync again (without await)?
+// function makeGetRequestFetch(urlPostFix) {
+//   return fetch(url + urlPostFix);
+// }
+// function makeGetRequestFetch(urlPostFix) {
+//   setTimeout(function() {
+//     return fetch(url + urlPostFix);
+//   },3000);
+// }
+</script>
+</body>
+</html>

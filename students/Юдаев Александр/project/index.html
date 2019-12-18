@@ -10,47 +10,19 @@
     <div id="app">
         <header>
             <div class="logo">E-shop</div>
-            <div class="cart">
-                <form action="#" class="search-form">
-                    <input type="text" class="search-field">
-                    <button class="btn-search" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <button class="btn-cart" type="button" @click="toggleBasket">Корзина</button>
-                <div class="cart-block" v-if="isActiveBasket">
-                    <div class="cart-item" v-for="prod of basket">
-                        <div class="product-bio">
-                            <img :src="prod.img" alt="Some image">
-                            <div class="product-desc">
-                                <p class="product-title">{{ prod.product_name }}</p>
-                                <p class="product-quantity">Quantity: {{ prod.quantity }}</p>
-                                <p class="product-single-price">{{ prod.price }} each</p>
-                            </div>
-                        </div>
-                        <div class="right-block">
-                            <p class="product-price">{{ prod.quantity * prod.price }}</p>
-                            <button class="del-btn" @click="deleteItemFromBasket(prod.id_product)">&times;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <basket ref="basket"></basket>
         </header>
         <main>
-            <div class="products">
-                <div class="product-item" v-for="item of catalog">
-                    <img :src="item.img" alt="Some img">
-                    <div class="desc">
-                        <h3>{{ item.product_name }}</h3>
-                        <p>{{ item.price }} </p>
-                        <button class="btn-cart" type="button" @click="content(item.id_product, item.product_name, item.price)">Купить</button>
-                    </div>
-                </div>
-            </div>
+            <products ref="catalog"></products>
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="js/BasketItem.js"></script>
+    <script src="js/Product.js"></script>
+    <script src="js/Products.js"></script>
+    <script src="js/Basket.js"></script>
     <script src="js/main.js"></script>
+
 </body>
 </html>
