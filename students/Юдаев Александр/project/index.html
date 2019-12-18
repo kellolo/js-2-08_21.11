@@ -2,27 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/style.css">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div id="app">
-        <header>
-            <div class="logo">E-shop</div>
-
-            <basket ref="basket"></basket>
-        </header>
-        <main>
-            <products ref="catalog"></products>
-        </main>
-    </div>
+<div id="app">
+    <header>
+        <div class="logo">food market</div>
+        <search></search>
+        <basket ref="basket"></basket>
+    </header>
+    <main>
+        <products ref="catalog"></products>
+    </main>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="js/BasketItem.js"></script>
     <script src="js/Product.js"></script>
     <script src="js/Products.js"></script>
     <script src="js/Basket.js"></script>
+    <script src="js/Search.js"></script>
     <script src="js/main.js"></script>
-
 </body>
 </html>

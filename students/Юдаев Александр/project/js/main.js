@@ -14,7 +14,6 @@ let app = new Vue ({
 });
 
 
-
 //
 // //заглушки (имитация базы данных)
 // const FAKE_API_CATALOG = 'https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/goods.json';
