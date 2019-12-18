@@ -36,35 +36,44 @@ Vue.component ('cart', {
                     console.log(`Ошибка ${errStatus}`);
                 });
         },
-        addItem(item) {
-            this.$parent.getJson(this.addItem_url)
-                .then((data) => {
-                    if (data.result === 1) {
-                        let findItem = this.items.find(el => el.id === +item.id);
-                        if (!findItem) {
-                            //заглушка для БД
-                            let addedItem = {
-                                id: +item.id,
-                                title: item.title,
-                                price: +item.price,
-                                img: "https://placehold.it/100x80",
-                                quantity: 1
-                            };
-                            //                        
-                            this.items.push(addedItem);
-                        } else {
-                            findItem.quantity++;
-                        }
-                    } else {
-                        this.$root.smthWrong = true;
-                        console.log(`Ошибка ${data.result}`);
-                    }
-                })
+        removeItemfromDB(item) {
+            this.$parent.deleteJson('/cart', item)
+                .then (data => this.items = data.contents)
                 .catch((errStatus) => {
                     this.$root.smthWrong = true;
                     console.log(`Ошибка ${errStatus}`);
                 });
+            
         },
+        // addItem(item) {
+        //     this.$parent.getJson(this.addItem_url)
+        //         .then((data) => {
+        //             if (data.result === 1) {
+        //                 let findItem = this.items.find(el => el.id === +item.id);
+        //                 if (!findItem) {
+        //                     //заглушка для БД
+        //                     let addedItem = {
+        //                         id: +item.id,
+        //                         title: item.title,
+        //                         price: +item.price,
+        //                         img: "https://placehold.it/100x80",
+        //                         quantity: 1
+        //                     };
+        //                     //                        
+        //                     this.items.push(addedItem);
+        //                 } else {
+        //                     findItem.quantity++;
+        //                 }
+        //             } else {
+        //                 this.$root.smthWrong = true;
+        //                 console.log(`Ошибка ${data.result}`);
+        //             }
+        //         })
+        //         .catch((errStatus) => {
+        //             this.$root.smthWrong = true;
+        //             console.log(`Ошибка ${errStatus}`);
+        //         });
+        // },
         addItemToDB(item) {
             this.$parent.putJson('/cart', item)
                 .then (data => this.items = data.contents)
@@ -72,33 +81,7 @@ Vue.component ('cart', {
                     this.$root.smthWrong = true;
                     console.log(`Ошибка ${errStatus}`);
                 });
-            // this.$parent.getJson(this.addItem_url)
-            //     .then((data) => {
-            //         if (data.result === 1) {
-            //             let findItem = this.items.find(el => el.id === +item.id);
-            //             if (!findItem) {
-            //                 //заглушка для БД
-            //                 let addedItem = {
-            //                     id: +item.id,
-            //                     title: item.title,
-            //                     price: +item.price,
-            //                     img: "https://placehold.it/100x80",
-            //                     quantity: 1
-            //                 };
-            //                 //                        
-            //                 this.items.push(addedItem);
-            //             } else {
-            //                 findItem.quantity++;
-            //             }
-            //         } else {
-            //             this.$root.smthWrong = true;
-            //             console.log(`Ошибка ${data.result}`);
-            //         }
-            //     })
-            //     .catch((errStatus) => {
-            //         this.$root.smthWrong = true;
-            //         console.log(`Ошибка ${errStatus}`);
-            //     });
+            
         },
     },
     template: `

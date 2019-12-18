@@ -61,7 +61,38 @@ app.post('/cart', (req, res) => {
                     res.send(JSON.stringify(newCart));
                 }
             });
-            // res.send(data);
+        }
+    });
+});
+
+app.delete('/cart', (req, res) => {
+    let item = req.body;
+
+    fs.readFile('server/db/getBasket.json', 'utf8', (err, data) => {
+        if (err) {
+            res.sendStatus(404);
+        } else {
+            let cart = JSON.parse(data).contents;
+            let findItem = cart.find(el => el.id === item.id);
+            if (findItem.quantity > 1) {
+                findItem.quantity--;
+            } else {
+                cart.splice(cart.indexOf(findItem), 1);
+            }
+            let newCart = {
+                "amount": 46600,
+                "countGoods": 2,
+                "contents": cart
+            };
+
+            fs.writeFile('server/db/getBasket.json', JSON.stringify(newCart), (err) => {
+                if (err) {
+                    res.sendStatus(404);
+                } else {
+                    console.log('OK');
+                    res.send(JSON.stringify(newCart));
+                }
+            });
         }
     });
 });
