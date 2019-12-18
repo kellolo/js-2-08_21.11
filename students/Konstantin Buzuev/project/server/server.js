@@ -1,6 +1,8 @@
 const catalogRoute = '/catalog'
 const catalogPath = 'server/data/catalog.json'
 const cartRoute = '/cart'
+const addRoute = '/add'
+const removeRoute = '/remove'
 const cartPath = 'server/data/cart.json'
 
 
@@ -10,7 +12,7 @@ const app = express()
 
 app.use(express.json())
 app.use('/', express.static('public')) // localhost:3000
-
+//----------------------------------------------------------------------
 app.get(catalogRoute, (req, res) => {
     catalog.Load()
     if (catalog.error) {
@@ -18,22 +20,27 @@ app.get(catalogRoute, (req, res) => {
             result: 0
         }))
     } else {
-        res.send(catalog.prepareData())
+        res.send(catalog.Data())
     }
 })
-
 app.get(cartRoute, (req, res) => {
-
     cart.Load()
     if (cart.error) {
         res.sendStatus(404, JSON.stringify({
             result: 0
         }))
     } else {
-        res.send(cart.prepareData())
+        res.send(cart.Data())
     }
 })
-
+app.get(`${addRoute}/:id`, (req, res) => {
+    cart.AddItemToCart(req.params.id)
+    res.send(cart.Data())
+})
+app.get(`${removeRoute}/:id`, (req, res) => {
+    cart.RemoveItemFromCart(req.params.id)
+    res.send(cart.Data())
+})
 
 app.listen(3000, () => {
     console.log('server listening at port 3000...')
@@ -69,7 +76,7 @@ class List {
     }
     _setJSON(url) {
         return new Promise((res, rej) => {
-                let data = this._prepareData()
+                let data = this.Data()
                 fs.writeFile(url, data, (err) => {
                     if (err) rej(err)
                     else res(0)
@@ -83,7 +90,7 @@ class List {
             this.items.push(new lists[this.constructor.name](el))
         })
     }
-    prepareData() {
+    Data() {
         return false
     }
 }
@@ -96,7 +103,7 @@ class Catalog extends List {
         this._getJSON(this.url)
             .then((data) => this._handleData(data))
     }
-    prepareData() {
+    Data() {
         return JSON.stringify(this.items)
     }
 }
@@ -112,13 +119,28 @@ class Cart extends List {
                 this.totalCost = data[0].totalCost
             })
     }
-    prepareData() {
+    Data() {
         let data = []
         data.push({
             "contents": this.items,
             "totalCost": this.totalCost
         })
         return JSON.stringify(data)
+    }
+    AddItemToCart(id) {
+        let product = this.items.find(item => item.id == id)
+        if (product) product.quantity++
+        else {
+            product = catalog.items.find(item => item.id == id)
+            product.quantity = 1
+            this.items.push(product)
+        }
+        this._setJSON(this.url)
+    }
+    RemoveItemFromCart(id) {
+        let index = this.items.findIndex(item => item.id == id)
+        if (--this.items[index].quantity === 0) this.items.splice(index, 1)
+        this._setJSON(this.url)
     }
 }
 

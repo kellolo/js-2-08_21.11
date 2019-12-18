@@ -34,7 +34,7 @@ Vue.component("cart-item", {
                 </div>`,
     methods: {
         RemoveFromCart: function () {
-            this.$emit('remove-from-cart', this.product)
+            eventBus.$emit('remove-from-cart', this.product)
         }
     }
 })
