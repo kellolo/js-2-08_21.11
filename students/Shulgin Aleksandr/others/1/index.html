@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        // vars: a = undefined, ...
+        // ES5
+        
+        // var a
+
+        // setTimeout (function () {
+        //     a = 0
+        // }, 0)
+
+        // console.log (a)
+
+        // setTimeout (function () {
+        //     console.log (a)
+        // }, 1000)
+        // window.newGlobalVariable = 'lol'
+        // // ES6
+        // let b = 1
+        // const c = []
+        
+        // console.log (aa)
+        // const aa = 0
+
+        // Шаблонные строки
+        // let str = 'Мама мыла '
+
+        // let what = prompt ('Введите, что мыла мама')
+
+        // console.log (str + what)
+        // console.log (`Ответ: ${str} ${what === '1' ? 'Раму' : 'Пилораму'}`)
+
+        //Стрелочные функции 
+        // function sayHi (par) {
+        //     let ans = 'Hi' + par
+        //     return ans
+        // }
+
+        // let sayArrow = par => {
+        //     let answ = 'Hi' + par
+        //     return answ
+        // }
+
+        // console.log (sayHi())
+        // console.log (sayArrow())
+
+        // let olya = {
+        //     name: 'Olga',
+        //     sayHi: function () {
+        //         console.log (`Hello! I am ${this.name}`)
+        //         console.log (this)
+        //     }
+        // }
+
+        // let kolya = {
+        //     name: 'Kolya',
+        //     sayHi: () => {
+        //         console.log (`Hello! I am ${this.name}`)
+        //         console.log (this)
+        //     }
+        // }
+
+        // let str = prompt ('Введите четырехзначное число')
+        // console.log (str)
+
+        // let a = [...str] // spread оператор, который приводит любое итерируемое данное к массиву
+
+        //Деструктуризация
+        let names = ['Olya', 'Kolya', 'Tolya', 'Vladimir']
+
+        // let name1 = names [0]
+        // let name2 = names [1]
+        // ...
+
+        let [name1, name2, name3, name4] = names
+    </script>
+</body>
+</html>

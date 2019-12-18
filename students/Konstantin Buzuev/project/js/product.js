@@ -22,18 +22,13 @@ Vue.component("product", {
             hidden: Boolean
         }
     },
-    created() {
-        eventBus.$on("search", (searchString) => {
-            if (searchString == "") this.product.hidden = false
-            else this.product.hidden = (this.product.title.indexOf(searchString, 0) < 0) ? true : false
-        })
-    },
-    template: `<div class='product' v-bind:class="{ product_hidden: product.hidden }">
-                    <h1 class='product__title'>{{ product.characteristics.display }}" {{ product.title }}</h1>
-                    <a :href='product.fullImageURL' class='product__link' target='_blank'>
-                        <img :src='product.imageURL' :alt='product.id' class='product__image'></a>
-                    <p class='product__price'>{{ product.price}} руб.</p>
+    template: `<div class="card product" v-bind:class="{ product_hidden: product.hidden }">
+                    <img :src="product.imageURL" class="product__image card-img-top" alt="product.id">
+                    <div class="product__body card-body">
+                    <h5 class="product__title card-title">{{ product.characteristics.display }}" {{ product.title }}</h5>
+                    <p class="product__price card-text">{{ product.price }}  руб.</p>
                     <button class='product__buy-btn' v-on:click="AddItem">Купить</button>
+                    </div>
                 </div>`,
     methods: {
         AddItem: function () {
@@ -41,3 +36,14 @@ Vue.component("product", {
         }
     }
 })
+
+/*
+
+                <div class='product' v-bind:class="{ product_hidden: product.hidden }">
+                    <h1 class='product__title'>{{ product.characteristics.display }}" {{ product.title }}</h1>
+                    <a :href='product.fullImageURL' class='product__link' target='_blank'>
+                        <img :src='product.imageURL' :alt='product.id' class='product__image'></a>
+                    <p class='product__price'>{{ product.price}} руб.</p>
+                    <button class='product__buy-btn' v-on:click="AddItem">Купить</button>
+                </div>
+*/

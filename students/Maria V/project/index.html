@@ -2,31 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Интернет-магазин</title>
+    <title>Online shopping</title>
     <link rel="stylesheet" href="style/normalize.css">
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
-        </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
+    <div id="app">
 
-
-
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" type="button" @click = "showCart" >Корзина</button>
+                <div class="cart-block" v-if = "cartShown">
+                    <div class="cart-item">
+                        <div class="product-bio">
+                            <img src="https://placehold.it/100x80" alt="Some image">
+                            <div class="product-desc">
+                                <p class="product-title"></p>
+                                <p class="product-quantity"></p>
+                                <p class="product-single-price"></p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price"></p>
+                            <button  class="del-btn" >&times;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="products">
+                <div class="product-item" v-for="product of products">
+                    <img src="https://placehold.it/200x150" alt="Some img">
+                    <div class="desc">
+                        <h3>{{product.product_name}}</h3>
+                        <p>{{product.price}}</p>
+                        <button class="buy-btn"> Купить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+    <script>
+    
+    let app = new Vue ({
+    el: '#app',
+    data: {
+        url: 'https://raw.githubusercontent.com/mary4erry/js-2-08_21.11/master/students/Maria%20V/project/JSON/catalog.json',
+        products: [],
+        cart: [],
+        cartShown: false,
+    },
+    methods: {
+        getJSON (url) {
+            return fetch (url)
+                .then ( data => data.json ())
+        },
+        showCart () {
+            this.cartShown = !this.cartShown;
+        },
+    },
+    computed: {
+    
+    },
+    mounted () {
+        this.getJSON(this.url)
+            .then(data => {this.products = data})
+            .then(() => {console.log(this.products)});
+    },
+    created () {
+
+    },
+})
+
+    </script>
 </body>
 </html>
