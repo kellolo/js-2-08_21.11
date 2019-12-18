@@ -1,7 +1,6 @@
 Vue.component ('cart', {
     data () {
         return {
-            FAKE_API_CART: 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/getBasket.json',
             items: [],
             show_up: false,
             removeItem_url: "https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/removeFromCart.json",
@@ -9,7 +8,7 @@ Vue.component ('cart', {
         };
     },
     mounted () {
-        this.$parent.getJson (this.FAKE_API_CART)
+        this.$parent.getJson ('/cart')
             .then (data => this.items = data.contents);
             
     },
@@ -66,10 +65,46 @@ Vue.component ('cart', {
                     console.log(`Ошибка ${errStatus}`);
                 });
         },
+        addItemToDB(item) {
+            this.$parent.putJson('/cart', item)
+                .then (data => this.items = data.contents)
+                .catch((errStatus) => {
+                    this.$root.smthWrong = true;
+                    console.log(`Ошибка ${errStatus}`);
+                });
+            // this.$parent.getJson(this.addItem_url)
+            //     .then((data) => {
+            //         if (data.result === 1) {
+            //             let findItem = this.items.find(el => el.id === +item.id);
+            //             if (!findItem) {
+            //                 //заглушка для БД
+            //                 let addedItem = {
+            //                     id: +item.id,
+            //                     title: item.title,
+            //                     price: +item.price,
+            //                     img: "https://placehold.it/100x80",
+            //                     quantity: 1
+            //                 };
+            //                 //                        
+            //                 this.items.push(addedItem);
+            //             } else {
+            //                 findItem.quantity++;
+            //             }
+            //         } else {
+            //             this.$root.smthWrong = true;
+            //             console.log(`Ошибка ${data.result}`);
+            //         }
+            //     })
+            //     .catch((errStatus) => {
+            //         this.$root.smthWrong = true;
+            //         console.log(`Ошибка ${errStatus}`);
+            //     });
+        },
     },
     template: `
         <div class="cart-block" v-show="show_up">
-             <cart-item v-for="product in items" :item='product' :key='product.id'></cart-item>      
+            <div v-if="items.length === 0">Ваша корзина пуста</div>
+            <cart-item v-for="product in items" :item='product' :key='product.id'></cart-item>      
         </div>
     `
 });

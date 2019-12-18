@@ -6,7 +6,7 @@ Vue.component ('catalog-item', {
         <div class="desc">
             <h3>{{ item.title}}</h3>
             <p>{{ item.price}}  $</p>
-            <button class="buy-btn" v-on:click="$root.$refs.cart.addItem(item)">Купить</button>
+            <button class="buy-btn" v-on:click="$root.$refs.cart.addItemToDB(item)">Купить</button>
         </div>
     </div>
     `
