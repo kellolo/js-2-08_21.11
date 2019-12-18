@@ -18,13 +18,7 @@ let app = new Vue ({
             })
         },
 
-        ShowCart(show)
-        {
-            if(show)
-            {
-                
-            }
-        }
+       
     },
     
 })
