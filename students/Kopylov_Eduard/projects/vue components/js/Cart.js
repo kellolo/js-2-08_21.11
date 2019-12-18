@@ -44,6 +44,8 @@ Vue.component ('cart', {
                     }
                 })  
         },
+
+       
     },
     template: `
     <div class="cart-block">

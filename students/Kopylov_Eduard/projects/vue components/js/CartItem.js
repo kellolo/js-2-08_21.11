@@ -5,7 +5,7 @@ Vue.component ('cart-item', {
         <div class="product-desc">
             <p class="product-title">{{ item.product_name }}</p>
             <p class="product-quantity">Quantity: {{ item.quantity }}</p>
-            <p class="product-single-price">'$'{{ item.price }} each</p>
+            <p class="product-single-price"> $ {{ item.price }} each</p>
         </div>
     </div>
     <div class="right-block">
