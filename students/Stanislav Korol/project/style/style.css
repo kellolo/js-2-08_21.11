@@ -61,7 +61,7 @@ button:focus{
     grid-template-columns: repeat(auto-fit, 200px);
     grid-template-rows: 1fr;
     padding: 40px 80px;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 p {
     margin: 0 0 5px 0;
@@ -86,6 +86,9 @@ img {
 }
 .cart{
     position: relative;
+}
+#cart-module{
+    display: inline-block;
 }
 .cart-block{
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62);

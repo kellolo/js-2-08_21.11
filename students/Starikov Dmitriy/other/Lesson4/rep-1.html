@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let str = "'Ldsafsdf'sdfsdf' s'sdfsdf'sdfsdf sdfsdf'sdfsdfsdfsdf'sdf' sdf's";
+        let reg = /(\B')|('\B)/gm;
+        str = str.replace(reg, '"');
+        console.log(str);
+    </script>
+
+
+</body>
+
+</html>

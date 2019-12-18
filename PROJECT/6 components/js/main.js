@@ -16,6 +16,7 @@ let app = new Vue ({
     data: {
         cartImage: 'https://placehold.it/100x80',
         cartUrl: '/getBasket.json',
+        showCart: false
         
     },
     methods: {
