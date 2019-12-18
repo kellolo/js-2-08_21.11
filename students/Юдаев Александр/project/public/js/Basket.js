@@ -5,7 +5,7 @@ Vue.component('basket', {
             basket: [],
             totalPrice: 0,
             totalQuantity: 0,
-            jsonBasket: 'https://raw.githubusercontent.com/Yudaev/Waxom-template/master/basket.json'
+            jsonBasket: '/basket'
         };
     },
     mounted(){

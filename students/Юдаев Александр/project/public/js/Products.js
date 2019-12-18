@@ -1,7 +1,7 @@
 Vue.component('products', {
     data() {
         return {
-            jsonCatalog: 'https://raw.githubusercontent.com/Yudaev/Waxom-template/master/catalog.json',
+            jsonCatalog: '/catalog',
             items: []
         };
     },
