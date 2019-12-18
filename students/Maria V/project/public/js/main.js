@@ -6,7 +6,7 @@
 // var userCart = [];
 // var list = fetchData ();
 
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+// const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
 
 
 let app = new Vue ({
@@ -19,7 +19,7 @@ let app = new Vue ({
     },
     methods: {
         getJSON (url) {
-            return fetch (`${API + url}`)
+            return fetch (url)
                 .then ( result => result.json())
                 .catch (err => {
                     console.log (err)
