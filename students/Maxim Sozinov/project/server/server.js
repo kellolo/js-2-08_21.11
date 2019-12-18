@@ -45,6 +45,17 @@ function rewriteCart (cart) {
     return (JSON.stringify(newCart));
 }
 
+function logActions (action, item) {
+    let data = `action: ${action}, product: ${item.title}, time: ${(new Date(Date.now())).toString ()} \n`;
+   
+    fs.appendFile('server/db/stat.txt', data, (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log('The "data to append" was appended to file!');
+      });
+}
+
 app.post('/cart', (req, res) => {
     let newItem = req.body;
 
@@ -61,6 +72,7 @@ app.post('/cart', (req, res) => {
             } else {
                 findItem.quantity++;
             }
+            logActions('add', newItem);
             res.send(rewriteCart (cart));
         }
     });
@@ -80,7 +92,7 @@ app.delete('/cart', (req, res) => {
             } else {
                 cart.splice(cart.indexOf(findItem), 1);
             }
-
+            logActions ('delete', item);
             res.send(rewriteCart (cart));
         }
     });
