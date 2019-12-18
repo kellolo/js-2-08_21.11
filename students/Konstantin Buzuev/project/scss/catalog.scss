@@ -1,0 +1,29 @@
+body {
+    font-family: 'SF Pro Display', sans-serif;
+    background-color: #fafafa;
+}
+
+.catalog {
+    &__wrap {
+        display: grid;
+        justify-content: space-between;
+        grid-template-columns: repeat(auto-fit, 250px);
+        column-gap: 30px;
+        grid-template-rows: 1fr;
+        row-gap: 30px;
+        padding: 30px 60px;
+    }
+
+    &__emptyMsg {
+        position: absolute;
+        height: calc(100vh - 200px);
+        margin: 0 auto;
+        text-align: center;
+        font-size: 48px;
+        width: 100%;
+    }
+
+    &_hidden {
+        display: none;
+    }
+}

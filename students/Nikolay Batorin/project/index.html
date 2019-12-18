@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div id="app">
     <header>
         <div class="logo">WISE <span>Market</span></div>
         <form action="#" class="search-form">
@@ -23,7 +24,6 @@
         </div>
     </header>
     <main>
-        <div id="app">
             <div id="products" class="products">
                 <product id="product" class="product-item" v-for="product in products" v-bind:product='product'></product>
             </div>
