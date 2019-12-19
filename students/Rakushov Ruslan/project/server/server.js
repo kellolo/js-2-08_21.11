@@ -60,6 +60,7 @@ app.post("/addToBasket.json", (req, res) => {
           quantity: 1
         });
       }
+      recountCart(cart);
         //TODO basketRecount(); запустить из basket.js (создать его)
         //или cart.amount = basket.recountAmount
         //    cart.countGoods = basket.recountCountGoods
@@ -86,6 +87,7 @@ app.post("/delFromBasket.json", (req, res) => {
       if (--find.quantity < 1) {
         cart.contents.splice(cart.contents.indexOf(find) ,1);
       }
+      recountCart(cart);
         //TODO basketRecount(); запустить из basket.js (создать его)
         //или cart.amount = basket.recountAmount
         //    cart.countGoods = basket.recountCountGoods
@@ -133,6 +135,15 @@ function logUserCartActivity(action, id) {
   }
   const title = getItemInCatalogById(id).title;
   fs.appendFile(logFile, `${dateStr} ${timeStr} ${act} ${title}\n`, () => { });
+}
+
+function recountCart(cart) {
+  cart.amount = 0
+  cart.countGoods = 0;
+  cart.contents.forEach(item => {
+    cart.countGoods += item.quantity;
+    cart.amount += item.quantity * item.price;
+  });
 }
 
 app.listen(3000, () => {
