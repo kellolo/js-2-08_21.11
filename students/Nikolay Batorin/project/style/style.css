@@ -17,10 +17,10 @@ button:focus {
 .logo {
     font-weight: bold;
     font-size: 30px;
-    text-shadow: 2px 2px 3px #fafafa83, 3px 3px 20px #fafafa85;
 }
 
 .logo span {
+    text-shadow: 2px 2px 1px #ffffffb6;
     color: #ad0000;
 }
 
@@ -207,5 +207,5 @@ img {
     padding: 10px;
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid #fafafa;
+    border-bottom: 1px solid #fafafa;
 }

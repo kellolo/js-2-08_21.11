@@ -7,26 +7,25 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
-        </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
-
-
-
+    <div id="shop">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <search ref="search"></search>
+                <cart ref="cart"></cart>
+            </div>
+        </header>
+        <main>
+            <catalog ref="catalog"></catalog>
+        </main>
+    </div>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/Catalog.js"></script>
+    <script src="js/CatalogItem.js"></script>
+    <script src="js/Cart.js"></script>
+    <script src="js/CartItem.js"></script>
+    <script src="js/Search.js"></script>
+    <script src="js/main-vue.js"></script>
 </body>
 </html>
