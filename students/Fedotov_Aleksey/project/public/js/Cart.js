@@ -82,7 +82,6 @@ Vue.component ('cart', {
                 this.count = data.cart.countGoods;
                 this.emptyCart = data.empty;
                 console.log(this.emptyCart);
-                
             })
             .catch( error => console.log("error", error));
         },

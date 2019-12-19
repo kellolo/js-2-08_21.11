@@ -3,21 +3,30 @@ Vue.component ('catalog', {
         return {
             catalogUrl: 'catalog',
             imgCatalog: 'https://placehold.it/200x150',
+            filterUrl: 'filter',
             items: []
         }
     },
     methods: {
         filterProduct(reg) {
             if (reg) {
-                this.items = [];
-                this.$parent.getJson(this.catalogUrl)
-                .then(data => {
-                    data.forEach(element => {
-                        if (reg.test(element.product_name)) {
-                            this.items.push(element);
-                        }
-                    })
+                console.log(reg);
+                this.$parent.getJsonPost(this.filterUrl, reg)
+                .then(resolve => {
+                    if (resolve.status !== 200) {
+                        return Promise.reject(new Error(resolve.statusText))
+                    }
+                    return resolve.json();
                 })
+                .then(data => {
+                    console.log(data);
+                    if (data.result !== 1) {
+                        return Promise.reject(new Error("Не удалось добавить товар в корзину"))
+                    } else {
+                        this.items = data.filter;
+                    }
+                })
+                .catch( error => console.log("error", error));
             }
         }
     },

@@ -41,6 +41,8 @@ app.post('/addToCart', urlencodedParser, (req,res) => {
 })
 
 app.post('/removeFromCart', urlencodedParser, (req,res) => {
+    console.log('remove', req.body.data);
+    
     if(!req.body) {
         res.sendStatus(400);
     } else {
@@ -71,6 +73,25 @@ app.post('/removeFromCart', urlencodedParser, (req,res) => {
         });
     }
 });
+
+app.post('/filter', urlencodedParser, (req,res) => {
+    let regFilter = new RegExp(req.body.data,'i');
+    if (!req.body) {
+        res.sendStatus(400);
+    } else {
+        //addToCart(req.body.data,res);
+        fs.readFile('server/db/catalog.json', 'utf-8', (err,data) => {
+            if (err) {
+                res.json({result: err})
+            } else {
+                let filterArr = [];
+                let catalog = JSON.parse(data);
+                filterArr = catalog.filter(product => regFilter.test(product.product_name))
+                res.json({filter: filterArr, result: 1});
+            }
+        })
+    }
+})
 
 function addToCart(product,res) {
     fs.readFile('server/db/userCart.json', 'utf-8', (err,data) => {

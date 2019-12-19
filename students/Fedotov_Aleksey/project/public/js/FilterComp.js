@@ -6,13 +6,14 @@ Vue.component('product-search',{
     },
     methods: {
         toSearch() {
-            this.$root.$refs.cat.filterProduct(this.regStr);
+            // this.$root.$refs.cat.filterProduct(this.regStr);
+            this.$root.$refs.cat.filterProduct(this.regSearch);
         }
     },
     computed: {
-        regStr: function() {
-            return new RegExp(this.regSearch,"i");
-        }
+        // regStr: function() {
+        //     return new RegExp(this.regSearch,"i");
+        // }
     },
     mounted() {
     },
