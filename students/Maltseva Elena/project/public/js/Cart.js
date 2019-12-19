@@ -11,7 +11,7 @@ Vue.component ('cart', {
     `,
     data () {
         return {
-            url: `/getBasket.json`,
+            url: `/cart`,
             image: 'https://placehold.it/100x80',
             cartItems: [],
             visibility: false
@@ -19,7 +19,7 @@ Vue.component ('cart', {
     },
     mounted () {
         this.$parent.fetchData(this.url)
-        .then (dataArr => this.cartItems = dataArr.contents)
+        .then (dataArr => this.cartItems = dataArr)
     },
     computed: {
         noCartItems () {
@@ -31,35 +31,30 @@ Vue.component ('cart', {
             this.visibility = !this.visibility
         },
         addProduct (selectedItem) {
-            this.$parent.fetchData(`/addToBasket.json`)
-                .then (data => {
-                    if (data.result == 1) {
-                        let find = this.cartItems.find (element => element.id_product === selectedItem.id_product)
-                        if (!find) {
-                            // selectedItem['quantity'] = 1                 // не работает
-                            // this.cartItems.push (selectedItem)
-
-                            // let selectedProduct = selectedItem           // не работает
-                            // selectedProduct.quantity = 1
-
-                            let selectedProduct = {
-                                'id_product': selectedItem.id_product,
-                                'product_name': selectedItem.product_name,
-                                'price': selectedItem.price,
-                                'quantity': 1
-                            }
-                            this.cartItems.push (selectedProduct)        
-                        }  else {
-                            find.quantity++
-                        }
-                    } else {
-                        alert ("В процессе добавления товара возникла ошибка, попробуйте еще раз.")
-                    }
-                })
+            let options = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json; charset=utf-8'},
+                body: JSON.stringify(selectedItem)
+            }
+            this.$parent.changeData(`/add-to-cart`, options)
+                .then (dataArr => this.cartItems = dataArr)
+            // this.$parent.fetchData (`https://raw.githubusercontent.com/LenaMaltseva/online-store-api/master/responses/addToBasket.json`)
+            //     .then (data => {
+            //         if (data.result == 1) {
+            //             let find = this.cartItems.find (element => element.id_product === selectedItem.id_product)
+            //             if (!find) {
+            //                 this.cartItems.push (Object.assign({}, selectedItem, {quantity: 1}))
+            //             }  else {
+            //                 find.quantity++
+            //             }
+            //         } else {
+            //             alert ("В процессе добавления товара возникла ошибка, попробуйте еще раз.")
+            //         }
+            //     })
                 .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
         },
         removeProduct (selectedItem) {
-            this.$parent.fetchData (`/deleteFromBasket.json`)
+            this.$parent.fetchData (`https://raw.githubusercontent.com/LenaMaltseva/online-store-api/master/responses/deleteFromBasket.json`)
                 .then (data => {
                     if (data.result == 1) {
                         let find = this.cartItems.find (element => element.id_product === selectedItem);
