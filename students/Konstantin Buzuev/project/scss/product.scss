@@ -17,11 +17,26 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    box-sizing: border-box;
     width: 250px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 20px;
+    padding: 10px 5px 0px 5px;
+    border: 1px solid black;
     background-color: white;
-    outline: 1px solid #2f2a2d;
+    /*outline: 1px solid #2f2a2d;*/
+
+    &__image {
+        object-fit: contain;
+        object-position: center;
+        width: 240px;
+        height: 240px;
+    }
+
+    &__body {
+        flex-direction: column;
+        justify-content: space-between;
+        display: flex;
+    }
 
     &__title {
         font-size: 18px;
@@ -30,19 +45,6 @@ body {
         padding: 15px;
     }
 
-    &__link {
-        &:hover {
-            text-decoration: none;
-            outline: 2px solid green;
-        }
-    }
-
-    &__image {
-        object-fit: contain;
-        object-position: center;
-        width: 250px;
-        height: 250px;
-    }
 
     &__price {
         color: green;
@@ -67,14 +69,8 @@ body {
         }
     }
 
-    &__details {
-        align-self: center;
-        margin: 0 auto;
-    }
-
     &_hidden {
         display: none !important;
-
     }
 
 }
