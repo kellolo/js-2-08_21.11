@@ -31,42 +31,13 @@ Vue.component ('cart', {
             this.visibility = !this.visibility
         },
         addProduct (selectedItem) {
-            let options = {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json; charset=utf-8'},
-                body: JSON.stringify(selectedItem)
-            }
-            this.$parent.changeData(`/add-to-cart`, options)
+            this.$parent.changeData(`/add-to-cart`, selectedItem)
                 .then (dataArr => this.cartItems = dataArr)
-            // this.$parent.fetchData (`https://raw.githubusercontent.com/LenaMaltseva/online-store-api/master/responses/addToBasket.json`)
-            //     .then (data => {
-            //         if (data.result == 1) {
-            //             let find = this.cartItems.find (element => element.id_product === selectedItem.id_product)
-            //             if (!find) {
-            //                 this.cartItems.push (Object.assign({}, selectedItem, {quantity: 1}))
-            //             }  else {
-            //                 find.quantity++
-            //             }
-            //         } else {
-            //             alert ("В процессе добавления товара возникла ошибка, попробуйте еще раз.")
-            //         }
-            //     })
                 .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
         },
         removeProduct (selectedItem) {
-            this.$parent.fetchData (`https://raw.githubusercontent.com/LenaMaltseva/online-store-api/master/responses/deleteFromBasket.json`)
-                .then (data => {
-                    if (data.result == 1) {
-                        let find = this.cartItems.find (element => element.id_product === selectedItem);
-                        if (find.quantity > 1) {
-                            find.quantity--;
-                        } else {
-                            this.cartItems.splice(this.cartItems.indexOf(find), 1);
-                        }
-                    } else {
-                        alert ("Не удалось удалить товар, попробуйте еще раз.")
-                    }
-                })
+            this.$parent.changeData(`/delete-from-cart`, selectedItem)
+                .then (dataArr => this.cartItems = dataArr)
                 .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
         }
     }
