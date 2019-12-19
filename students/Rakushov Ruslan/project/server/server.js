@@ -1,5 +1,3 @@
-//TODO Add amount & countGoods in app.post("/addToBasket.json", ...)
-
 const logFile = "server/stats.json";
 console.log("Hello, I'm server.js");
 
@@ -61,9 +59,6 @@ app.post("/addToBasket.json", (req, res) => {
         });
       }
       recountCart(cart);
-        //TODO basketRecount(); запустить из basket.js (создать его)
-        //или cart.amount = basket.recountAmount
-        //    cart.countGoods = basket.recountCountGoods
       fs.writeFile("server/responses/getBasket.json", JSON.stringify(cart), (errW, resW) => {
         if (errW) {
           res.send(`{"result": 0, "error": ${errW}}`);
@@ -88,9 +83,6 @@ app.post("/delFromBasket.json", (req, res) => {
         cart.contents.splice(cart.contents.indexOf(find) ,1);
       }
       recountCart(cart);
-        //TODO basketRecount(); запустить из basket.js (создать его)
-        //или cart.amount = basket.recountAmount
-        //    cart.countGoods = basket.recountCountGoods
       fs.writeFile("server/responses/getBasket.json", JSON.stringify(cart), (errW, resW) => {
         if (errW) {
           res.send(`{"result": 0, "error": ${errW}}`);

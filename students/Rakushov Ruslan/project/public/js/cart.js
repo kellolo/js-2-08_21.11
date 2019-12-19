@@ -1,5 +1,3 @@
-//TODO Empty cart message
-
 Vue.component("cart", {
   data: function() {
     return {
@@ -9,7 +7,8 @@ Vue.component("cart", {
       imageCart: "https://placehold.it/100x80",
       isVisible: false,
       vItems: [],
-      totalSum: 0
+      amount: 0,
+      countGoods: 0,
     };
   },
   methods: {
@@ -19,6 +18,8 @@ Vue.component("cart", {
     fetchDataToCart() {
       this.$root.getJson(this.urlBasketData).then(data => {
         this.vItems = data.contents;
+        this.amount = data.amount;
+        this.countGoods = data.countGoods;
       });
     },
     addItemToCart(event) {
@@ -27,6 +28,8 @@ Vue.component("cart", {
         data => {
           if (data.result == 1) {
             this.vItems = data.cart.contents;
+            this.amount = data.cart.amount;
+            this.countGoods = data.cart.countGoods;
           } else if (data.result == 0) {
             console.log(`Error adding good to cart: ${data.error}`);
           }
@@ -39,6 +42,8 @@ Vue.component("cart", {
         data => {
           if (data.result == 1) {
             this.vItems = data.cart.contents;
+            this.amount = data.cart.amount;
+            this.countGoods = data.cart.countGoods;
           } else if (data.result == 0) {
             console.log(`Error deleting good from cart: ${data.error}`);
           }
@@ -49,7 +54,7 @@ Vue.component("cart", {
     getItemInCartById(id) {
       let find = this.vItems.find(item => +item.id === id);
       return find;
-    }
+    },
   },
   mounted() {
     this.fetchDataToCart();
@@ -59,9 +64,15 @@ Vue.component("cart", {
     <search></search>
     <button class="btn-cart" type="button" @click="toggleCartVisibility">Корзина</button>
     <div class="cart-block" v-show="this.isVisible">
-        <cart-item class="cart-item" v-for="item in vItems" :item="item" :img="imageCart" :key="item.id">
-        </cart-item>
+        <template v-if="vItems.length > 0">
+          <cart-item class="cart-item" v-for="item in vItems" :item="item" :img="imageCart" :key="item.id">
+          </cart-item>
+          <div class=cart-block__total>
+            Total: {{this.amount}} руб. за {{this.countGoods}} товара/ов
+          </div>
+        </template>
+        <cart-empty v-else>Cart is empty</cart-empty>
     </div>
   </div>
-  `
+  `,
 });
