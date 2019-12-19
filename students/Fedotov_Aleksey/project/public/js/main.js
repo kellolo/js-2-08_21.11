@@ -17,7 +17,7 @@ let app = new Vue ({
             })
         },
         getJsonPost(url, d) {
-            console.log(JSON.stringify({data:d}));
+            //console.log(JSON.stringify({data:d}));
             return fetch(`${url}`, {
                 method: 'POST',
                 headers: {

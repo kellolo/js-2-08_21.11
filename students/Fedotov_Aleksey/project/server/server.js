@@ -36,7 +36,7 @@ app.post('/addToCart', urlencodedParser, (req,res) => {
     if (!req.body) {
         res.sendStatus(400);
     } else {
-        console.log(addToCart(req.body.data,res));
+        addToCart(req.body.data,res);
     }
 })
 
@@ -44,6 +44,7 @@ app.post('/removeFromCart', urlencodedParser, (req,res) => {
     if(!req.body) {
         res.sendStatus(400);
     } else {
+        let isEmpty = false;
         fs.readFile('server/db/userCart.json', 'utf-8', (err,data) => {
             if (err) {
                 res.json({result:0})
@@ -64,7 +65,8 @@ app.post('/removeFromCart', urlencodedParser, (req,res) => {
                         console.log("удален");
                     }
                 })
-                res.json({result:1});
+                isEmpty = userCart.contents.length > 0 ? false : true;
+                res.json({result:1, cart: userCart, empty: isEmpty});
             }
         });
     }
@@ -89,7 +91,7 @@ function addToCart(product,res) {
                     console.log(product, "добавлен");
                 }
             });
-            res.json({result:1, cart: JSON.stringify(oldCart)})
+            res.json({result:1, cart: oldCart})
             res.end();
         }
     })
