@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <!-- <div id="app">
         <header>
             <div class="logo">E-shop</div>
             <div class="cart">
@@ -38,11 +38,26 @@
             </div>
 
         </main>
+    </div> -->
+    <div id="app">
+        <header>
+            <div class="logo">E-shop</div>
+            <search></search>
+            <basket ref="basket"></basket>
+        </header>
+        <main>
+            <products ref="catalog"></products>
+        </main>
     </div>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/BasketItem.js"></script>
+    <script src="js/Product.js"></script>
+    <script src="js/Products.js"></script>
+    <script src="js/Basket.js"></script>
+    <script src="js/Search.js"></script>
     <script src="js/main.js"></script>
 </body>
 
