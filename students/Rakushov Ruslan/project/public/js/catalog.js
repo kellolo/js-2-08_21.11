@@ -1,7 +1,7 @@
 Vue.component("catalog", {
   data: function() {
     return {
-      urlCatalogData: "catalogData.json",
+      urlCatalogData: "/catalogData.json",
       image: "https://placehold.it/200x150",
       vItems: [],
       vSearchString: "",
