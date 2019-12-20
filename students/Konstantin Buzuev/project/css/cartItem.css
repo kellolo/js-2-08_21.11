@@ -1,0 +1,70 @@
+@charset "UTF-8";
+.cart-item {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 50px auto auto 25px 50px;
+      grid-template-columns: 50px auto auto 25px 50px;
+  grid-column-gap: 10px;
+  padding: 10px;
+}
+
+.cart-item:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.cart-item__icon {
+  height: 50px;
+  width: 50px;
+  -o-object-fit: fill;
+     object-fit: fill;
+  -o-object-position: center;
+     object-position: center;
+  justify-self: flex-start;
+  margin-right: 15px;
+}
+
+.cart-item__title {
+  max-width: 150px;
+  margin: auto 0;
+  font-size: 12px;
+}
+
+.cart-item__quantity, .cart-item__price {
+  font-size: 18px;
+  max-height: 50px;
+  line-height: 50px;
+}
+
+.cart-item__delete-btn {
+  background-color: #2f2a2d;
+  border: 1px solid transparent;
+  color: #fafafa;
+  -webkit-transition: all ease-in-out .4s;
+  transition: all ease-in-out .4s;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
+  font-size: 28px;
+  line-height: 50px;
+  padding-left: 6px;
+}
+
+.cart-item__delete-btn:hover {
+  background-color: #fafafa;
+  color: #2f2a2d;
+  border: 1px solid #2f2a2d;
+}
+
+/*
+Выпиленные кнопки:
+    &__btnGroup {
+        display: flex;
+        justify-content: space-between;
+        justify-self: flex-end;
+    }
+    &__add-btn,
+    &__remove-btn,
+
+*/
+/*# sourceMappingURL=cartItem.css.map */
