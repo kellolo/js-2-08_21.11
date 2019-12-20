@@ -1,7 +1,7 @@
 Vue.component ('cart', {
     data () {
         return {
-            cartUrl: '/getBasket.json',
+            cartUrl: '/cart',
             imgCart: 'https://placehold.it/100x80',
             isVisibleCart: false,
             items: []
@@ -12,14 +12,16 @@ Vue.component ('cart', {
             this.isVisibleCart = !this.isVisibleCart
         },
         addProduct(prod){
-            this.$parent.getJson("/addToBasket.json")
+            let prodData = `id_product=${encodeURIComponent(prod.id_product)}&product_name=${encodeURIComponent(prod.product_name)}&price=${encodeURIComponent(prod.price)}`
+
+            this.$parent.postJson("/addToCart", prodData)
                 .then((data) => {
-                    if (data.result === 1) {
+                    if (data === "OK") {
                         const targetCartItem = this._getItemById(prod.id_product)
                 
                         if (targetCartItem) targetCartItem.quantity++
                         else {
-                            let newItem = prod
+                            let newItem = Object.assign({}, prod)
                             newItem.quantity = 1
                             this.items.push(newItem)
                         };
@@ -30,9 +32,11 @@ Vue.component ('cart', {
                 })
         },
         deleteProduct(prod){
-            this.$parent.getJson("/deleteFromBasket.json")
+            let prodData = `id_product=${encodeURIComponent(prod.id_product)}`
+
+            this.$parent.postJson("/deleteFromCart", prodData)
                 .then((data) => {
-                    if (data.result === 1) {
+                    if (data === "OK") {
                         if (prod.quantity === 1) this.items = this.items.filter(item => item.id_product !== prod.id_product)
                         else prod.quantity--
                     }
