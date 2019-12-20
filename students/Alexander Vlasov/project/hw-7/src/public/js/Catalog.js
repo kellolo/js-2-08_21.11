@@ -1,4 +1,6 @@
-Vue.component ('catalog', {
+import catalogItem from './CatalogItem'
+
+let catalog = {
     data () {
         return {
             catalogUrl: '/catalog',
@@ -19,7 +21,12 @@ Vue.component ('catalog', {
     template: `
             <div class="products">
                 <div v-show="filteredItems.length === 0">Нет данных</div>
-                <catalog-item v-for="product of filteredItems" :item="product" :imgProp="imgCatalog"></catalog-item>
+                <catalog-item v-for="product of filteredItems" :key="product.id_product" :item="product" :imgProp="imgCatalog"></catalog-item>
             </div>
-    `
-})
+    `,
+    components: {
+        'catalog-item': catalogItem
+    }
+}
+
+export default catalog

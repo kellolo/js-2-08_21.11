@@ -1,4 +1,4 @@
-Vue.component ('filter-comp', {
+let filterComp = {
     template: `
     <form action="#" class="search-form">
         <input type="text" class="search-field" v-model="searchText">
@@ -12,4 +12,6 @@ Vue.component ('filter-comp', {
             searchText: ''
         }
     }
-})
+}
+
+export default filterComp

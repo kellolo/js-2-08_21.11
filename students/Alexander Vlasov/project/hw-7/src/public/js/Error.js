@@ -1,4 +1,4 @@
-Vue.component ('error-comp', {
+let errorComp = {
     template: `
         <div class="error" v-show="showError">
             {{ errorText }}
@@ -19,4 +19,6 @@ Vue.component ('error-comp', {
             }, 3000)
         }
     }
-})
+}
+
+export default errorComp
