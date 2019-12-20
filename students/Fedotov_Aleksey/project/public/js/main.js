@@ -10,10 +10,20 @@ let app = new Vue ({
     },
     methods: {
         getJson (url) {
-            return fetch (`${API + url}`)
+            return fetch (`${url}`)
             .then (result => result.json())
             .catch (err => {
                 console.log (err)
+            })
+        },
+        getJsonPost(url, d) {
+            //console.log(JSON.stringify({data:d}));
+            return fetch(`${url}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({data:d})
             })
         },
         toShowCart() {
