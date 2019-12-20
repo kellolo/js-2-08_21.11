@@ -1,0 +1,55 @@
+  [{
+          "id_product": 1,
+          "product_name": "Notebook",
+          "price": 1000,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Notebook.jpg"
+      },
+      {
+          "id_product": 2,
+          "product_name": "Display",
+          "price": 200,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Display.jpg"
+      },
+      {
+          "id_product": 3,
+          "product_name": "Keyboard",
+          "price": 50,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Keyboard.jpg"
+      },
+      {
+          "id_product": 4,
+          "product_name": "Mouse",
+          "price": 30,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Mouse.jpg"
+      },
+      {
+          "id_product": 5,
+          "product_name": "Gamepad",
+          "price": 25,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Gamepad.jpg"
+      },
+      {
+          "id_product": 6,
+          "product_name": "Headphones",
+          "price": 15,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Headphones.jpg"
+      },
+      {
+          "id_product": 7,
+          "product_name": "Router",
+          "price": 150,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Router.jpg"
+      },
+      {
+          "id_product": 8,
+          "product_name": "WEB-camera",
+          "price": 120,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/WEB-camera.jpg"
+      },
+      {
+          "id_product": 9,
+          "product_name": "Microphone",
+          "price": 15,
+          "image": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Microphone.jpg"
+      }
+  ]
