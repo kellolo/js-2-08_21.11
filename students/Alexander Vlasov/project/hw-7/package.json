@@ -7,7 +7,7 @@
     "serve": "nodemon src/server/server.js",
     "serve-prod": "nodemon dist/server/server.js",
     "watch-front": "webpack --mode=development --config webpack.config.js --watch",
-    "watch-back": "",
+    "watch-back": "webpack --mode=development --config serve.webpack.config.js --watch",
     "build": "webpack --mode=development --config webpack.config.js && webpack --mode=development --config server.webpack.config.js",
     "build-prod": "webpack --mode=production --config webpack.config.js && webpack --mode=production --config server.webpack.config.js"
   },
