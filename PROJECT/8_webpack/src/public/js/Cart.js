@@ -1,4 +1,6 @@
-Vue.component ('cart', {
+import cartItem from './CartItem'
+
+let cart = {
     data () {
         return {
             items: [],
@@ -27,17 +29,6 @@ Vue.component ('cart', {
                         }
                     })
             }
-            
-                // .then (answer => {
-                //     if (answer.result) {
-                        
-                //         if (find) {
-                //             find.quantity ++
-                //         } else {
-                            
-                //         }
-                //     }
-                // })  
         },
         delProduct (product) {
             let find = this.items.find (item => item.id_product === product.id_product)
@@ -58,23 +49,6 @@ Vue.component ('cart', {
                         }
                     })
             }
-            // this.$parent.getJson (this.delUrl)
-            //     .then (answer => {
-            //         if (answer.result) {
-            //             let find = this.items.find (item => item.id_product === product.id_product)
-            //             if (find.quantity > 1) {
-            //                 this.$parent.putJson ('/cart/' + product.id_product, {op: -1})
-            //                     .then (answ => {
-            //                         if (answ) {
-            //                             find.quantity--
-            //                         }
-            //                     })
-            //             } else {
-            //                 let arr = this.items
-            //                 arr.splice (arr.indexOf (product), 1)
-            //             }
-            //         }
-            //     })  
         },
     },
     mounted () {
@@ -85,5 +59,10 @@ Vue.component ('cart', {
     <div class="cart-block">
         <cart-item v-for="item of items" :img="imgCart" :item="item"></cart-item>
     </div>
-    `
-})
+    `,
+    components: {
+        'cart-item': cartItem
+    }
+}
+
+export default cart
