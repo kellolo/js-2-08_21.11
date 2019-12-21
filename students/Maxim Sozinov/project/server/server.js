@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const handler = require('./handler');
 
 const app = express();
 
@@ -57,45 +58,15 @@ function logActions (action, item) {
 }
 
 app.post('/cart', (req, res) => {
-    let newItem = req.body;
 
-    fs.readFile('server/db/getBasket.json', 'utf8', (err, data) => {
-        if (err) {
-            res.sendStatus(404);
-        } else {
-            let cart = JSON.parse(data).contents;
-            let findItem = cart.find(el => el.id === newItem.id);
-            if (!findItem) {
-                newItem.quantity = 1;
-                newItem.img = "https://placehold.it/100x80";
-                cart.push(newItem);                        
-            } else {
-                findItem.quantity++;
-            }
-            logActions('add', newItem);
-            res.send(rewriteCart (cart));
-        }
-    });
+    handler(req, res, 'server/db/getBasket.json', 'add');
+
 });
 
 app.delete('/cart', (req, res) => {
-    let item = req.body;
 
-    fs.readFile('server/db/getBasket.json', 'utf8', (err, data) => {
-        if (err) {
-            res.sendStatus(404);
-        } else {
-            let cart = JSON.parse(data).contents;
-            let findItem = cart.find(el => el.id === item.id);
-            if (findItem.quantity > 1) {
-                findItem.quantity--;
-            } else {
-                cart.splice(cart.indexOf(findItem), 1);
-            }
-            logActions ('delete', item);
-            res.send(rewriteCart (cart));
-        }
-    });
+    handler(req, res, 'server/db/getBasket.json', 'delete');
+
 });
 
 app.listen(3000, () => {
