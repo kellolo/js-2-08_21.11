@@ -1,4 +1,4 @@
-Vue.component('product-search',{
+let productSearch = {
     data() {
         return {
             regSearch: undefined
@@ -11,9 +11,6 @@ Vue.component('product-search',{
         }
     },
     computed: {
-        // regStr: function() {
-        //     return new RegExp(this.regSearch,"i");
-        // }
     },
     mounted() {
     },
@@ -25,4 +22,5 @@ Vue.component('product-search',{
             </button>
         </form>
     `
-})
+}
+export default productSearch;
