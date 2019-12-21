@@ -1,0 +1,45 @@
+/*
+  550 mobile
+*/
+
+@media (min-width: 576px) {
+
+}
+
+/*
+  750 tablets
+*/
+
+@media (min-width: 768px) {
+  h1 {
+    text-align: left;
+    font-size: 3rem;
+  }
+  h2, h3 {
+    font-size: 2rem;
+  }
+}
+
+/*
+  750 tablet landscape
+*/
+
+@media (min-width: 768px) and (orientation: landscape) {
+
+}
+
+/*
+  960 desktops
+*/
+
+@media (min-width: 992px) {
+
+}
+
+/*
+  1170 full 2k
+*/
+
+@media (min-width: 1200px) {
+
+}

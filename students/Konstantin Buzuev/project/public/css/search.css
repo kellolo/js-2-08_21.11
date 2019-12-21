@@ -1,0 +1,19 @@
+.search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 300px;
+}
+
+.search__btnSearch {
+  display: block;
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  color: #fafafa;
+}
+/*# sourceMappingURL=search.css.map */

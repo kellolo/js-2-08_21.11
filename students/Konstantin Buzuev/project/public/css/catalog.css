@@ -1,0 +1,34 @@
+body {
+  font-family: 'SF Pro Display', sans-serif;
+  background-color: #fafafa;
+}
+
+.catalog__wrap {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-grid-columns: (250px)[auto-fit];
+      grid-template-columns: repeat(auto-fit, 250px);
+  -webkit-column-gap: 30px;
+          column-gap: 30px;
+  -ms-grid-rows: 1fr;
+      grid-template-rows: 1fr;
+  row-gap: 30px;
+  padding: 30px 60px;
+}
+
+.catalog__emptyMsg {
+  position: absolute;
+  height: calc(100vh - 200px);
+  margin: 0 auto;
+  text-align: center;
+  font-size: 48px;
+  width: 100%;
+}
+
+.catalog_hidden {
+  display: none;
+}
+/*# sourceMappingURL=catalog.css.map */
