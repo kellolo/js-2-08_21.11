@@ -2,3 +2,5 @@
 /css/*
 # Игнорирование настроек Visual Studio Code
 /.vscode
+# Игнорирование установленных модулей
+/node_modules
