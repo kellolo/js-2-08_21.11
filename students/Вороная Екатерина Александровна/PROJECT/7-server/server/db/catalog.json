@@ -1,0 +1,42 @@
+[
+  {
+    "id_product": 1,
+    "product_name": "Лыжи",
+    "price": 1500
+  },
+  {
+    "id_product": 2,
+    "product_name": "Сани",
+    "price": 5000
+  },
+  {
+    "id_product": 3,
+    "product_name": "Коньки",
+    "price": 3000
+  },
+  {
+    "id_product": 4,
+    "product_name": "Сноуборд",
+    "price": 8000
+  },
+  {
+    "id_product": 5,
+    "product_name": "Треккинговые палки",
+    "price": 5000
+  },
+  {
+    "id_product": 6,
+    "product_name": "Шлем",
+    "price": 6000
+  },
+  {
+    "id_product": 7,
+    "product_name": "Горнолыжный костюм",
+    "price": 17000
+  },
+  {
+    "id_product": 8,
+    "product_name": "Солнцезащитные очки",
+    "price": 700
+  }
+]
