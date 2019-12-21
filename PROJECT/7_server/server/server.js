@@ -1,4 +1,4 @@
-const express = require ('express'); //for npm mods
+const express = require ('express') //for npm mods
 // const mod = require ('./mod') //for custom mods
 
 const fs = require ('fs') //file system (docs NODE)
