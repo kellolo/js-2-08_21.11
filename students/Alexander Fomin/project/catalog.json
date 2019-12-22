@@ -1,0 +1,55 @@
+[{
+        "id": 1,
+        "title": "Irbis MB2380",
+        "price": 21980,
+        "img": "https://c.dns-shop.ru/thumb/st1/fit/320/250/7a7aadc87348df36bf4920954c3ca31f/b59f762e75691f4f43f36402276d1ffd740ea433e23e38140a5141d98121917d.jpg"
+    },
+    {
+        "id": 2,
+        "title": "HP 20-c401ur 4GU78EA",
+        "price": 22300,
+        "img": "https://c.dns-shop.ru/thumb/st4/fit/320/250/38e918a81a1e51008a268a830f58f191/7bfc680a697f4de73a150cde6bb66b884b3c7a3ba90410f4a3fe6487a3b87cd8.jpg"
+    },
+    {
+        "id": 3,
+        "title": "Acer Aspire C22-820",
+        "price": 22999,
+        "img": "https://c.dns-shop.ru/thumb/st1/fit/320/250/0f58dee76da922c804b904f9a7ecfe71/42c3f4d0ce08ba02c77b1482ccf20ac417b7f0abb5b6bf47f9e904f0aa312f9c.jpg"
+    },
+    {
+        "id": 4,
+        "title": "Lenovo IdeaCentre A340-22AST ",
+        "price": 23050,
+        "img": "https://c.dns-shop.ru/thumb/st4/fit/320/250/f50a5751d42e74d038169947658cb237/288df98cb91bee53678084be493ebc967bb5072518f2ad51cc976e5d91d207f0.jpg"
+    },
+    {
+        "id": 5,
+        "title": "GIGABYTE BRIX",
+        "price": 8999,
+        "img": "https://c.dns-shop.ru/thumb/st1/fit/320/250/da9366c9f3365d81258a6b5c096df32b/803862d4ea497db530f4712a189e640333b6c4d740f6da4b802699cd381d4500.jpg"
+    },
+    {
+        "id": 6,
+        "title": "Intel NUC",
+        "price": 4699,
+        "img": "https://c.dns-shop.ru/thumb/st1/fit/320/250/82ba3c997b590546380d4cfeef4708cc/9ff72423ed215269c0b1ab180cd792880b9ee3651cfbdbfb804414a83c4aecb7.jpg"
+    }, 
+    {
+        "id": 17,
+        "title": "Intel Compute Stick ",
+        "price": 7800,
+        "img": "https://c.dns-shop.ru/thumb/st1/fit/320/250/4dea8affe90dc136b74d3d656ff9886e/585ea3a35259526ea7a2a53a6b246dc14f152288609ab3599e5c7a2d9b503352.jpg"
+    },
+    {
+        "id": 19,
+        "title": "Lenovo ThinkCentre M625q",
+        "price": 12856,
+        "img": "https://c.dns-shop.ru/thumb/st4/fit/320/250/3b6a9d0c5210eba390b5fa67a9fdf112/3940d0c2bb433d233ec13a4e63a5ac9e410a7383b9d5c9b5351f465e5ec40e18.jpg"
+    },
+    {
+        "id": 20,
+        "title": "Asus VivoPC E420-B058Z",
+        "price": 17896,
+        "img": "https://c.dns-shop.ru/thumb/st4/fit/320/250/89ec096ad0313adb2a4c8a246d604b2f/e202ccf4804430c8d6a618a9d93ee9ae633ca5ebe4b874db8e34d50fa7f745f1.jpg"
+    }
+]

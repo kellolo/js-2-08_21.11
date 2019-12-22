@@ -1,0 +1,20 @@
+{
+  "amount": 120,
+  "countGoods": 3,
+  "contents": [
+    {
+      "id_product": 4,
+      "product_name": "Rippen Mango",
+      "price": 20,
+      "img": "http://oach.ucoz.ru/sites/food/4.jpg",
+      "quantity": 1
+    },
+    {
+      "id_product": 6,
+      "product_name": "Fresh Coconut",
+      "price": 50,
+      "img": "http://oach.ucoz.ru/sites/food/6.jpg",
+      "quantity": 2
+    }
+  ]
+}

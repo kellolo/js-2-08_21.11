@@ -1,0 +1,22 @@
+{
+  "name": "js-2-lesson-7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "nodemonConfig": {
+    "ignore": ["server/db/*", "public/*"]
+  },
+  "scripts": {
+    "serve": "nodemon server/server.js",
+    "cli": "node server/client.js"
+  },
+  "author": "Igor A1",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

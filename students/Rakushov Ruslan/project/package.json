@@ -1,0 +1,20 @@
+{
+  "name": "shop",
+  "version": "0.1.0",
+  "description": "Geek_JS2",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "server/server.js",
+    "test": "npx nodemon /server/server.js"
+  },
+  "author": "rri9",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.0.1",
+    "nodemon": "^2.0.2"
+  }
+}
