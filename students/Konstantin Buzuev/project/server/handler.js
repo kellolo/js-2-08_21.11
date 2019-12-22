@@ -9,16 +9,18 @@ function handler(req, res, file, object, action) {
         } else {
             data = JSON.parse(data)
             let newCart = object[action](req, data)
-            let str = JSON.stringify(newCart, null, 2)
-            fs.writeFile(file, str, (err) => {
-                if (!err) {
-                    res.send(JSON.stringify(newCart))
-                } else {
-                    res.sendStatus(500, JSON.stringify({
-                        result: 0
-                    }))
-                }
-            })
+            if (action === "get") res.send(JSON.stringify(newCart))
+            else {
+                fs.writeFile(file, JSON.stringify(newCart), (err) => {
+                    if (!err) {
+                        res.send(JSON.stringify(newCart))
+                    } else {
+                        res.sendStatus(500, JSON.stringify({
+                            result: 0
+                        }))
+                    }
+                })
+            }
         }
     })
 }

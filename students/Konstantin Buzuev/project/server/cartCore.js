@@ -1,5 +1,5 @@
 function findItem(id, oldCart) {
-    return oldCart.contents.find(pr => pr.id_product === id)
+    return oldCart.contents.find(pr => pr.id === id)
 }
 
 let cart = {
@@ -9,17 +9,20 @@ let cart = {
     change(req, obj) {
         let find = findItem(+req.params.id, obj)
         find.quantity += req.body.op
+        obj.totalCost += req.body.op * find.price
         return obj
     },
     add(req, obj) {
-        let newObj = obj
-        newObj.contents.push(Object.assign({}, req.body, {
+        obj.contents.push(Object.assign({}, req.body, {
             quantity: 1
         }))
-        return newObj
+        obj.totalCost += req.body.price
+        return obj
     },
     del(req, obj) {
+        console.log("Got DEL request")
         let find = findItem(+req.params.id, obj)
+        obj.totalCost -= find.price
         obj.contents.splice(obj.contents.indexOf(find), 1)
         return obj
     }

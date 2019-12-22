@@ -23,6 +23,13 @@ const app = new Vue({
             Vue.set(product, "summary", summary);
             Vue.set(product, "details", details);
         },
+        _refreshCart() {
+            this.getJSON('/cart')
+                .then(data => {
+                    this.cart = data.contents
+                })
+
+        },
         /*Получение данных с сервера*/
         getJSON(url) {
             return fetch(url)
@@ -39,7 +46,6 @@ const app = new Vue({
                     },
                     body: JSON.stringify(data)
                 })
-                .then(result => result.json())
                 .catch(err => {
                     console.log(err)
                 })
@@ -52,7 +58,6 @@ const app = new Vue({
                     },
                     body: JSON.stringify(data)
                 })
-                .then(result => result.json())
                 .catch(err => {
                     console.log(err)
                 })
@@ -64,7 +69,6 @@ const app = new Vue({
                         "Content-Type": "application/json"
                     }
                 })
-                .then(result => result.json())
                 .catch(err => {
                     console.log(err)
                 })
@@ -81,29 +85,26 @@ const app = new Vue({
                 });
         })
         eventBus.$on("get-cart", () => {
-            this.getJSON("/cart")
-                .then(data => {
-                    this.cart = data.contents
-                })
+            this._refreshCart()
         })
         eventBus.$on('put', (id, modifer) => {
             this.putJSON("/cart/" + id, {
                     op: modifer
                 })
-                .then(data => {
-                    this.cart = data.contents
+                .then(() => {
+                    this._refreshCart()
                 })
         })
         eventBus.$on('post', (id) => {
-            this.postJSON('/cart', id)
-                .then(data => {
-                    this.cart = data.contents
+            this.postJSON('/cart/', id)
+                .then(() => {
+                    this._refreshCart()
                 })
         })
         eventBus.$on('delete', (id) => {
-            this.deleteJSON('/cart', id)
-                .then(data => {
-                    this.cart = data.contents
+            this.deleteJSON('/cart/' + id)
+                .then(() => {
+                    this._refreshCart()
                 })
         })
     }

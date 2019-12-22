@@ -32,14 +32,12 @@ Vue.component('cart', {
             if (inputProduct !== undefined) {
                 eventBus.$emit("put", prod.id, 1)
             } else eventBus.$emit("post", prod)
-            eventBus.$emit("get-cart")
         })
         eventBus.$on("remove-from-cart", (prod) => {
             let inputProduct = this.items.find(item => item.id === prod.id)
             if (inputProduct.quantity > 1) {
                 eventBus.$emit("put", prod.id, -1)
             } else eventBus.$emit("delete", prod.id)
-            eventBus.$emit("get-cart")
         })
     },
     mounted() {
