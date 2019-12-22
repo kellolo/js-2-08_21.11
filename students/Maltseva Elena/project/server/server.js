@@ -1,10 +1,8 @@
 const express = require ('express')
-const bodyParser = require ('body-parser')
 const fs = require ('fs')
 const shop = express ()
 
 shop.use (express.json())
-shop.use (bodyParser.json())
 
 shop.use ('/', express.static('public'))
 
@@ -28,51 +26,62 @@ shop.get ('/cart', (req, res) => {
     })
 })
 
-shop.post ('/add-to-cart', (req, res) => {
+shop.post ('/cart', (req, res) => {
     fs.readFile ('server/data/cart.json', 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({result: 0}))
         } else {
             const cart = JSON.parse(data)
-            const item = req.body
-            let find = cart.find (element => element.id_product === item.id_product)
-                        if (!find) {
-                            cart.push (Object.assign({}, item, {quantity: 1}))
-                        }  else {
-                            find.quantity++
-                        }
-            fs.writeFile ('server/data/cart.json', JSON.stringify(cart), (err) => {
+            cart.contents.push (Object.assign({}, req.body, {quantity: 1}))
+            fs.writeFile ('server/data/cart.json', JSON.stringify(cart, null, 2), (err) => {
                 if (err) {
-                    alert ("В процессе добавления товара возникла ошибка, попробуйте еще раз.") 
+                    res.sendStatus (500, JSON.stringify ({result: 0}))
+                } else {
+                    res.send (cart)
                 }
             })
-            addLog('add product', item.product_name)
-            res.send (cart)
+            addLog('add product', req.body.product_name)
         }
     })
 })
 
-shop.post ('/delete-from-cart', (req, res) => {
+shop.put ('/cart/:id', (req, res) => {
     fs.readFile ('server/data/cart.json', 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({result: 0}))
         } else {
             const cart = JSON.parse(data)
-            const item = req.body
-            let find = cart.find (element => element.id_product === item.id_product);
-                        if (find.quantity > 1) {
-                            find.quantity--;
-                        } else {
-                            cart.splice(cart.indexOf(find), 1);
-                        }
-            fs.writeFile ('server/data/cart.json', JSON.stringify(cart), (err) => {
-                if (err) {
-                    alert ("В процессе удаления товара возникла ошибка, попробуйте еще раз.") 
-                }
-            })
-            addLog('remove product', item.product_name)
-            res.send (cart)
-        }
+            let find = cart.contents.find (element => element.id_product === +req.params.id);
+            find.quantity += req.body.act
+            fs.writeFile ('server/data/cart.json', JSON.stringify(cart, null, 2), (err) => {
+                    if (err) {
+                        res.sendStatus (500, JSON.stringify ({result: 0}))
+                    } else {
+                        res.send (cart)
+                    }
+                })
+                addLog(`change quantity of product: ${req.body.act}`, find.product_name)
+            }
+    })
+})
+
+shop.delete ('/cart/:id', (req, res) => {
+    fs.readFile ('server/data/cart.json', 'utf-8', (err, data) => {
+        if (err) {
+            res.sendStatus (404, JSON.stringify ({result: 0}))
+        } else {
+            const cart = JSON.parse(data)
+            let find = cart.contents.find (element => element.id_product === +req.params.id);
+            cart.contents.splice(cart.contents.indexOf(find), 1)      
+            fs.writeFile ('server/data/cart.json', JSON.stringify(cart, null, 2), (err) => {
+                    if (err) {
+                        res.sendStatus (500, JSON.stringify ({result: 0}))
+                    } else {
+                        res.send (cart)
+                    }
+                })
+                addLog('remove product', find.product_name)
+            }
     })
 })
 
@@ -87,7 +96,7 @@ function addLog (act, prod) {
                 product_name: prod,
                 time: new Date()
             })
-            fs.writeFile ('server/data/stats.json', JSON.stringify(actLog), (err) => {
+            fs.writeFile ('server/data/stats.json', JSON.stringify(actLog, null, 2), (err) => {
                 if (err) {
                     actLog.push(`${err}`)
                 }

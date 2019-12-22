@@ -19,7 +19,7 @@ Vue.component ('cart', {
     },
     mounted () {
         this.$parent.fetchData(this.url)
-        .then (dataArr => this.cartItems = dataArr)
+        .then (dataArr => this.cartItems = dataArr.contents)
     },
     computed: {
         noCartItems () {
@@ -31,14 +31,30 @@ Vue.component ('cart', {
             this.visibility = !this.visibility
         },
         addProduct (selectedItem) {
-            this.$parent.changeData(`/add-to-cart`, selectedItem)
-                .then (dataArr => this.cartItems = dataArr)
-                .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+            let find = this.cartItems.find(item => item.id_product === selectedItem.id_product)
+            if (!find) {
+                this.$parent.postData(this.url, selectedItem)
+                    .then (dataArr => this.cartItems = dataArr.contents)
+                    .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+            } else {
+                this.$parent.putData(`${this.url}/${selectedItem.id_product}`, {act: 1})
+                    .then (dataArr => this.cartItems = dataArr.contents)
+                    .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+            }
+            
         },
         removeProduct (selectedItem) {
-            this.$parent.changeData(`/delete-from-cart`, selectedItem)
-                .then (dataArr => this.cartItems = dataArr)
-                .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+            let find = this.cartItems.find(item => item.id_product === selectedItem.id_product)
+            if (find.quantity > 1) {
+                this.$parent.putData(`${this.url}/${selectedItem.id_product}`, {act: -1})
+                    .then (dataArr => this.cartItems = dataArr.contents)
+                    .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+            } else {
+                this.$parent.delData(`${this.url}/${selectedItem.id_product}`)
+                    .then (dataArr => this.cartItems = dataArr.contents)
+                    .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+            }
+            
         }
     }
 })

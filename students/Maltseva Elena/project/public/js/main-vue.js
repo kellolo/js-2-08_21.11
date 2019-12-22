@@ -6,13 +6,29 @@ let shop = new Vue ({
                     .then (dataJSON => dataJSON.json())
                     .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
         },
-        changeData (url, reqBody) {
-            let options = {
+        postData (url, reqBody) {
+            return fetch (url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json; charset=utf-8'},
                 body: JSON.stringify(reqBody)
-            }
-            return fetch (url, options)
+            })
+                    .then (dataJSON => dataJSON.json())
+                    .catch (error => console.log(`Не удалось изменить данные: ${error}`))
+        },
+        putData (url, reqBody) {
+            return fetch (url, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json; charset=utf-8'},
+                body: JSON.stringify(reqBody)
+            })
+                    .then (dataJSON => dataJSON.json())
+                    .catch (error => console.log(`Не удалось изменить данные: ${error}`))
+        },
+        delData (url){
+            return fetch (url, {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            })
                     .then (dataJSON => dataJSON.json())
                     .catch (error => console.log(`Не удалось изменить данные: ${error}`))
         }
