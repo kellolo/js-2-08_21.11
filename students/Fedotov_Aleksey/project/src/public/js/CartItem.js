@@ -1,4 +1,4 @@
-Vue.component ('cart-item', {
+let cartItem = {
     template: `
         <div class="product-bio">
         <img :src="img" alt="Some image">
@@ -14,4 +14,6 @@ Vue.component ('cart-item', {
         </div>
     `,
     props: ['item', 'img']
-})
+}
+
+export default cartItem;
