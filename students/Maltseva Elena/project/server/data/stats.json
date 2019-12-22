@@ -108,5 +108,25 @@
     "action": "change quantity of product: 1",
     "product_name": "Mouse",
     "time": "2019-12-22T18:53:05.128Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Mouse",
+    "time": "2019-12-22T20:00:18.227Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Mouse",
+    "time": "2019-12-22T20:00:18.805Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Mouse",
+    "time": "2019-12-22T20:00:19.851Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Mouse",
+    "time": "2019-12-22T20:00:20.240Z"
   }
 ]
