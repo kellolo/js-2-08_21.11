@@ -1,0 +1,9 @@
+body {
+  font-family: 'SF Pro Display', sans-serif;
+  overflow-x: hidden;
+}
+
+button:focus {
+  outline: none;
+}
+/*# sourceMappingURL=common.css.map */
