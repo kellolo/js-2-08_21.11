@@ -23,7 +23,7 @@
         <header class="header">
             <div class="header__logo">E-shop</div>
             <search></search>
-            <cart></cart>
+            <cart v-bind:items="cart"></cart>
         </header>
         <main>
             <catalog v-bind:items="products"></catalog>

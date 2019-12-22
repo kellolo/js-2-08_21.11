@@ -23,7 +23,9 @@ Vue.component('catalog', {
                 }
             })
         })
-
+    },
+    mounted() {
+        eventBus.$emit("get-catalog")
     },
     template: `<div class="catalog__wrap">
                     <product v-for="item in items" v-bind:product="item"></product>

@@ -32,7 +32,7 @@ Vue.component("product", {
                 </div>`,
     methods: {
         AddItem: function () {
-            eventBus.$emit("add-item-to-cart", this.product)
+            eventBus.$emit("put-to-cart", this.product)
         }
     }
 })
