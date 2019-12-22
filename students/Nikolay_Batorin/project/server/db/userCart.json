@@ -1,0 +1,19 @@
+{
+    "amount": 1010,
+    "countGoods": 2,
+    "contents": [{
+            "id_product": 1,
+            "product_name": "Notebook",
+            "price": 1000,
+            "quantity": 1,
+            "smallImage": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Notebook_s.jpg"
+        },
+        {
+            "id_product": 4,
+            "product_name": "Mouse",
+            "price": 10,
+            "quantity": 1,
+            "smallImage": "https://raw.githubusercontent.com/batoxa/archive/master/js-2/json/Mouse_s.jpg"
+        }
+    ]
+}
