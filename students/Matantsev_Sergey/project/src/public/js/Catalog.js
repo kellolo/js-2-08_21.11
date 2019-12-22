@@ -1,4 +1,6 @@
-Vue.component ('catalog', {
+import item from './CatalogItem'
+
+let catalog = {
     data () {
         return {
             catalogUrl: '/catalogData.json',
@@ -13,7 +15,12 @@ Vue.component ('catalog', {
     },
     template: `
             <div class="products">
-                <catalog-item v-for="product of items" :item="product" :imgProp="imgCatalog"></catalog-item>
+                <item v-for="product of items" :item="product" :imgProp="imgCatalog"></item>
             </div>
-    `
-})
+    `,
+    components: {
+        item
+    }
+}
+
+export default catalog
