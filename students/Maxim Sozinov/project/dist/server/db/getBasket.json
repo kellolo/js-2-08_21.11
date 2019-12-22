@@ -1,25 +1,25 @@
 {
-  "amount": 46600,
-  "countGoods": 2,
+  "amount": "",
+  "countGoods": "",
   "contents": [
     {
       "id": 1,
       "title": "Notebook",
       "price": 1000,
       "img": "https://placehold.it/100x80",
-      "quantity": 2
+      "quantity": 1
     },
     {
       "id": 5,
       "title": "Phones",
       "price": 25,
       "img": "https://placehold.it/100x80",
-      "quantity": 2
+      "quantity": 1
     },
     {
-      "id": 8,
-      "title": "Gamepad",
-      "price": 24,
+      "id": 2,
+      "title": "Display",
+      "price": 200,
       "img": "https://placehold.it/100x80",
       "quantity": 1
     }

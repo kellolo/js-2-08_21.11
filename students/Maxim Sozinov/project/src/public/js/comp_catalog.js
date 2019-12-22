@@ -1,7 +1,8 @@
-Vue.component ('catalog', {
+import catalogItem from './comp_catalogItem';
+
+let catalog = {
     data () {
         return {
-            FAKE_API_CATALOG: 'https://raw.githubusercontent.com/havkin/js-2-08_21.11/master/students/Maxim%20Sozinov/fake-server/catalogData.json',
             items: [],
             filteredItems: []
         };
@@ -25,5 +26,10 @@ Vue.component ('catalog', {
         <div class="products">
             <catalog-item v-for="product in filteredItems" :item="product" :key="product.id"></catalog-item>
         </div>
-    `
-}); 
+    `,
+    components: {
+        'catalog-item' : catalogItem
+    }
+}; 
+
+export default catalog;

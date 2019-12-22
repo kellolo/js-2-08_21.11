@@ -1,4 +1,9 @@
-let app = new Vue ({
+import cart from './comp_cart';
+import catalog from './comp_catalog';
+import serverError from './comp_error';
+import searchFilter from './comp_filter';
+
+let app = {
     el: '#app',
     data: {
         smthWrong: false
@@ -40,5 +45,13 @@ let app = new Vue ({
                 console.log (err);
             }); 
         },
+    },
+    components: {
+        cart,
+        catalog,
+        'server-error': serverError,
+        'search-filter': searchFilter
     }
-});
+};
+
+export default app;

@@ -1,4 +1,4 @@
-Vue.component ('catalog-item', {
+let catalogItem = {
     props: ['item'],
     template: `
     <div class="product-item">
@@ -10,4 +10,6 @@ Vue.component ('catalog-item', {
         </div>
     </div>
     `
-});
+};
+
+export default catalogItem;
