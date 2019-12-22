@@ -1,4 +1,4 @@
-Vue.component ('filter-comp', {
+let filterComp = {
     data() {
         return {
             searchData: ""
@@ -12,4 +12,6 @@ Vue.component ('filter-comp', {
             </button>
         </form>
     `
-}) 
+}
+
+export default filterComp
