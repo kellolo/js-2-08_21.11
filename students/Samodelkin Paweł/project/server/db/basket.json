@@ -1,0 +1,20 @@
+{
+  "amount": 220,
+  "countGoods": 3,
+  "contents": [
+    {
+      "id_product": 2,
+      "product_name": "Display",
+      "price": 200,
+      "img": "https://placehold.it/200x150",
+      "quantity": 1
+    },
+    {
+      "id_product": 3,
+      "product_name": "Keyboard",
+      "price": 20,
+      "img": "https://placehold.it/200x150",
+      "quantity": 2
+    }
+  ]
+}
