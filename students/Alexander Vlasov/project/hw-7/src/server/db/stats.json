@@ -1,0 +1,67 @@
+[
+  {
+    "method": "PUT",
+    "id_product": 3,
+    "dateTime": "2019-12-20T07:41:36.443Z"
+  },
+  {
+    "method": "PUT",
+    "id_product": 3,
+    "dateTime": "2019-12-20T07:41:38.785Z"
+  },
+  {
+    "method": "DELETE",
+    "id_product": 2,
+    "dateTime": "2019-12-20T07:41:41.035Z"
+  },
+  {
+    "method": "PUT",
+    "id_product": 3,
+    "dateTime": "2019-12-20T07:41:42.085Z"
+  },
+  {
+    "method": "PUT",
+    "id_product": 3,
+    "dateTime": "2019-12-20T07:41:42.450Z"
+  },
+  {
+    "method": "PUT",
+    "id_product": 3,
+    "dateTime": "2019-12-20T07:41:43.871Z"
+  },
+  {
+    "method": "DELETE",
+    "id_product": 3,
+    "dateTime": "2019-12-20T07:41:45.153Z"
+  },
+  {
+    "method": "POST",
+    "id_product": 4,
+    "dateTime": "2019-12-20T09:06:24.011Z"
+  },
+  {
+    "method": "PUT",
+    "id_product": 4,
+    "dateTime": "2019-12-20T09:06:24.755Z"
+  },
+  {
+    "method": "POST",
+    "id_product": 3,
+    "dateTime": "2019-12-20T09:06:26.135Z"
+  },
+  {
+    "method": "PUT",
+    "id_product": 4,
+    "dateTime": "2019-12-20T09:06:27.548Z"
+  },
+  {
+    "method": "DELETE",
+    "id_product": 4,
+    "dateTime": "2019-12-20T09:06:28.095Z"
+  },
+  {
+    "method": "DELETE",
+    "id_product": 3,
+    "dateTime": "2019-12-20T09:06:29.118Z"
+  }
+]

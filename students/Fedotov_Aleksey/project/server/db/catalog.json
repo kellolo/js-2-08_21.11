@@ -1,0 +1,42 @@
+[
+  {
+    "id_product": 123,
+    "product_name": "Ноутбук",
+    "price": 45600
+  },
+  {
+    "id_product": 456,
+    "product_name": "Мышка",
+    "price": 1000
+  },
+  {
+    "id_product": 111,
+    "product_name": "Клавиатура",
+    "price": 256
+  },
+  {
+    "id_product": 222,
+    "product_name": "Монитор",
+    "price": 7599
+  },
+  {
+    "id_product": 333,
+    "product_name": "ОЗУ",
+    "price": 2300
+  },
+  {
+    "id_product": 444,
+    "product_name": "SSD",
+    "price": 5782
+  },
+  {
+    "id_product": 555,
+    "product_name": "HDD",
+    "price": 1568
+  },
+  {
+    "id_product": 666,
+    "product_name": "Видеокарта",
+    "price": 8947
+  }
+]
