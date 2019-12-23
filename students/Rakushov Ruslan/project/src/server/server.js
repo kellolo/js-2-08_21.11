@@ -1,12 +1,16 @@
 const logFile = "server/stats.json";
 console.log("Hello, I'm server.js");
 
+const path = require("path");
 const fs = require("fs");
 const express = require("express");
 const app = express();
 
 app.use(express.json());
 app.use("/", express.static("public"));
+// app.use("/", express.static(path.resolve("src", "public")));
+console.log(`Static path is ${path.resolve("public")}`);
+
 
 app.get("/catalogData.json", (req, res) => {
   fs.readFile("server/responses/catalogData.json", "utf-8", (err, data) => {
@@ -59,7 +63,7 @@ app.post("/addToBasket.json", (req, res) => {
         });
       }
       recountCart(cart);
-      fs.writeFile("server/responses/getBasket.json", JSON.stringify(cart), (errW, resW) => {
+      fs.writeFile("server/responses/getBasket.json", JSON.stringify(cart, null,2), (errW, resW) => {
         if (errW) {
           res.send(`{"result": 0, "error": ${errW}}`);
         } else {
@@ -83,7 +87,7 @@ app.post("/delFromBasket.json", (req, res) => {
         cart.contents.splice(cart.contents.indexOf(find) ,1);
       }
       recountCart(cart);
-      fs.writeFile("server/responses/getBasket.json", JSON.stringify(cart), (errW, resW) => {
+      fs.writeFile("server/responses/getBasket.json", JSON.stringify(cart, null, 2), (errW, resW) => {
         if (errW) {
           res.send(`{"result": 0, "error": ${errW}}`);
         } else {
