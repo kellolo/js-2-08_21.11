@@ -1,0 +1,77 @@
+[
+  {
+    "time": "22-12-2019 11:20:16",
+    "action": "remove",
+    "product_name": "Notebook"
+  },
+  {
+    "time": "22-12-2019 11:20:17",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "22-12-2019 11:20:20",
+    "action": "remove",
+    "product_name": "Router"
+  },
+  {
+    "time": "22-12-2019 11:20:23",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "22-12-2019 11:20:25",
+    "action": "add",
+    "product_name": "Router"
+  },
+  {
+    "time": "22-12-2019 11:20:26",
+    "action": "add",
+    "product_name": "Phones"
+  },
+  {
+    "time": "22-12-2019 11:20:27",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "22-12-2019 11:20:30",
+    "action": "add",
+    "product_name": "Keyboard"
+  },
+  {
+    "time": "22-12-2019 11:20:33",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "22-12-2019 11:20:34",
+    "action": "add",
+    "product_name": "Phones"
+  },
+  {
+    "time": "22-12-2019 11:26:04",
+    "action": "add",
+    "product_name": "Notebook"
+  },
+  {
+    "time": "22-12-2019 11:26:09",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "22-12-2019 11:26:10",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "22-12-2019 11:26:18",
+    "action": "add",
+    "product_name": "USB-camera"
+  },
+  {
+    "time": "22-12-2019 11:26:20",
+    "action": "add",
+    "product_name": "Gamepad"
+  }
+]
