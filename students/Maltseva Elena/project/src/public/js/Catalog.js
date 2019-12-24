@@ -1,10 +1,15 @@
-Vue.component ('catalog', {
+import catalogItem from './CatalogItem'
+
+let catalog = {
     template: `
         <div class="products">
             <div class="empty" v-if="filteredItems.length == 0">Товары не найдены</div>
             <catalog-item v-else v-for="item in filteredItems" :item="item" :image="image"></catalog-item>
         </div>
     `,
+    components: {
+        'catalog-item': catalogItem
+    },
     data () {
         return {
             url: `/catalog`,
@@ -29,4 +34,6 @@ Vue.component ('catalog', {
         this.$parent.fetchData(this.url)
             .then (dataArr => this.items = this.filteredItems = dataArr)
     }
-})
+}
+
+export default catalog

@@ -1,4 +1,8 @@
-let shop = new Vue ({
+import catalog from './Catalog'
+import cart from './Cart'
+import search from './Search'
+
+let shop = {
     el: '#shop',
     methods: {
         fetchData (url) {
@@ -32,5 +36,10 @@ let shop = new Vue ({
                     .then (dataJSON => dataJSON.json())
                     .catch (error => console.log(`Не удалось изменить данные: ${error}`))
         }
+    },
+    components: {
+        catalog, cart, search
     }
-})
+}
+
+export default shop

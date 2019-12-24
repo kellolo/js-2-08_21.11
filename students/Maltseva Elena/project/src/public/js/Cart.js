@@ -1,4 +1,6 @@
-Vue.component ('cart', {
+import cartItem from './CartItem'
+
+let cart = {
     template: `
         <span>
             <button class="btn-cart" type="button" @click="showCart">Корзина</button>
@@ -9,6 +11,9 @@ Vue.component ('cart', {
             </div>
         </span>
     `,
+    components: {
+        'cart-item': cartItem
+    },
     data () {
         return {
             url: `/cart`,
@@ -57,4 +62,6 @@ Vue.component ('cart', {
             
         }
     }
-})
+}
+
+export default cart
