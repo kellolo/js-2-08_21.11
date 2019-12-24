@@ -8,7 +8,7 @@ Vue.component('basket', {
             jsonBasket: '/basket'
         };
     },
-    mounted(){
+    mounted() {
         this.$parent.getJSON(this.jsonBasket)
             .then (data => {
                 this.basket = data.contents;
