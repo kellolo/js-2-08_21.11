@@ -1,6 +1,6 @@
 import catalog from "./catalog";
 import cart from "./cart";
-  
+
 let app = {
   el: "#app",
   data: {

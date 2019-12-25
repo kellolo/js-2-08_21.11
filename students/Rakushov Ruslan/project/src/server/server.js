@@ -8,9 +8,6 @@ const app = express();
 
 app.use(express.json());
 app.use("/", express.static("public"));
-// app.use("/", express.static(path.resolve("src", "public")));
-console.log(`Static path is ${path.resolve("public")}`);
-
 
 app.get("/catalogData.json", (req, res) => {
   fs.readFile("server/responses/catalogData.json", "utf-8", (err, data) => {
