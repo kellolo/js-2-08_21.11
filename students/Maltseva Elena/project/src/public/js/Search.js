@@ -1,4 +1,4 @@
-Vue.component ('search', {
+let search = {
     template: `
         <form action="#" class="search-form">
             <input type="text" class="search-field" v-model="searchLine" @input="$root.$refs.catalog.searchProducts(searchLine)">
@@ -12,4 +12,6 @@ Vue.component ('search', {
             searchLine: ''
         }
     }
-})
+}
+
+export default search

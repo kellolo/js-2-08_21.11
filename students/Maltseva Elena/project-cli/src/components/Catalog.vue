@@ -1,13 +1,16 @@
-Vue.component ('catalog', {
-    template: `
-        <div class="products">
-            <div class="empty" v-if="filteredItems.length == 0">Товары не найдены</div>
-            <catalog-item v-else v-for="item in filteredItems" :item="item" :image="image"></catalog-item>
-        </div>
-    `,
+<template>
+    <div class="products">
+        <div class="empty" v-if="filteredItems.length == 0">Товары не найдены</div>
+        <catalog-item v-else v-for="item in filteredItems" :item="item" :image="image" :key="item.id_product"></catalog-item>
+    </div>
+</template>
+
+<script>
+import catalogItem from './CatalogItem'
+export default {
     data () {
         return {
-            url: `/catalog`,
+            url: `/api/catalog`,
             image: 'https://placehold.it/200x150',
             items: [],
             filteredItems: []
@@ -28,5 +31,9 @@ Vue.component ('catalog', {
     mounted () {
         this.$parent.fetchData(this.url)
             .then (dataArr => this.items = this.filteredItems = dataArr)
+    },
+    components: {
+        'catalog-item': catalogItem
     }
-})
+}
+</script>
