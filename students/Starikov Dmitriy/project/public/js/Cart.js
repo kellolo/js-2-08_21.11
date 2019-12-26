@@ -2,10 +2,10 @@ Vue.component ('cart', {
     data () {
         return {
             items: [],
-            cartUrl: '/getBasket.json',
+            cartUrl: '/cartUrl',
             imgCart: 'https://placehold.it/100x80',
-            addUrl: '/addToBasket.json',
-            delUrl: '/deleteFromBasket.json',
+            addUrl: '/addUrl',
+            delUrl: '/delUrl',
             count: 0,
             visibil: false
         }
@@ -14,6 +14,16 @@ Vue.component ('cart', {
         showCart () {
             this.visibil = !this.visibil
         },
+        // addProduct (selectedItem) {
+        //     this.$parent.changeData(`/add-to-cart`, selectedItem)
+        //         .then (dataArr => this.items = dataArr)
+        //         .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+        // },
+        // removeProduct (selectedItem) {
+        //     this.$parent.changeData(`/delete-from-cart`, selectedItem)
+        //         .then (dataArr => this.items = dataArr)
+        //         .catch (error => console.log(`Не удалось выполнить запрос к серверу: ${error}`))
+        // },
         addProduct (product) {
             this.$parent.getJson (this.addUrl)
                 .then (answer => {
