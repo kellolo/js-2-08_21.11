@@ -1,4 +1,4 @@
-Vue.component("search", {
+let search = {
   data: function() {
     return {
       searchString: "",
@@ -18,4 +18,6 @@ Vue.component("search", {
     </button>
   </form>
   `,
-});
+};
+
+export default search;

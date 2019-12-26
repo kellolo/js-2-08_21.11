@@ -1,4 +1,4 @@
-Vue.component("cart-item", {
+let cartItem = {
   props: ["item", "img"],
   template: `
   <div class="cart-item" :data-id="item.id">
@@ -16,4 +16,6 @@ Vue.component("cart-item", {
     </div>
   </div>
   `
-})
+};
+
+export default cartItem;

@@ -1,7 +1,11 @@
-Vue.component("catalog", {
+import catalogItem from "./catalogItem"
+import dataEmpty from "./dataEmpty"
+import dataLoading from "./dataLoading"
+
+let catalog = {
   data: function() {
     return {
-      urlCatalogData: "/catalogData.json",
+      urlCatalogData: "./catalogData.json",
       image: "https://placehold.it/200x150",
       vItems: [],
       vSearchString: "",
@@ -55,5 +59,12 @@ Vue.component("catalog", {
     <data-loading v-if="isDataLoading"></data-loading>
     <data-empty v-if="isDataEmpty" :error="isDataEmptyError"></data-empty>
   </div>
-  `
-});
+  `,
+  components: {
+    "catalog-item": catalogItem,
+    "data-empty": dataEmpty,
+    "data-loading": dataLoading
+  }
+};
+
+export default catalog;

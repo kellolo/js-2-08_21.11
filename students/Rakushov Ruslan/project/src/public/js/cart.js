@@ -1,9 +1,13 @@
-Vue.component("cart", {
+import cartItem from "./cartItem"
+import cartEmpty from "./cartEmpty"
+import search from "./search"
+
+let cart = {
   data: function() {
     return {
-      urlBasketData: "/getBasket.json",
-      urlBasketAdd: "/addToBasket.json", //TODO Заменить на один адрес с разными параметрами действия (del/add)
-      urlBasketDel: "/delFromBasket.json",
+      urlBasketData: "./getBasket.json",
+      urlBasketAdd: "./addToBasket.json", //TODO Заменить на один адрес с разными параметрами действия (del/add)
+      urlBasketDel: "./delFromBasket.json",
       imageCart: "https://placehold.it/100x80",
       isVisible: false,
       vItems: [],
@@ -75,4 +79,11 @@ Vue.component("cart", {
     </div>
   </div>
   `,
-});
+  components: {
+    "cart-item": cartItem,
+    "cart-empty": cartEmpty,
+    search
+  }
+};
+
+export default cart;
