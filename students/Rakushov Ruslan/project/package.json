@@ -1,0 +1,33 @@
+{
+  "name": "shop",
+  "version": "0.1.0",
+  "description": "Geek_JS2",
+  "main": "src/server/server.js",
+  "scripts": {
+    "serve": "cd dist && npx nodemon --watch server/js server/js/server.js",
+    "build": "webpack --mode development --config webpack.config.client.js && webpack --config webpack.config.server.js --mode development",
+    "watch-front": "webpack --watch --config webpack.config.client.js --mode development",
+    "watch-back": "webpack --watch --config webpack.config.server.js --mode development",
+    "build-serv": "webpack --config webpack.config.server.js --mode development"
+  },
+  "author": "rri9",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.4.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "nodemon": "^2.0.2",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

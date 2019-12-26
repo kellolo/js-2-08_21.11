@@ -1,0 +1,34 @@
+{
+  "amount": 2080,
+  "countGoods": 6,
+  "contents": [
+    {
+      "id_product": 1,
+      "product_name": "Notebook",
+      "price": 1000,
+      "img": "https://placehold.it/200x150",
+      "quantity": 2
+    },
+    {
+      "id_product": 3,
+      "product_name": "Keyboard",
+      "price": 20,
+      "img": "https://placehold.it/200x150",
+      "quantity": 1
+    },
+    {
+      "id_product": 5,
+      "product_name": "Phones",
+      "price": 25,
+      "img": "https://placehold.it/200x150",
+      "quantity": 2
+    },
+    {
+      "id_product": 4,
+      "product_name": "Mouse",
+      "price": 10,
+      "img": "https://placehold.it/200x150",
+      "quantity": 1
+    }
+  ]
+}

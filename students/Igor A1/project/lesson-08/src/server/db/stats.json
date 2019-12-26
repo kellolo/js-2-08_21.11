@@ -1,0 +1,252 @@
+[
+  {
+    "time": "21-12-2019 12:09:46",
+    "action": "remove",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 12:09:48",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 12:09:50",
+    "action": "add",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 12:09:54",
+    "action": "add",
+    "product_name": "Phones"
+  },
+  {
+    "time": "21-12-2019 12:10:00",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 12:10:02",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 12:10:03",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 12:10:04",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 12:10:05",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 12:10:06",
+    "action": "remove",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 12:10:08",
+    "action": "remove",
+    "product_name": "Phones"
+  },
+  {
+    "time": "21-12-2019 12:10:10",
+    "action": "add",
+    "product_name": "Notebook"
+  },
+  {
+    "time": "21-12-2019 12:10:13",
+    "action": "remove",
+    "product_name": "Notebook"
+  },
+  {
+    "time": "21-12-2019 12:10:14",
+    "action": "remove",
+    "product_name": "Notebook"
+  },
+  {
+    "time": "21-12-2019 12:10:27",
+    "action": "add",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 12:10:28",
+    "action": "add",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 17:42:13",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 17:42:15",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 17:42:15",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 17:42:17",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 17:42:18",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 17:42:20",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 17:42:22",
+    "action": "remove",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 17:42:23",
+    "action": "remove",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 17:42:26",
+    "action": "add",
+    "product_name": "Notebook"
+  },
+  {
+    "time": "21-12-2019 17:42:27",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 17:42:27",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 17:42:29",
+    "action": "add",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 21:39:48",
+    "action": "remove",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 21:39:50",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 21:39:51",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 21:39:53",
+    "action": "add",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 21:42:45",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 21:42:55",
+    "action": "remove",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 21:44:54",
+    "action": "add",
+    "product_name": "Display"
+  },
+  {
+    "time": "21-12-2019 21:45:07",
+    "action": "remove",
+    "product_name": "Display"
+  },
+  {
+    "time": "21-12-2019 21:47:05",
+    "action": "remove",
+    "product_name": "Router"
+  },
+  {
+    "time": "21-12-2019 21:49:06",
+    "action": "add",
+    "product_name": "Notebook"
+  },
+  {
+    "time": "21-12-2019 21:49:14",
+    "action": "add",
+    "product_name": "Phones"
+  },
+  {
+    "time": "21-12-2019 21:52:06",
+    "action": "remove",
+    "product_name": "Phones"
+  },
+  {
+    "time": "21-12-2019 21:57:50",
+    "action": "add",
+    "product_name": "Keyboard"
+  },
+  {
+    "time": "21-12-2019 21:59:54",
+    "action": "add",
+    "product_name": "Keyboard"
+  },
+  {
+    "time": "21-12-2019 22:00:09",
+    "action": "add",
+    "product_name": "Phones"
+  },
+  {
+    "time": "21-12-2019 22:11:08",
+    "action": "remove",
+    "product_name": "Phones"
+  },
+  {
+    "time": "21-12-2019 22:11:10",
+    "action": "remove",
+    "product_name": "Keyboard"
+  },
+  {
+    "time": "21-12-2019 22:11:11",
+    "action": "remove",
+    "product_name": "Keyboard"
+  },
+  {
+    "time": "21-12-2019 22:19:47",
+    "action": "add",
+    "product_name": "Keyboard"
+  },
+  {
+    "time": "21-12-2019 22:23:06",
+    "action": "add",
+    "product_name": "Phones"
+  },
+  {
+    "time": "21-12-2019 22:25:57",
+    "action": "add",
+    "product_name": "Mouse"
+  },
+  {
+    "time": "21-12-2019 22:26:04",
+    "action": "add",
+    "product_name": "Phones"
+  }
+]

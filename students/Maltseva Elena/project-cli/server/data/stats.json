@@ -1,0 +1,222 @@
+[
+  {
+    "action": "remove product",
+    "product_name": "Mouse",
+    "time": "2019-12-19T16:26:42.425Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Mouse",
+    "time": "2019-12-19T16:26:43.827Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Display",
+    "time": "2019-12-19T16:28:09.242Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Display",
+    "time": "2019-12-19T16:28:09.729Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Keyboard",
+    "time": "2019-12-19T16:28:11.254Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Keyboard",
+    "time": "2019-12-19T16:28:12.333Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Display",
+    "time": "2019-12-19T16:28:13.090Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Display",
+    "time": "2019-12-19T16:28:13.429Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Keyboard",
+    "time": "2019-12-22T18:27:03.048Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Keyboard",
+    "time": "2019-12-22T18:27:08.647Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Keyboard",
+    "time": "2019-12-22T18:27:09.369Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Keyboard",
+    "time": "2019-12-22T18:27:10.286Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Keyboard",
+    "time": "2019-12-22T18:27:11.446Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Keyboard",
+    "time": "2019-12-22T18:27:12.329Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Notebook",
+    "time": "2019-12-22T18:30:28.442Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Notebook",
+    "time": "2019-12-22T18:30:30.447Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Mouse",
+    "time": "2019-12-22T18:31:03.039Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Mouse",
+    "time": "2019-12-22T18:31:03.573Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Mouse",
+    "time": "2019-12-22T18:31:04.572Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Mouse",
+    "time": "2019-12-22T18:31:06.732Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Mouse",
+    "time": "2019-12-22T18:53:03.769Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Mouse",
+    "time": "2019-12-22T18:53:05.128Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Mouse",
+    "time": "2019-12-22T20:00:18.227Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Mouse",
+    "time": "2019-12-22T20:00:18.805Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Mouse",
+    "time": "2019-12-22T20:00:19.851Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Mouse",
+    "time": "2019-12-22T20:00:20.240Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Display",
+    "time": "2019-12-25T21:57:20.898Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Display",
+    "time": "2019-12-25T21:57:23.347Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Display",
+    "time": "2019-12-25T21:57:24.095Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Display",
+    "time": "2019-12-25T21:57:25.171Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Display",
+    "time": "2019-12-25T21:57:30.063Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Display",
+    "time": "2019-12-25T22:31:32.185Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T22:31:33.403Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T22:31:33.859Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T22:31:34.763Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T22:31:35.056Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T23:43:36.746Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T23:43:38.011Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Mouse",
+    "time": "2019-12-25T23:51:34.316Z"
+  },
+  {
+    "action": "add product",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T23:52:16.735Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T23:52:19.042Z"
+  },
+  {
+    "action": "change quantity of product: -1",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T23:52:20.404Z"
+  },
+  {
+    "action": "remove product",
+    "product_name": "Keyboard",
+    "time": "2019-12-25T23:52:20.833Z"
+  },
+  {
+    "action": "change quantity of product: 1",
+    "product_name": "Mouse",
+    "time": "2019-12-25T23:52:23.434Z"
+  }
+]

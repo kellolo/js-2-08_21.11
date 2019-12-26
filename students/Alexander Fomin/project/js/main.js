@@ -5,13 +5,67 @@ const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', '
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24, 350, 20];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const data =  'https://raw.githubusercontent.com/alexferdinand/js-2-08_21.11/master/students/Alexander Fomin/project/goods.json'
+const API = 'https://raw.githubusercontent.com/alexferdinand/js-2-08_21.11/master/students/Alexander Fomin/project'
+const urlCatalog = '/catalog.json'
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData();
 
+class List {
+    constructor() {
+        this.list = null
+        this._init()
+    }
+
+
+    _init() {
+        this.list = this.getProductList()
+    }
+
+    _getXHR() {
+        let xhr
+        try {
+            xhr = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (E) {
+                xhr = false;
+            }
+        }
+        if (typeof XMLHttpRequest != 'undefined') {
+            xhr = new XMLHttpRequest();
+        }
+        return xhr
+    }
+
+    makeGETrequest() {
+       return new Promise((resolve, reject) => {
+            let xhr = this._getXHR()
+            xhr.onload = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status == 200)
+                        resolve(xhr.responseText)
+                } else {
+                    reject(xhr.status)
+                }
+            }
+            xhr.open('GET', API + urlCatalog, true)
+            xhr.send()
+        })
+    }
+
+    getProductList() {
+        this.makeGETrequest()
+            .then(responseText => {
+                return responseText
+            })
+            .catch(error => {
+                return 'Ошибка'
+            })
+
+    }
+}
 
 class Catalog {
     constructor() {
@@ -20,11 +74,10 @@ class Catalog {
         this._init()
     }
     _init() {
-        list.forEach(el => {
-            this.products.push(new Product(el))
-        })
+
         this.render()
     }
+
     render() {
         let trg = document.querySelector(this.container)
         let str = ''
@@ -79,7 +132,7 @@ class Cart {
         });
     }
 
-_setBuyButton() {
+    _setBuyButton() {
         document.querySelector('.products').addEventListener('click', (evt) => {
             if (evt.target.classList.contains('buy-btn')) {
                 this.addItem(evt.target.dataset);
@@ -172,9 +225,11 @@ class CartItem {
 }
 
 
+let a = new List()
 
-    let catalog = new Catalog()
-    let cart = new Cart()
+console.log(a)
+let catalog = new Catalog()
+let cart = new Cart()
 
 
 //создание массива объектов - имитация загрузки данных с сервера
@@ -194,13 +249,4 @@ function createProduct(i) {
         price: prices[i],
         img: image,
     }
-};
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData() {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push(createProduct(i));
-    }
-    return arr
 };

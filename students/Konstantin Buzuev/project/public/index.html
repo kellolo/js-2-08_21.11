@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <!-- Bootstrap 4 styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- My styles -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/cartItem.css">
+    <link rel="stylesheet" href="css/search.css">
+
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="header__logo">E-shop</div>
+            <search></search>
+            <cart v-bind:items="cart"></cart>
+        </header>
+        <main>
+            <catalog v-bind:items="products"></catalog>
+        </main>
+    </div>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/cartitem.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/catalog.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/search.js"></script>
+    <!-- Bootstrap 4 scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
+<!--
+https://ibb.co/9G2hcsM
+https://ibb.co/FBYj0gx
+https://ibb.co/GvMGWdb
+https://ibb.co/LnSVPzB
+https://ibb.co/rQym7ng
+https://ibb.co/4KfSQBt
+https://ibb.co/TPCkj3C
+https://ibb.co/61KNwRJ
+https://ibb.co/3TtH74d
+https://ibb.co/Xz1tf23
+https://ibb.co/ncmH5pp
+https://ibb.co/PC1NDPN
+
+<a href="https://imgbb.com/">       <img src="https://i.ibb.co/52vkGB7/product-1.jpg" alt="product-1" border="0"></a>
+<a href="https://ibb.co/FBYj0gx">   <img src="https://i.ibb.co/vJdKQZw/product-1-full.jpg" alt="product-1-full" border="0"></a>
+<a href="https://imgbb.com/">       <img src="https://i.ibb.co/pvKNf19/product-2.jpg" alt="product-2" border="0"></a>
+<a href="https://ibb.co/LnSVPzB">   <img src="https://i.ibb.co/NZxc36f/product-2-full.jpg" alt="product-2-full" border="0"></a>
+<a href="https://imgbb.com/">       <img src="https://i.ibb.co/tHC4myS/product-3.jpg" alt="product-3" border="0"></a>
+<a href="https://ibb.co/4KfSQBt">   <img src="https://i.ibb.co/34sFJtd/product-3-full.jpg" alt="product-3-full" border="0"></a>
+<a href="https://imgbb.com/">       <img src="https://i.ibb.co/RQ59rw5/product-4.jpg" alt="product-4" border="0"></a>
+<a href="https://ibb.co/61KNwRJ">   <img src="https://i.ibb.co/0F0Q2jV/product-4-full.jpg" alt="product-4-full" border="0"></a>
+<a href="https://imgbb.com/">       <img src="https://i.ibb.co/RgLW9Yb/product-5.jpg" alt="product-5" border="0"></a>
+<a href="https://ibb.co/Xz1tf23">   <img src="https://i.ibb.co/wKV4Z0w/product-5-full.jpg" alt="product-5-full" border="0"></a>
+<a href="https://imgbb.com/">       <img src="https://i.ibb.co/2thDfJJ/product-6.jpg" alt="product-6" border="0"></a>
+<a href="https://ibb.co/PC1NDPN">   <img src="https://i.ibb.co/12RLzPL/product-6-full.jpg" alt="product-6-full" border="0"></a><br />
+<a target='_blank' href='https://showclassdance.ru/'>шоукласс</a><br />
+
+-->
