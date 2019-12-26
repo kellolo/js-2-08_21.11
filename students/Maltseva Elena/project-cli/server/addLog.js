@@ -1,8 +1,7 @@
 const fs = require ('fs')
-const moment = require ('moment')
 
 function addLog (act, prod) {
-    fs.readFile ('server/data/stats.json', 'utf-8', (err, data) => {
+    fs.readFile ('./data/stats.json', 'utf-8', (err, data) => {
         if (err) {
             console.log(err)
         } else {
@@ -10,9 +9,9 @@ function addLog (act, prod) {
             actLog.push({
                 action: act,
                 product_name: prod,
-                time: moment().format('DD-MM-YYYY, hh:mm:ss')
+                time: new Date()
             })
-            fs.writeFile ('server/data/stats.json', JSON.stringify(actLog, null, 2), (err) => {
+            fs.writeFile ('./data/stats.json', JSON.stringify(actLog, null, 2), (err) => {
                 if (err) {
                     actLog.push(`${err}`)
                 }

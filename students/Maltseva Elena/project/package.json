@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "serve-dev": "nodemon server/server.js",
     "serve": "cd dist && nodemon server/js/server.js",
-    "build": "webpack --mode development --config webpack.config.js && webpack --mode development --config webpack.config.serv.js"
+    "build": "webpack --mode development --config webpack.config.js && webpack --mode development --config webpack.config.serv.js",
+    "build-w": "webpack -w --mode development --config webpack.config.serv.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,7 @@
     "css-loader": "^3.4.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.9.0",
+    "moment": "^2.24.0",
     "nodemon": "^2.0.2",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
