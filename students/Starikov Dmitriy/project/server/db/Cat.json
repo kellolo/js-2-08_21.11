@@ -1,0 +1,59 @@
+
+[
+    {
+      "id_product": 1,
+      "product_name": "Ноутбук Asus VivoBook X543MA-GQ469",
+      "price": 1000,
+      "img": "http://madelephants.ru/3.jpg"
+
+    },
+    {
+        "id_product": 2,
+        "product_name": "Ноутбук HP 15-rb048ur (7NC11EA)",
+        "price": 800,
+        "img": "http://madelephants.ru/4.jpg"
+  
+      },
+      {
+        "id_product": 3,
+        "product_name": "Ноутбук Asus VivoBook X540UB-DM616",
+        "price": 520,
+        "img": "http://madelephants.ru/6.jpg"
+  
+      },
+      {
+        "id_product": 4,
+        "product_name": "Ноутбук Asus VivoBook X512FJ-EJ237",
+        "price": 670,
+        "img": "http://madelephants.ru/3.jpg"
+  
+      },
+      {
+        "id_product": 5,
+        "product_name": "Ноутбук Asus ZenBook UX433FA-A5232R",
+        "price": 1025,
+        "img": "http://madelephants.ru/4.jpg"
+  
+      },
+      {
+        "id_product": 6,
+        "product_name": "Ноутбук Dell Inspiron 15 (3584-2914)",
+        "price": 1230,
+        "img": "http://madelephants.ru/6.jpg"
+  
+      },
+      {
+        "id_product": 7,
+        "product_name": "Ноутбук Dell Inspiron 15 (3583-2921)",
+        "price": 1218,
+        "img": "http://madelephants.ru/3.jpg"
+  
+      },
+      {
+        "id_product": 8,
+        "product_name": "Ноутбук Asus X540BA-GQ097",
+        "price": 2002,
+        "img": "http://madelephants.ru/4.jpg"
+  
+      }
+  ]

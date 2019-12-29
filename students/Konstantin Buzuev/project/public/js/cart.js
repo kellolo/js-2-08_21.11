@@ -1,7 +1,9 @@
 Vue.component('cart', {
+    props: {
+        items: Array
+    },
     data() {
         return {
-            cartItems: [],
             isHidden: true
         }
     },
@@ -14,23 +16,32 @@ Vue.component('cart', {
     computed: {
         totalCost: function () {
             let sum = 0
-            this.cartItems.forEach(item => {
+            this.items.forEach(item => {
                 sum += item.price * item.quantity
             })
             return sum
         },
         isFilled: function () {
-            if (this.cartItems.length === 0) this.isHidden = true
-            return (this.cartItems.length === 0) ? false : true
+            if (this.items.length === 0) this.isHidden = true
+            return (this.items.length === 0) ? false : true
         }
     },
     created() {
         eventBus.$on("put-to-cart", (prod) => {
-            this.cartItems.push(prod)
+            let inputProduct = this.items.find(item => item.id === prod.id)
+            if (inputProduct !== undefined) {
+                eventBus.$emit("put", prod.id, 1)
+            } else eventBus.$emit("post", prod)
         })
-        eventBus.$on("clear-cart", () => {
-            this.cartItems = []
+        eventBus.$on("remove-from-cart", (prod) => {
+            let inputProduct = this.items.find(item => item.id === prod.id)
+            if (inputProduct.quantity > 1) {
+                eventBus.$emit("put", prod.id, -1)
+            } else eventBus.$emit("delete", prod.id)
         })
+    },
+    mounted() {
+        eventBus.$emit("get-cart")
     },
     template: `<div class="cart">
            <button class="cart__button cart_empty" 
@@ -41,7 +52,7 @@ Vue.component('cart', {
            <div class="cart__wrap"
            v-bind:class="{ cart_hidden: isHidden}">
                <cart-item 
-                   v-for="item in cartItems" 
+                   v-for="item in items" 
                    v-bind:product="item">
                </cart-item>
                <hr>
