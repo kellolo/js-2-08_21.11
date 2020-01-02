@@ -1,4 +1,4 @@
-Vue.component ('catalog-item', {
+let catalogItem = {
 
     template: `
     <div class="product-item" :data-id="item.id_product">
@@ -11,4 +11,6 @@ Vue.component ('catalog-item', {
     </div>
     `,
     props: ['item', 'imgProp']
-})
+}
+
+export default catalogItem

@@ -5,6 +5,8 @@ const fs = require ('fs') //file system (docs NODE)
 
 const app = express ()
 
+const handler = require('./handler')
+
 app.use (express.json ())
 
 app.use ('/', express.static ('public')) //localhost:3030/
@@ -28,8 +30,15 @@ app.get ('/cart', (req, res) => {
         }
     })
 })
-
-//post, put, delete
+app.post ('/cart', (req, res) => {
+    handler(req, res, 'server/db/userCart.json', 'add')
+})
+app.delete ('/cart/:id', (req, res) => {
+    handler(req, res, 'server/db/userCart.json', 'del')
+})
+app.put ('/cart/:id', (req, res) => {
+    handler(req, res, 'server/db/userCart.json', 'change')
+})
 
 app.listen (3030, () => {
     console.log ('Server listening at port 3030...')

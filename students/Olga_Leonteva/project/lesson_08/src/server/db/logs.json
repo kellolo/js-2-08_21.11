@@ -1,0 +1,27 @@
+[
+	{
+		"prod_name": "Phones",
+		"user_action": "del",
+		"time": "01 01 2020, 5:28:43"
+	},
+	{
+		"prod_name": "Router",
+		"user_action": "add",
+		"time": "01 01 2020, 5:29:21"
+	},
+	{
+		"prod_name": "Router",
+		"user_action": "del",
+		"time": "01 01 2020, 5:29:31"
+	},
+	{
+		"prod_name": "Gamepad",
+		"user_action": "add",
+		"time": "02 01 2020, 6:56:07"
+	},
+	{
+		"prod_name": "Gamepad",
+		"user_action": "del",
+		"time": "02 01 2020, 6:56:15"
+	}
+]
