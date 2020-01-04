@@ -1,7 +1,9 @@
-Vue.component ('catalog', {
+import catalogItem from "./CatalogItem"
+import filterComp from "./FilterComp"
+
+let catalog = {
     data () {
         return {
-            //catalogUrl: '/catalogData.json',
             imgCatalog: 'https://placehold.it/200x150',
             items: [],
             itemsFilter: []
@@ -23,4 +25,10 @@ Vue.component ('catalog', {
             this.itemsFilter = this.items.filter(good => regexp.test(good.product_name))
     }
     },
-})
+    components: {
+        'catalog-item': catalogItem,
+        'filter-comp': filterComp
+
+    }
+}
+export default catalog

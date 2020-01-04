@@ -1,4 +1,4 @@
-Vue.component ('cart-item', {
+let cartItem = {
     data(){
         return {
             name: '',
@@ -37,4 +37,6 @@ Vue.component ('cart-item', {
         this.quantity = this.item.quantity
 
     }
-})
+}
+
+export default cartItem
