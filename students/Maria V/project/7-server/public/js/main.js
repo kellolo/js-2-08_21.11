@@ -25,6 +25,44 @@ let app = new Vue ({
                     console.log (err)
                 })
             },
+        postJSON (url, data) {
+            return fetch (url, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify (data)
+            }) 
+            .then ( result => result.json())
+            .catch (err => {
+                console.log (err)
+            })
+        },
+        putJSON (url, data) {
+            return fetch (url, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify (data)
+            }) 
+            .then ( result => result.json())
+            .catch (err => {
+                console.log (err)
+            })
+        },
+        deleteJSON (url) {
+            return fetch (url, {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }) 
+            .then ( result => result.json())
+            .catch (err => {
+                console.log (err)
+            })
+        },
     },
     // computed: {
 
